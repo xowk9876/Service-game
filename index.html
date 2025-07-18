@@ -12,12 +12,8 @@
     <div class="container">
         <!-- 프로필 카드 -->
         <div class="profile-card">
-            <div class="profile-image" onclick="checkAdminAndOpenEditor()">
-                <img src="image/프로필.jpg" alt="Tae_system Profile" class="profile-photo" id="profilePhoto">
-                <div class="profile-edit-overlay">
-                    <i class="fas fa-camera"></i>
-                    <span>편집</span>
-                </div>
+            <div class="profile-image">
+                <img src="image/profile.jpg" alt="Tae_system Profile" class="profile-photo" id="profilePhoto">
             </div>
             
             <h1 class="name">Tae_system</h1>
@@ -76,93 +72,6 @@
                     <div class="retro-particles"></div>
                     <div class="retro-particles"></div>
                     <div class="retro-particles"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 관리자 인증 모달 -->
-    <div class="admin-auth-modal" id="adminAuthModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>관리자 인증</h3>
-                <button class="close-btn" onclick="closeAdminAuth()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="auth-form">
-                    <div class="input-group">
-                        <label for="adminPassword">관리자 비밀번호</label>
-                        <input type="password" id="adminPassword" placeholder="비밀번호를 입력하세요" onkeypress="handleAuthKeyPress(event)">
-                    </div>
-                    <div class="auth-buttons">
-                        <button onclick="authenticateAdmin()" class="auth-btn">인증</button>
-                        <button onclick="closeAdminAuth()" class="cancel-btn">취소</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- 프로필 편집 모달 -->
-    <div class="profile-edit-modal" id="profileEditModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>프로필 사진 편집</h3>
-                <button class="close-btn" onclick="closeProfileEditor()">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="edit-options">
-                    <div class="edit-option" onclick="uploadPhoto()">
-                        <i class="fas fa-upload"></i>
-                        <span>사진 업로드</span>
-                    </div>
-                    <div class="edit-option" onclick="rotatePhoto()">
-                        <i class="fas fa-redo"></i>
-                        <span>회전</span>
-                    </div>
-                    <div class="edit-option" onclick="cropPhoto()">
-                        <i class="fas fa-crop"></i>
-                        <span>자르기</span>
-                    </div>
-                    <div class="edit-option" onclick="adjustBrightness()">
-                        <i class="fas fa-sun"></i>
-                        <span>밝기 조절</span>
-                    </div>
-                    <div class="edit-option" onclick="adjustContrast()">
-                        <i class="fas fa-adjust"></i>
-                        <span>대비 조절</span>
-                    </div>
-                    <div class="edit-option delete" onclick="deletePhoto()">
-                        <i class="fas fa-trash"></i>
-                        <span>사진 삭제</span>
-                    </div>
-                </div>
-                
-                <!-- 파일 업로드 (숨겨진 input) -->
-                <input type="file" id="photoUpload" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
-                
-                <!-- 편집 도구 -->
-                <div class="edit-tools" id="editTools" style="display: none;">
-                    <div class="tool-section">
-                        <label>회전: <span id="rotationValue">0°</span></label>
-                        <input type="range" id="rotationSlider" min="0" max="360" value="0" onchange="updateRotation(this.value)">
-                    </div>
-                    <div class="tool-section">
-                        <label>밝기: <span id="brightnessValue">100%</span></label>
-                        <input type="range" id="brightnessSlider" min="0" max="200" value="100" onchange="updateBrightness(this.value)">
-                    </div>
-                    <div class="tool-section">
-                        <label>대비: <span id="contrastValue">100%</span></label>
-                        <input type="range" id="contrastSlider" min="0" max="200" value="100" onchange="updateContrast(this.value)">
-                    </div>
-                    <div class="tool-buttons">
-                        <button onclick="applyChanges()" class="apply-btn">적용</button>
-                        <button onclick="resetChanges()" class="reset-btn">초기화</button>
-                    </div>
                 </div>
             </div>
         </div>

@@ -151,37 +151,7 @@ body::before {
     border-color: rgba(255, 255, 255, 0.5);
 }
 
-.profile-edit-overlay {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 150px;
-    height: 150px;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: all 0.3s ease;
-    color: white;
-    font-size: 12px;
-    font-weight: 500;
-    z-index: 3;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
 
-.profile-edit-overlay i {
-    font-size: 20px;
-    margin-bottom: 3px;
-}
-
-.profile-image:hover .profile-edit-overlay {
-    opacity: 1;
-}
 
 .profile-image::before {
     content: '';
