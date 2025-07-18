@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tae_system - IT Server Engineer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 프로필 카드 -->
+        <div class="profile-card">
+            <div class="profile-image" onclick="checkAdminAndOpenEditor()">
+                <img src="image/프로필.jpg" alt="Tae_system Profile" class="profile-photo" id="profilePhoto">
+                <div class="profile-edit-overlay">
+                    <i class="fas fa-camera"></i>
+                    <span>편집</span>
+                </div>
+            </div>
+            
+            <h1 class="name">Tae_system</h1>
+            <p class="title">IT Server Engineer</p>
+            
+            <!-- VIEW MORE 버튼 -->
+            <button class="view-more-btn" onclick="toggleGameSection()">
+                <span>VIEW MORE</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            
+            <!-- 연락처 정보 -->
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> bhd03014@gmail.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> South Korea</p>
+            </div>
+            
+            <!-- 소셜 링크 -->
+            <div class="social-links">
+                <a href="https://www.instagram.com/tae_system/" class="social-icon instagram" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+            
+            <!-- 컬러 팔레트 -->
+            <div class="color-palette">
+                <div class="color-swatch blue"></div>
+                <div class="color-swatch teal"></div>
+                <div class="color-swatch pink"></div>
+                <div class="color-swatch purple"></div>
+            </div>
+        </div>
+        
+        <!-- 고전 게임 섹션 -->
+        <div class="retro-game-section" id="gameSection">
+            <h2>🎮 Retro Gaming Experience</h2>
+            <div class="retro-game-card" onclick="openEmuOS()">
+                <div class="retro-game-content">
+                    <div class="retro-game-icon">
+                        <i class="fas fa-gamepad"></i>
+                        <div class="retro-glow"></div>
+                    </div>
+                    <h3>EmuOS Classic Games</h3>
+                    <p>수천 개의 고전 게임을 무료로 즐겨보세요!<br>레트로 게임의 향수를 느껴보세요.</p>
+                    <div class="retro-features">
+                        <span class="feature-tag">🎯 1000+ Games</span>
+                        <span class="feature-tag">🕹️ Retro</span>
+                        <span class="feature-tag">💾 Free</span>
+                    </div>
+                    <div class="retro-cta">
+                        <span>지금 시작하기</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="retro-game-bg">
+                    <div class="retro-particles"></div>
+                    <div class="retro-particles"></div>
+                    <div class="retro-particles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 관리자 인증 모달 -->
+    <div class="admin-auth-modal" id="adminAuthModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>관리자 인증</h3>
+                <button class="close-btn" onclick="closeAdminAuth()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="auth-form">
+                    <div class="input-group">
+                        <label for="adminPassword">관리자 비밀번호</label>
+                        <input type="password" id="adminPassword" placeholder="비밀번호를 입력하세요" onkeypress="handleAuthKeyPress(event)">
+                    </div>
+                    <div class="auth-buttons">
+                        <button onclick="authenticateAdmin()" class="auth-btn">인증</button>
+                        <button onclick="closeAdminAuth()" class="cancel-btn">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 프로필 편집 모달 -->
+    <div class="profile-edit-modal" id="profileEditModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>프로필 사진 편집</h3>
+                <button class="close-btn" onclick="closeProfileEditor()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="edit-options">
+                    <div class="edit-option" onclick="uploadPhoto()">
+                        <i class="fas fa-upload"></i>
+                        <span>사진 업로드</span>
+                    </div>
+                    <div class="edit-option" onclick="rotatePhoto()">
+                        <i class="fas fa-redo"></i>
+                        <span>회전</span>
+                    </div>
+                    <div class="edit-option" onclick="cropPhoto()">
+                        <i class="fas fa-crop"></i>
+                        <span>자르기</span>
+                    </div>
+                    <div class="edit-option" onclick="adjustBrightness()">
+                        <i class="fas fa-sun"></i>
+                        <span>밝기 조절</span>
+                    </div>
+                    <div class="edit-option" onclick="adjustContrast()">
+                        <i class="fas fa-adjust"></i>
+                        <span>대비 조절</span>
+                    </div>
+                    <div class="edit-option delete" onclick="deletePhoto()">
+                        <i class="fas fa-trash"></i>
+                        <span>사진 삭제</span>
+                    </div>
+                </div>
+                
+                <!-- 파일 업로드 (숨겨진 input) -->
+                <input type="file" id="photoUpload" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
+                
+                <!-- 편집 도구 -->
+                <div class="edit-tools" id="editTools" style="display: none;">
+                    <div class="tool-section">
+                        <label>회전: <span id="rotationValue">0°</span></label>
+                        <input type="range" id="rotationSlider" min="0" max="360" value="0" onchange="updateRotation(this.value)">
+                    </div>
+                    <div class="tool-section">
+                        <label>밝기: <span id="brightnessValue">100%</span></label>
+                        <input type="range" id="brightnessSlider" min="0" max="200" value="100" onchange="updateBrightness(this.value)">
+                    </div>
+                    <div class="tool-section">
+                        <label>대비: <span id="contrastValue">100%</span></label>
+                        <input type="range" id="contrastSlider" min="0" max="200" value="100" onchange="updateContrast(this.value)">
+                    </div>
+                    <div class="tool-buttons">
+                        <button onclick="applyChanges()" class="apply-btn">적용</button>
+                        <button onclick="resetChanges()" class="reset-btn">초기화</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
