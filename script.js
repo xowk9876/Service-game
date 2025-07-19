@@ -1,20 +1,15 @@
 // DOM이 로드된 후 실행
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM 로드 완료!');
+    
+    // VIEW MORE 버튼 즉시 설정
+    setupViewMoreButton();
+    
     // 프로필 이미지 클릭 이벤트
     const profilePhoto = document.getElementById('profilePhoto');
     if (profilePhoto) {
-        profilePhoto.addEventListener('click', function() {
+        profilePhoto.addEventListener('click', function(event) {
             createClickEffect(event);
-        });
-    }
-
-    // VIEW MORE 버튼 토글 기능
-    const viewMoreBtn = document.querySelector('.view-more-btn');
-    const gameSection = document.getElementById('gameSection');
-    
-    if (viewMoreBtn && gameSection) {
-        viewMoreBtn.addEventListener('click', function() {
-            toggleGameSection();
         });
     }
 
@@ -42,24 +37,87 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// 게임 섹션 토글 함수
-function toggleGameSection() {
-    const gameSection = document.getElementById('gameSection');
-    const viewMoreBtn = document.querySelector('.view-more-btn');
+// VIEW MORE 버튼 설정 함수
+function setupViewMoreButton() {
+    console.log('VIEW MORE 버튼 설정 시작');
     
-    if (gameSection && viewMoreBtn) {
-        if (gameSection.classList.contains('active')) {
-            gameSection.classList.remove('active');
-            viewMoreBtn.classList.remove('active');
-        } else {
-            gameSection.classList.add('active');
-            viewMoreBtn.classList.add('active');
-        }
+    // 버튼 찾기
+    const viewMoreBtn = document.querySelector('.view-more-btn');
+    const gameSection = document.getElementById('gameSection');
+    
+    console.log('찾은 요소들:', {
+        viewMoreBtn: viewMoreBtn,
+        gameSection: gameSection
+    });
+    
+    if (!viewMoreBtn) {
+        console.error('VIEW MORE 버튼을 찾을 수 없습니다!');
+        return;
     }
+    
+    if (!gameSection) {
+        console.error('게임 섹션을 찾을 수 없습니다!');
+        return;
+    }
+    
+    // 기존 이벤트 리스너 제거 (중복 방지)
+    const newBtn = viewMoreBtn.cloneNode(true);
+    viewMoreBtn.parentNode.replaceChild(newBtn, viewMoreBtn);
+    
+    // 새로운 이벤트 리스너 추가
+    newBtn.addEventListener('click', function(event) {
+        console.log('VIEW MORE 버튼 클릭됨!');
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // 토글 실행
+        const currentGameSection = document.getElementById('gameSection');
+        const currentViewMoreBtn = document.querySelector('.view-more-btn');
+        
+        if (currentGameSection && currentViewMoreBtn) {
+            const isActive = currentGameSection.classList.contains('active');
+            console.log('현재 상태:', isActive ? '활성화' : '비활성화');
+            
+            if (isActive) {
+                currentGameSection.classList.remove('active');
+                currentViewMoreBtn.classList.remove('active');
+                console.log('게임 섹션 숨김 완료');
+            } else {
+                currentGameSection.classList.add('active');
+                currentViewMoreBtn.classList.add('active');
+                console.log('게임 섹션 표시 완료');
+            }
+        }
+    });
+    
+    // 버튼에 직접 onclick 속성도 추가 (이중 보험)
+    newBtn.onclick = function(event) {
+        console.log('onclick 이벤트도 실행됨!');
+        event.preventDefault();
+        
+        const currentGameSection = document.getElementById('gameSection');
+        const currentViewMoreBtn = document.querySelector('.view-more-btn');
+        
+        if (currentGameSection && currentViewMoreBtn) {
+            const isActive = currentGameSection.classList.contains('active');
+            
+            if (isActive) {
+                currentGameSection.classList.remove('active');
+                currentViewMoreBtn.classList.remove('active');
+            } else {
+                currentGameSection.classList.add('active');
+                currentViewMoreBtn.classList.add('active');
+            }
+        }
+    };
+    
+    console.log('VIEW MORE 버튼 설정 완료');
 }
 
 // EmuOS 게임 플랫폼 열기
 function openEmuOS() {
+    console.log('EmuOS 열기 함수 실행');
+    
     // 게임 카드 클릭 효과
     const gameCard = event.target.closest('.retro-game-card');
     if (gameCard) {
@@ -151,8 +209,6 @@ function changeThemeColor(swatch) {
         }, 200);
     }
 }
-
-
 
 // 파티클 효과 생성
 function createParticles() {
@@ -252,58 +308,23 @@ style.textContent = `
         box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4) !important;
     }
 
-    .retro-game-card:hover .retro-cta i {
-        transform: translateX(5px) !important;
+    .view-more-btn {
+        cursor: pointer !important;
     }
 
-    .retro-game-card:hover .feature-tag {
-        background: rgba(255, 255, 255, 0.3) !important;
+    .view-more-btn:hover {
         transform: translateY(-2px) !important;
-    }
-
-    .retro-game-card:hover .retro-cta {
-        background: rgba(255, 255, 255, 0.3) !important;
-        transform: translateY(-3px) !important;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
     }
 `;
+
 document.head.appendChild(style);
 
-// 페이지 로드 완료 후 초기화
+// 페이지 로드 완료 후 한 번 더 확인
 window.addEventListener('load', function() {
-    // 프로필 카드 로딩 애니메이션
-    const profileCard = document.querySelector('.profile-card');
-    if (profileCard) {
-        profileCard.style.opacity = '0';
-        profileCard.style.transform = 'translateY(30px)';
-        setTimeout(() => {
-            profileCard.style.transition = 'all 0.8s ease';
-            profileCard.style.opacity = '1';
-            profileCard.style.transform = 'translateY(0)';
-        }, 300);
-    }
-
-    // 프로필 이미지 로딩 애니메이션
-    const profilePhoto = document.querySelector('.profile-photo');
-    if (profilePhoto) {
-        profilePhoto.style.opacity = '0';
-        profilePhoto.style.transform = 'scale(0.8)';
-        setTimeout(() => {
-            profilePhoto.style.transition = 'all 0.6s ease';
-            profilePhoto.style.opacity = '1';
-            profilePhoto.style.transform = 'scale(1)';
-        }, 500);
-    }
-
-    // VIEW MORE 버튼 로딩 애니메이션
-    const viewMoreBtn = document.querySelector('.view-more-btn');
-    if (viewMoreBtn) {
-        viewMoreBtn.style.opacity = '0';
-        viewMoreBtn.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-            viewMoreBtn.style.transition = 'all 0.6s ease';
-            viewMoreBtn.style.opacity = '1';
-            viewMoreBtn.style.transform = 'translateY(0)';
-        }, 700);
-    }
+    console.log('페이지 완전 로드 완료!');
+    // VIEW MORE 버튼 다시 한 번 설정
+    setTimeout(() => {
+        setupViewMoreButton();
+    }, 100);
 }); 
