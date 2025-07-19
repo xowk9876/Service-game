@@ -20,7 +20,7 @@
             <p class="title">IT Server Engineer</p>
             
             <!-- VIEW MORE 버튼 -->
-            <button class="view-more-btn" onclick="toggleGameSectionDirect()">
+            <button class="view-more-btn" onclick="document.getElementById('gameSection').classList.toggle('active'); this.classList.toggle('active');">
                 <span>VIEW MORE</span>
                 <i class="fas fa-chevron-down"></i>
             </button>
@@ -85,31 +85,5 @@
     </div>
     
     <script src="script.js"></script>
-    <script>
-        // VIEW MORE 버튼 직접 처리 함수
-        function toggleGameSectionDirect() {
-            console.log('toggleGameSectionDirect 함수 실행!');
-            
-            const gameSection = document.getElementById('gameSection');
-            const viewMoreBtn = document.querySelector('.view-more-btn');
-            
-            if (gameSection && viewMoreBtn) {
-                const isActive = gameSection.classList.contains('active');
-                console.log('현재 상태:', isActive ? '활성화' : '비활성화');
-                
-                if (isActive) {
-                    gameSection.classList.remove('active');
-                    viewMoreBtn.classList.remove('active');
-                    console.log('게임 섹션 숨김 완료');
-                } else {
-                    gameSection.classList.add('active');
-                    viewMoreBtn.classList.add('active');
-                    console.log('게임 섹션 표시 완료');
-                }
-            } else {
-                console.error('게임 섹션이나 버튼을 찾을 수 없습니다!');
-            }
-        }
-    </script>
 </body>
 </html> 
