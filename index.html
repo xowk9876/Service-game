@@ -20,7 +20,7 @@
             <p class="title">IT Server Engineer</p>
             
             <!-- VIEW MORE 버튼 -->
-            <button class="view-more-btn" onclick="testButton();">
+            <button class="view-more-btn" onclick="document.getElementById('gameSection').style.display='block'; this.style.display='none';">
                 <span>VIEW MORE</span>
                 <i class="fas fa-chevron-down"></i>
             </button>
@@ -56,6 +56,7 @@
         
         <!-- 고전 게임 섹션 -->
         <div class="retro-game-section" id="gameSection">
+            <button onclick="document.getElementById('gameSection').style.display='none'; document.querySelector('.view-more-btn').style.display='flex';" style="position: absolute; top: 10px; right: 10px; background: #ff6b6b; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 16px;">×</button>
             <h2>🎮 Retro Gaming Experience</h2>
             <div class="retro-game-card" onclick="openEmuOS()">
                 <div class="retro-game-content">
@@ -85,39 +86,5 @@
     </div>
     
     <script src="script.js"></script>
-    <script>
-        // VIEW MORE 버튼 테스트 및 토글 함수
-        function testButton() {
-            console.log('VIEW MORE 버튼 클릭됨!');
-            
-            var gameSection = document.getElementById('gameSection');
-            var viewMoreBtn = document.querySelector('.view-more-btn');
-            
-            if (gameSection && viewMoreBtn) {
-                console.log('게임 섹션과 버튼을 찾았습니다!');
-                
-                if (gameSection.classList.contains('active')) {
-                    gameSection.classList.remove('active');
-                    viewMoreBtn.classList.remove('active');
-                    console.log('게임 섹션을 숨겼습니다.');
-                } else {
-                    gameSection.classList.add('active');
-                    viewMoreBtn.classList.add('active');
-                    console.log('게임 섹션을 표시했습니다.');
-                }
-            } else {
-                console.error('게임 섹션이나 버튼을 찾을 수 없습니다!');
-            }
-        }
-        
-        // 페이지 로드 완료 후 확인
-        window.onload = function() {
-            console.log('페이지 로드 완료!');
-            var gameSection = document.getElementById('gameSection');
-            var viewMoreBtn = document.querySelector('.view-more-btn');
-            console.log('게임 섹션:', gameSection);
-            console.log('VIEW MORE 버튼:', viewMoreBtn);
-        };
-    </script>
 </body>
 </html> 
