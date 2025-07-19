@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tae_system - IT Server Engineer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 프로필 카드 -->
+        <div class="profile-card">
+            <div class="profile-image">
+                <img src="image/profile.jpg" alt="Tae_system Profile" class="profile-photo" id="profilePhoto">
+            </div>
+            
+            <h1 class="name">Tae_system</h1>
+            <p class="title">IT Server Engineer</p>
+            
+            <!-- VIEW MORE 버튼 -->
+            <button class="view-more-btn" onclick="toggleGameSection()">
+                <span>VIEW MORE</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            
+            <!-- 연락처 정보 -->
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> bhd03014@gmail.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> South Korea</p>
+            </div>
+            
+            <!-- 소셜 링크 -->
+            <div class="social-links">
+                <a href="https://www.instagram.com/tae_system/" class="social-icon instagram" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://github.com/xowk9876" class="social-icon github" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+            
+            <!-- 컬러 팔레트 -->
+            <div class="color-palette">
+                <div class="color-swatch blue"></div>
+                <div class="color-swatch teal"></div>
+                <div class="color-swatch pink"></div>
+                <div class="color-swatch purple"></div>
+            </div>
+        </div>
+        
+        <!-- 고전 게임 섹션 -->
+        <div class="retro-game-section" id="gameSection">
+            <h2>🎮 Retro Gaming Experience</h2>
+            <div class="retro-game-card" onclick="openEmuOS()">
+                <div class="retro-game-content">
+                    <div class="retro-game-icon">
+                        <i class="fas fa-gamepad"></i>
+                        <div class="retro-glow"></div>
+                    </div>
+                    <h3>EmuOS Classic Games</h3>
+                    <p>수천 개의 고전 게임을 무료로 즐겨보세요!<br>레트로 게임의 향수를 느껴보세요.</p>
+                    <div class="retro-features">
+                        <span class="feature-tag">🎯 1000+ Games</span>
+                        <span class="feature-tag">🕹️ Retro</span>
+                        <span class="feature-tag">💾 Free</span>
+                    </div>
+                    <div class="retro-cta">
+                        <span>지금 시작하기</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="retro-game-bg">
+                    <div class="retro-particles"></div>
+                    <div class="retro-particles"></div>
+                    <div class="retro-particles"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
