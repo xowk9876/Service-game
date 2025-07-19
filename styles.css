@@ -304,6 +304,18 @@ body::before {
 
 .social-icon.github {
     background: linear-gradient(135deg, #333 0%, #24292e 50%, #586069 100%);
+    color: white !important;
+}
+
+.social-icon.github i {
+    color: white !important;
+    font-size: 20px;
+}
+
+.social-icon.github .github-svg {
+    color: white;
+    width: 20px;
+    height: 20px;
 }
 
 .social-icon.facebook {
