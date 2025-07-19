@@ -313,9 +313,11 @@ body::before {
 }
 
 .social-icon.github .github-svg {
-    color: white;
+    color: white !important;
     width: 20px;
     height: 20px;
+    fill: white !important;
+    stroke: none;
 }
 
 .social-icon.facebook {

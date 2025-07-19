@@ -1,8 +1,5 @@
 // DOM이 로드된 후 실행
 document.addEventListener('DOMContentLoaded', function() {
-    // Font Awesome 로드 확인 및 GitHub 아이콘 대체 처리
-    checkFontAwesomeAndFallback();
-    
     // 프로필 이미지 클릭 이벤트
     const profilePhoto = document.getElementById('profilePhoto');
     if (profilePhoto) {
@@ -155,33 +152,7 @@ function changeThemeColor(swatch) {
     }
 }
 
-// Font Awesome 로드 확인 및 대체 아이콘 처리
-function checkFontAwesomeAndFallback() {
-    // Font Awesome이 로드되었는지 확인
-    setTimeout(() => {
-        const testIcon = document.createElement('i');
-        testIcon.className = 'fab fa-github';
-        testIcon.style.position = 'absolute';
-        testIcon.style.left = '-9999px';
-        document.body.appendChild(testIcon);
-        
-        const computedStyle = window.getComputedStyle(testIcon, '::before');
-        const content = computedStyle.getPropertyValue('content');
-        
-        // Font Awesome이 로드되지 않은 경우 SVG 아이콘 표시
-        if (content === 'none' || content === 'normal') {
-            const githubIcon = document.querySelector('.social-icon.github i');
-            const githubSvg = document.querySelector('.github-svg');
-            
-            if (githubIcon && githubSvg) {
-                githubIcon.style.display = 'none';
-                githubSvg.style.display = 'block';
-            }
-        }
-        
-        document.body.removeChild(testIcon);
-    }, 1000);
-}
+
 
 // 파티클 효과 생성
 function createParticles() {
