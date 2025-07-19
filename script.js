@@ -2,9 +2,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM 로드 완료!');
     
-    // VIEW MORE 버튼 즉시 설정
-    setupViewMoreButton();
-    
     // 프로필 이미지 클릭 이벤트
     const profilePhoto = document.getElementById('profilePhoto');
     if (profilePhoto) {
@@ -37,82 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// VIEW MORE 버튼 설정 함수
-function setupViewMoreButton() {
-    console.log('VIEW MORE 버튼 설정 시작');
-    
-    // 버튼 찾기
-    const viewMoreBtn = document.querySelector('.view-more-btn');
-    const gameSection = document.getElementById('gameSection');
-    
-    console.log('찾은 요소들:', {
-        viewMoreBtn: viewMoreBtn,
-        gameSection: gameSection
-    });
-    
-    if (!viewMoreBtn) {
-        console.error('VIEW MORE 버튼을 찾을 수 없습니다!');
-        return;
-    }
-    
-    if (!gameSection) {
-        console.error('게임 섹션을 찾을 수 없습니다!');
-        return;
-    }
-    
-    // 기존 이벤트 리스너 제거 (중복 방지)
-    const newBtn = viewMoreBtn.cloneNode(true);
-    viewMoreBtn.parentNode.replaceChild(newBtn, viewMoreBtn);
-    
-    // 새로운 이벤트 리스너 추가
-    newBtn.addEventListener('click', function(event) {
-        console.log('VIEW MORE 버튼 클릭됨!');
-        event.preventDefault();
-        event.stopPropagation();
-        
-        // 토글 실행
-        const currentGameSection = document.getElementById('gameSection');
-        const currentViewMoreBtn = document.querySelector('.view-more-btn');
-        
-        if (currentGameSection && currentViewMoreBtn) {
-            const isActive = currentGameSection.classList.contains('active');
-            console.log('현재 상태:', isActive ? '활성화' : '비활성화');
-            
-            if (isActive) {
-                currentGameSection.classList.remove('active');
-                currentViewMoreBtn.classList.remove('active');
-                console.log('게임 섹션 숨김 완료');
-            } else {
-                currentGameSection.classList.add('active');
-                currentViewMoreBtn.classList.add('active');
-                console.log('게임 섹션 표시 완료');
-            }
-        }
-    });
-    
-    // 버튼에 직접 onclick 속성도 추가 (이중 보험)
-    newBtn.onclick = function(event) {
-        console.log('onclick 이벤트도 실행됨!');
-        event.preventDefault();
-        
-        const currentGameSection = document.getElementById('gameSection');
-        const currentViewMoreBtn = document.querySelector('.view-more-btn');
-        
-        if (currentGameSection && currentViewMoreBtn) {
-            const isActive = currentGameSection.classList.contains('active');
-            
-            if (isActive) {
-                currentGameSection.classList.remove('active');
-                currentViewMoreBtn.classList.remove('active');
-            } else {
-                currentGameSection.classList.add('active');
-                currentViewMoreBtn.classList.add('active');
-            }
-        }
-    };
-    
-    console.log('VIEW MORE 버튼 설정 완료');
-}
+
 
 // EmuOS 게임 플랫폼 열기
 function openEmuOS() {
@@ -320,11 +242,7 @@ style.textContent = `
 
 document.head.appendChild(style);
 
-// 페이지 로드 완료 후 한 번 더 확인
+// 페이지 로드 완료 후 확인
 window.addEventListener('load', function() {
     console.log('페이지 완전 로드 완료!');
-    // VIEW MORE 버튼 다시 한 번 설정
-    setTimeout(() => {
-        setupViewMoreButton();
-    }, 100);
 }); 
