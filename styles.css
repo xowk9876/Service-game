@@ -114,8 +114,6 @@ body::before {
     }
 }
 
-
-
 /* 프로필 이미지 */
 .profile-image {
     margin-bottom: 25px;
@@ -135,23 +133,19 @@ body::before {
     object-fit: cover;
     margin: 0 auto;
     display: block;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
     z-index: 2;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 2px;
+    border: 4px solid rgba(255, 255, 255, 0.9);
 }
 
 .profile-photo:hover {
-    transform: scale(1.05) rotate(1deg);
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
-    filter: brightness(1.05) contrast(1.05);
-    border-color: rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    filter: brightness(1.05);
+    border-color: rgba(255, 255, 255, 1);
 }
-
-
 
 .profile-image::before {
     content: '';
@@ -162,13 +156,13 @@ body::before {
     width: 162px;
     height: 162px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
-    background-size: 300% 300%;
-    animation: borderRotate 6s ease infinite;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     z-index: 1;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-    opacity: 0.7;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    opacity: 0.8;
 }
+
+
 
 @keyframes borderRotate {
     0% { 
@@ -306,6 +300,10 @@ body::before {
 
 .social-icon.instagram {
     background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.social-icon.github {
+    background: linear-gradient(135deg, #333 0%, #24292e 50%, #586069 100%);
 }
 
 .social-icon.facebook {
@@ -624,66 +622,6 @@ body::before {
     }
 }
 
-/* 공통 모달 스타일 */
-.modal-content {
-    background: white;
-    border-radius: 20px;
-    max-width: 600px;
-    width: 90%;
-    max-height: 80vh;
-    overflow: hidden;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-    animation: modalSlideIn 0.3s ease;
-}
-
-@keyframes modalSlideIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9) translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 30px;
-    border-bottom: 1px solid #e2e8f0;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-.modal-header h3 {
-    font-size: 20px;
-    font-weight: 600;
-    color: #2d3748;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: #718096;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-}
-
-.close-btn:hover {
-    background: #e2e8f0;
-    color: #2d3748;
-}
-
-.modal-body {
-    padding: 30px;
-    max-height: 60vh;
-    overflow-y: auto;
-}
-
 /* 반응형 디자인 */
 @media (max-width: 768px) {
     .profile-card {
@@ -695,419 +633,24 @@ body::before {
         width: 120px;
         height: 120px;
     }
-    
+
     .profile-image::before {
         width: 132px;
         height: 132px;
         top: -6px;
     }
-    
-    .profile-edit-overlay {
-        width: 120px;
-        height: 120px;
-    }
-    
+
+
+
     .retro-game-section {
         padding: 30px 20px;
         margin: 20px 10px 0;
     }
-    
-    .modal-content {
-        width: 95%;
-        margin: 20px;
-    }
-    
-    .modal-body {
-        padding: 20px;
-    }
-}
 
-/* 프로필 편집 모달 */
-.profile-edit-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-.profile-edit-modal.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.profile-edit-modal .modal-content {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 20px;
-    padding: 0;
-    max-width: 500px;
-    width: 90%;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    transform: scale(0.8) translateY(20px);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.profile-edit-modal.active .modal-content {
-    transform: scale(1) translateY(0);
-}
-
-.profile-edit-modal .modal-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 25px 30px;
-    border-radius: 18px 18px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.profile-edit-modal .modal-header h3 {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0;
-}
-
-.profile-edit-modal .modal-body {
-    padding: 30px;
-}
-
-/* 편집 옵션 */
-.edit-options {
-    display: grid;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-.edit-option {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.edit-option:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    border-color: #4facfe;
-    background: rgba(255, 255, 255, 0.95);
-}
-
-.edit-option i {
-    font-size: 20px;
-    width: 30px;
-    text-align: center;
-    color: #4facfe;
-}
-
-.edit-option span {
-    font-weight: 500;
-    color: #2d3748;
-    font-size: 16px;
-}
-
-.edit-option.delete {
-    border-color: #ff6b6b;
-}
-
-.edit-option.delete:hover {
-    border-color: #ff4757;
-    background: rgba(255, 107, 107, 0.1);
-}
-
-.edit-option.delete i {
-    color: #ff6b6b;
-}
-
-/* 편집 도구 */
-.edit-tools {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    padding: 25px;
-    border: 2px solid rgba(79, 172, 254, 0.2);
-}
-
-.tool-section {
-    margin-bottom: 20px;
-}
-
-.tool-section label {
-    display: block;
-    font-weight: 500;
-    color: #2d3748;
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-
-.tool-section input[type="range"] {
-    width: 100%;
-    height: 8px;
-    border-radius: 4px;
-    background: #e2e8f0;
-    outline: none;
-    -webkit-appearance: none;
-    appearance: none;
-}
-
-.tool-section input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    cursor: pointer;
-    box-shadow: 0 2px 10px rgba(79, 172, 254, 0.3);
-}
-
-.tool-section input[type="range"]::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 2px 10px rgba(79, 172, 254, 0.3);
-}
-
-.tool-buttons {
-    display: flex;
-    gap: 15px;
-    margin-top: 25px;
-}
-
-.apply-btn, .reset-btn {
-    flex: 1;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.apply-btn {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    color: white;
-}
-
-.apply-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
-}
-
-.reset-btn {
-    background: rgba(255, 255, 255, 0.8);
-    color: #718096;
-    border: 2px solid #e2e8f0;
-}
-
-.reset-btn:hover {
-    background: #f7fafc;
-    border-color: #cbd5e0;
-    transform: translateY(-2px);
-}
-
-/* 반응형 디자인 */
-@media (max-width: 768px) {
-    .profile-edit-modal .modal-content {
-        width: 95%;
-        margin: 20px;
-    }
-    
-    .profile-edit-modal .modal-body {
-        padding: 20px;
-    }
-    
-    .edit-option {
-        padding: 15px;
-    }
-    
-    .tool-buttons {
-        flex-direction: column;
-    }
-}
-
-/* 관리자 인증 모달 */
-.admin-auth-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1001;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-.admin-auth-modal.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.admin-auth-modal .modal-content {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-radius: 20px;
-    padding: 0;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    transform: scale(0.8) translateY(20px);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.admin-auth-modal.active .modal-content {
-    transform: scale(1) translateY(0);
-}
-
-.admin-auth-modal .modal-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 25px 30px;
-    border-radius: 18px 18px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.admin-auth-modal .modal-header h3 {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0;
-}
-
-.admin-auth-modal .modal-body {
-    padding: 30px;
-}
-
-/* 인증 폼 */
-.auth-form {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.input-group label {
-    font-weight: 600;
-    color: #2d3748;
-    font-size: 14px;
-}
-
-.input-group input {
-    padding: 15px;
-    border: 2px solid #e2e8f0;
-    border-radius: 10px;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.9);
-}
-
-.input-group input:focus {
-    outline: none;
-    border-color: #4facfe;
-    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
-    background: white;
-}
-
-.auth-buttons {
-    display: flex;
-    gap: 15px;
-}
-
-.auth-btn, .cancel-btn {
-    flex: 1;
-    padding: 15px 20px;
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.auth-btn {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    color: white;
-}
-
-.auth-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(79, 172, 254, 0.3);
-}
-
-.cancel-btn {
-    background: rgba(255, 255, 255, 0.8);
-    color: #718096;
-    border: 2px solid #e2e8f0;
-}
-
-.cancel-btn:hover {
-    background: #f7fafc;
-    border-color: #cbd5e0;
-    transform: translateY(-2px);
-}
-
-/* 보안 경고 스타일 */
-.security-warning {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
-    color: white;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    text-align: center;
-    font-weight: 500;
-    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
-}
-
-.security-warning i {
-    margin-right: 8px;
-    font-size: 16px;
-} 
-
-/* 반응형 디자인 - 레트로 게임 섹션 */
-@media (max-width: 768px) {
-    .retro-game-section {
-        margin: 20px;
-        padding: 30px 20px;
-    }
-    
     .retro-game-card {
         padding: 30px 20px;
     }
-    
+
     .retro-game-icon {
         width: 100px;
         height: 100px;
@@ -1117,7 +660,7 @@ body::before {
     .retro-game-card h3 {
         font-size: 24px;
     }
-    
+
     .retro-game-card p {
         font-size: 14px;
     }
@@ -1125,7 +668,7 @@ body::before {
     .retro-features {
         gap: 10px;
     }
-    
+
     .feature-tag {
         font-size: 12px;
         padding: 6px 12px;
