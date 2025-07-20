@@ -210,7 +210,5 @@ WebSite/
 ---
 
 **Tae_system** - IT Server Engineer Portfolio  
-*깔끔하고 모던한 디자인으로 완성된 개인 포트폴리오*  
-*🚀 GitHub Pages로 성공적으로 배포 완료*  
 *✨ 최신 업데이트: EMUPEDIA.NET 베타 EmuOS 연동 및 VIEW MORE 버튼 완벽 작동*  
 *🌐 온라인 호환성: 로컬과 GitHub Pages 모두에서 완벽 작동* 
