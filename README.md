@@ -2,6 +2,16 @@
 
 👨‍💻 **IT Server Engineer 개인 포트폴리오** - 깔끔하고 모던한 프로필 웹사이트
 
+## 🔍 SEO 개요 (업데이트)
+
+- **메타 태그 강화**: `description`, `robots`, `author`, `theme-color` 추가
+- **소셜 미리보기 최적화**: Open Graph, Twitter Card 메타 태그 추가로 공유 시 썸네일/제목/설명 최적화
+- **정규 URL 설정**: `link rel="canonical"` 로 중복 URL 이슈 방지
+- **퍼포먼스 향상**: Google Fonts `preconnect`/`dns-prefetch` 적용으로 초기 렌더링 시간 단축
+- **구조화 데이터**: JSON-LD `Person` 스키마 추가로 검색엔진 이해도 향상
+- **보안/SEO**: 외부 링크에 `rel="noopener noreferrer"` 적용
+- **검색 크롤링**: `robots.txt`, `sitemap.xml` 추가
+
 ## ✨ 주요 기능
 
 ### 🎯 프로필 카드
@@ -123,6 +133,29 @@ WebSite/
 3. **브랜치 설정**: main, folder: / (root)
 4. **배포 완료**: 몇 분 내에 사이트 활성화
 
+## 🔎 SEO 구성 요소 상세
+
+- **Meta Description**: 사이트 핵심 요약 제공으로 CTR 개선
+- **Open Graph/Twitter**: SNS 공유 미리보기 품질 향상
+- **Canonical URL**: 동일 컨텐츠의 중복 색인 방지
+- **Schema.org (JSON-LD)**: `Person` 타입으로 작성자/프로필 구조화
+- **Robots & Sitemap**: 검색 엔진 크롤링/인덱싱 경로 제공
+
+### 파일 위치
+
+```
+WebSite/
+├── index.html       # SEO 메타/OG/Twitter/JSON-LD/Canonical 반영
+├── robots.txt       # 검색 엔진 크롤링 정책
+└── sitemap.xml      # 정적 사이트맵
+```
+
+### 수동 검증 방법
+
+- 크롬 개발자도구 → Lighthouse → SEO: 점수 확인 및 권장사항 반영
+- 페이스북 공유 디버거, 트위터 카드 밸리데이터로 미리보기 확인
+- `https://search.google.com/test/rich-results`에서 구조화 데이터 테스트
+
 ## 🎯 성능 최적화
 
 ### JavaScript 최적화
@@ -161,11 +194,9 @@ WebSite/
 - **이미지 클릭**: 프로필 이미지 클릭 시 폭발 효과
 - **컬러 팔레트**: 색상 원형 클릭 시 배경 색상 변경
 
-### VIEW MORE 버튼
-- **토글 기능**: 클릭 시 레트로 게임 섹션 표시/숨김
-- **GitHub Pages 호환성**: 온라인에서도 완벽 작동
-- **부드러운 전환**: CSS 애니메이션으로 자연스러운 전환
-- **닫기 버튼**: 게임 섹션 우상단 X 버튼으로 닫기
+### 레이아웃 변경 (업데이트)
+- **VIEW MORE 버튼 제거**: 게임 섹션은 기본으로 표시됩니다.
+- **프로필 바로 하단에 노출**: `🎮 Retro Gaming Experience`가 프로필 카드 아래에 항상 표시됩니다.
 
 ### 레트로 게임 섹션
 - **3D 호버 효과**: 카드 호버 시 입체적인 변형

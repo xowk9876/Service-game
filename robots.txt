@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://xowk9876.github.io/Service-game/sitemap.xml
+

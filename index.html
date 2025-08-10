@@ -4,6 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tae_system - IT Server Engineer</title>
+    <meta name="description" content="Tae_system 포트폴리오 | IT Server Engineer. 인프라, 서버 운영, 자동화, 보안, DevOps 프로젝트와 연락처 정보를 확인하세요.">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Tae_system">
+    <meta name="theme-color" content="#667eea">
+    <link rel="canonical" href="https://xowk9876.github.io/Service-game/">
+
+    <!-- Preconnects for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="Tae_system Portfolio">
+    <meta property="og:title" content="Tae_system - IT Server Engineer">
+    <meta property="og:description" content="IT Server Engineer 포트폴리오 · 인프라/서버/보안/DevOps 프로젝트 소개">
+    <meta property="og:url" content="https://xowk9876.github.io/Service-game/">
+    <meta property="og:image" content="https://xowk9876.github.io/Service-game/image/profile.jpg">
+    <meta property="og:image:alt" content="Tae_system Profile">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tae_system - IT Server Engineer">
+    <meta name="twitter:description" content="IT Server Engineer 포트폴리오 · 인프라/서버/보안/DevOps 프로젝트 소개">
+    <meta name="twitter:image" content="https://xowk9876.github.io/Service-game/image/profile.jpg">
+
+    <!-- Favicon (uses profile image as fallback) -->
+    <link rel="icon" href="image/profile.jpg" type="image/jpeg">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -19,11 +49,7 @@
             <h1 class="name">Tae_system</h1>
             <p class="title">IT Server Engineer</p>
             
-            <!-- VIEW MORE 버튼 -->
-            <button class="view-more-btn" onclick="showGameSection();">
-                <span>VIEW MORE</span>
-                <i class="fas fa-chevron-down"></i>
-            </button>
+            
             
             <!-- 연락처 정보 -->
             <div class="contact-info">
@@ -33,10 +59,10 @@
             
             <!-- 소셜 링크 -->
             <div class="social-links">
-                <a href="https://www.instagram.com/tae_system/" class="social-icon instagram" target="_blank">
+                <a href="https://www.instagram.com/tae_system/" class="social-icon instagram" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="https://github.com/xowk9876" class="social-icon github" target="_blank">
+                <a href="https://github.com/xowk9876" class="social-icon github" target="_blank" rel="noopener noreferrer">
                     <i class="fab fa-github" style="display: none;"></i>
                     <!-- GitHub SVG 아이콘 (기본으로 표시) -->
                     <svg class="github-svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -56,7 +82,6 @@
         
         <!-- 고전 게임 섹션 -->
         <div class="retro-game-section" id="gameSection">
-            <button onclick="hideGameSection();" style="position: absolute; top: 10px; right: 10px; background: #ff6b6b; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 16px;">×</button>
             <h2>🎮 Retro Gaming Experience</h2>
             <div class="retro-game-card" onclick="openEmuOS()">
                 <div class="retro-game-content">
@@ -85,42 +110,29 @@
         </div>
     </div>
     
+    <!-- JSON-LD Structured Data: Person -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Tae_system",
+      "jobTitle": "IT Server Engineer",
+      "url": "https://xowk9876.github.io/Service-game/",
+      "image": "https://xowk9876.github.io/Service-game/image/profile.jpg",
+      "email": "mailto:bhd03014@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "KR"
+      },
+      "sameAs": [
+        "https://www.instagram.com/tae_system/",
+        "https://github.com/xowk9876"
+      ]
+    }
+    </script>
+
     <script>
         // GitHub Pages 호환성을 위한 함수들
-        function showGameSection() {
-            try {
-                var gameSection = document.getElementById('gameSection');
-                var viewMoreBtn = document.querySelector('.view-more-btn');
-                
-                if (gameSection && viewMoreBtn) {
-                    gameSection.style.display = 'block';
-                    viewMoreBtn.style.display = 'none';
-                    console.log('게임 섹션 표시됨');
-                } else {
-                    console.error('요소를 찾을 수 없습니다');
-                }
-            } catch (error) {
-                console.error('오류 발생:', error);
-            }
-        }
-        
-        function hideGameSection() {
-            try {
-                var gameSection = document.getElementById('gameSection');
-                var viewMoreBtn = document.querySelector('.view-more-btn');
-                
-                if (gameSection && viewMoreBtn) {
-                    gameSection.style.display = 'none';
-                    viewMoreBtn.style.display = 'flex';
-                    console.log('게임 섹션 숨김됨');
-                } else {
-                    console.error('요소를 찾을 수 없습니다');
-                }
-            } catch (error) {
-                console.error('오류 발생:', error);
-            }
-        }
-        
         // EMUPEDIA.NET 게임 플랫폼 열기
         function openEmuOS() {
             console.log('EMUPEDIA.NET 열기 함수 실행');
@@ -224,18 +236,10 @@
             // 파티클 효과 생성
             createParticles();
             
-            // 게임 섹션 초기 상태 설정
+            // 게임 섹션은 기본 표시
             var gameSection = document.getElementById('gameSection');
             if (gameSection) {
-                gameSection.style.display = 'none';
-                console.log('게임 섹션 초기 상태 설정됨');
-            }
-            
-            // VIEW MORE 버튼 초기 상태 설정
-            var viewMoreBtn = document.querySelector('.view-more-btn');
-            if (viewMoreBtn) {
-                viewMoreBtn.style.display = 'flex';
-                console.log('VIEW MORE 버튼 초기 상태 설정됨');
+                gameSection.style.display = 'block';
             }
         });
         
