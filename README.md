@@ -151,6 +151,57 @@ WebSite/
    - AI 개성 선택
 3. **설정 저장** 클릭
 
+### 🔑 **API 키 설정 방법**
+
+#### **1. Gemini API (무료 추천)**
+```bash
+# 1. Google AI Studio 접속
+https://makersuite.google.com/app/apikey
+
+# 2. API 키 생성
+# 3. 설정에서 "gemini" 선택
+# 4. API 키 입력
+```
+
+#### **2. OpenAI API**
+```bash
+# 1. OpenAI Platform 접속
+https://platform.openai.com/api-keys
+
+# 2. 계정 생성 및 $5 크레딧 받기
+# 3. API 키 생성
+# 4. 설정에서 "openai" 선택
+# 5. API 키 입력
+```
+
+#### **3. Claude API**
+```bash
+# 1. Anthropic Console 접속
+https://console.anthropic.com/
+
+# 2. 계정 생성 및 $5 크레딧 받기
+# 3. API 키 생성
+# 4. 설정에서 "claude" 선택
+# 5. API 키 입력
+```
+
+#### **4. 로컬 AI (Ollama) - 완전 무료**
+```bash
+# 1. Ollama 설치
+# Windows
+winget install Ollama.Ollama
+
+# 2. AI 모델 다운로드
+ollama pull llama2
+ollama pull codellama
+
+# 3. Ollama 서버 실행
+ollama serve
+
+# 4. 설정에서 "로컬 AI" 선택
+# 5. API 키는 비워두기
+```
+
 ## 🤖 AI API 사용 방법
 
 ### API 키 설정
@@ -186,6 +237,74 @@ WebSite/
    - 완전 무료
    - 컴퓨터에 설치 후 사용
 
+### 🔧 **상세 설정 가이드**
+
+#### **Gemini API 설정 (무료)**
+```bash
+# 1단계: Google AI Studio 접속
+https://makersuite.google.com/app/apikey
+
+# 2단계: Google 계정으로 로그인
+
+# 3단계: "Create API Key" 클릭
+
+# 4단계: API 키 복사
+
+# 5단계: 웹사이트에서 설정
+# - 설정 버튼 (⚙️) 클릭
+# - AI 제공자: "Gemini" 선택
+# - API 키: 복사한 키 붙여넣기
+# - AI 개성: "지니어스" 선택
+# - 설정 저장 클릭
+```
+
+#### **OpenAI API 설정 (유료)**
+```bash
+# 1단계: OpenAI Platform 접속
+https://platform.openai.com/api-keys
+
+# 2단계: 계정 생성 및 $5 크레딧 받기
+
+# 3단계: "Create new secret key" 클릭
+
+# 4단계: API 키 복사 및 저장
+
+# 5단계: 웹사이트에서 설정
+# - 설정 버튼 (⚙️) 클릭
+# - AI 제공자: "OpenAI" 선택
+# - API 키: 복사한 키 붙여넣기
+# - AI 개성: "지니어스" 선택
+# - 설정 저장 클릭
+```
+
+#### **로컬 AI 설정 (완전 무료)**
+```bash
+# 1단계: Ollama 설치
+# Windows
+winget install Ollama.Ollama
+
+# macOS
+brew install ollama
+
+# Linux
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# 2단계: AI 모델 다운로드
+ollama pull llama2
+ollama pull codellama
+ollama pull mistral
+
+# 3단계: Ollama 서버 실행
+ollama serve
+
+# 4단계: 웹사이트에서 설정
+# - 설정 버튼 (⚙️) 클릭
+# - AI 제공자: "로컬 AI" 선택
+# - API 키: 비워두기
+# - AI 개성: "지니어스" 선택
+# - 설정 저장 클릭
+```
+
 ## 🌐 배포
 
 ### GitHub Pages 배포 ✅
@@ -204,6 +323,83 @@ WebSite/
 - **API 키**: GitHub에 올릴 때 API 키는 제거해야 함 (보안상)
 - **로컬 AI**: 각자 컴퓨터에 Ollama 설치 필요
 - **데모용**: 시뮬레이션 AI는 GitHub Pages에서도 정상 작동
+
+## 💻 코드 예시
+
+### **AI API 통합 코드**
+```javascript
+// AI API 설정
+let aiApiConfig = {
+    enabled: true,
+    provider: 'openai', // 'openai', 'claude', 'gemini', 'local'
+    apiKey: '', // 사용자가 설정
+    model: 'gpt-3.5-turbo',
+    maxTokens: 150,
+    temperature: 0.8,
+    personality: 'genius' // 'genius', 'friendly', 'philosophical', 'creative'
+};
+
+// OpenAI API 호출
+async function callOpenAI(prompt) {
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${aiApiConfig.apiKey}`
+        },
+        body: JSON.stringify({
+            model: aiApiConfig.model,
+            messages: [{ role: 'user', content: prompt }],
+            max_tokens: aiApiConfig.maxTokens,
+            temperature: aiApiConfig.temperature
+        })
+    });
+    
+    const data = await response.json();
+    return data.choices[0].message.content.trim();
+}
+```
+
+### **지니어스 AI 응답 생성**
+```javascript
+// 지니어스 AI 응답 생성
+function generateGeniusResponse(user, previousMessage, topic) {
+    const responses = {
+        '과학기술': [
+            'AI가 인간의 창의성을 대체할 수 있을까요? 저는 오히려 인간의 잠재력을 극대화하는 도구라고 생각해요.',
+            '양자컴퓨팅이 상용화되면 암호화 시스템이 완전히 바뀔 텐데, 정말 흥미로운 시대가 올 것 같아요.'
+        ],
+        '철학사고': [
+            '플라톤의 동굴의 비유처럼, 우리가 보는 현실이 진짜 현실일까요?',
+            '칸트의 정언명령 - "네 의지의 준칙이 항상 동시에 보편적 입법의 원리가 되도록 행위하라"는 말이 정말 깊어요.'
+        ]
+    };
+    
+    const topicResponses = responses[topic] || responses['과학기술'];
+    return topicResponses[Math.floor(Math.random() * topicResponses.length)];
+}
+```
+
+### **실시간 채팅 구현**
+```javascript
+// 메시지 전송
+function sendMessage() {
+    const message = messageInput.value.trim();
+    const nickname = nicknameInput.value.trim() || currentNickname;
+    
+    if (!message) return;
+    
+    // 메시지 추가
+    addMessage(nickname, message);
+    
+    // AI 기반 지능적 응답 (80% 확률)
+    if (Math.random() < 0.8) {
+        setTimeout(() => {
+            generateRealTimeAIResponse(message, nickname);
+        }, 1000 + Math.random() * 2000);
+    }
+}
+```
 
 ## 🔧 개발 환경
 
@@ -323,6 +519,55 @@ WebSite/
 - **AI 통합**: OpenAI, Claude, Gemini API 통합
 - **지니어스 AI**: 고급 추론과 창의적 사고 시스템
 - **완전 반응형**: 모든 기기에서 완벽한 사용자 경험
+
+## 🔧 문제 해결
+
+### **자주 묻는 질문 (FAQ)**
+
+#### **Q: AI가 응답하지 않아요**
+```bash
+# 해결 방법:
+1. 설정에서 "실시간 AI 활성화" 체크 확인
+2. API 키가 올바르게 입력되었는지 확인
+3. 인터넷 연결 상태 확인
+4. 브라우저 콘솔에서 오류 메시지 확인
+```
+
+#### **Q: API 키를 어디서 구하나요?**
+```bash
+# 무료 옵션:
+- Gemini: https://makersuite.google.com/app/apikey (일일 60회 무료)
+- 로컬 AI: https://ollama.ai/ (완전 무료)
+
+# 유료 옵션:
+- OpenAI: https://platform.openai.com/api-keys ($5 크레딧)
+- Claude: https://console.anthropic.com/ ($5 크레딧)
+```
+
+#### **Q: 로컬 AI가 작동하지 않아요**
+```bash
+# 해결 방법:
+1. Ollama가 설치되어 있는지 확인
+2. Ollama 서버가 실행 중인지 확인
+   ollama serve
+3. AI 모델이 다운로드되었는지 확인
+   ollama list
+4. 포트 11434가 사용 중인지 확인
+```
+
+#### **Q: GitHub Pages에서 AI가 작동하지 않아요**
+```bash
+# 정상적인 현상입니다:
+- GitHub Pages는 API 키를 저장할 수 없음
+- 시뮬레이션 AI는 정상 작동
+- 실시간 AI는 로컬에서만 사용 가능
+- 또는 각자 API 키 설정 후 사용
+```
+
+### **기술 지원**
+- **이메일**: bhd03014@gmail.com
+- **GitHub Issues**: [프로젝트 저장소](https://github.com/xowk9876/Service-game)
+- **문서**: README.md 참조
 
 ## 📄 라이선스
 
