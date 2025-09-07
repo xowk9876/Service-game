@@ -242,6 +242,11 @@ style.textContent = `
 
 document.head.appendChild(style);
 
+// 채팅 페이지 열기
+function openChat() {
+    window.open('chat.html', '_blank');
+}
+
 // 페이지 로드 완료 후 확인
 window.addEventListener('load', function() {
     console.log('페이지 완전 로드 완료!');

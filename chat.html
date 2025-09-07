@@ -551,6 +551,11 @@
         let lastActivityTime = Date.now();
         let isUserActive = true;
         
+        // WebSocket 관련 변수
+        let ws = null;
+        let clientId = null;
+        let isConnected = false;
+        
         // 지니어스 AI 대화 주제 - 고급 지식과 창의적 사고
         let conversationTopics = {
             '과학기술': {
@@ -760,6 +765,181 @@
         const typingIndicator = document.getElementById('typingIndicator');
         const typingText = document.getElementById('typingText');
         
+        // WebSocket 연결 함수
+        function connectWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}`;
+            
+            try {
+                ws = new WebSocket(wsUrl);
+                
+                ws.onopen = function() {
+                    console.log('WebSocket 연결 성공');
+                    isConnected = true;
+                    addSystemMessage('🔗 실시간 채팅 서버에 연결되었습니다!');
+                    
+                    // 연결 후 현재 닉네임을 서버에 전송
+                    if (currentNickname) {
+                        ws.send(JSON.stringify({
+                            type: 'nickname',
+                            nickname: currentNickname
+                        }));
+                    }
+                };
+                
+                ws.onmessage = function(event) {
+                    try {
+                        const data = JSON.parse(event.data);
+                        handleWebSocketMessage(data);
+                    } catch (error) {
+                        console.error('메시지 파싱 오류:', error);
+                    }
+                };
+                
+                ws.onclose = function() {
+                    console.log('WebSocket 연결 종료');
+                    isConnected = false;
+                    addSystemMessage('❌ 서버 연결이 끊어졌습니다. 재연결을 시도합니다...');
+                    
+                    // 3초 후 재연결 시도
+                    setTimeout(() => {
+                        if (!isConnected) {
+                            connectWebSocket();
+                        }
+                    }, 3000);
+                };
+                
+                ws.onerror = function(error) {
+                    console.error('WebSocket 오류:', error);
+                    addSystemMessage('❌ 연결 오류가 발생했습니다.');
+                };
+                
+            } catch (error) {
+                console.error('WebSocket 연결 실패:', error);
+                addSystemMessage('❌ 실시간 채팅을 사용할 수 없습니다. 로컬 모드로 실행됩니다.');
+            }
+        }
+        
+        // WebSocket 메시지 처리
+        function handleWebSocketMessage(data) {
+            switch (data.type) {
+                case 'connected':
+                    clientId = data.clientId;
+                    addSystemMessage(data.message);
+                    break;
+                    
+                case 'history':
+                    // 메시지 히스토리 로드
+                    data.messages.forEach(msg => {
+                        if (msg.type === 'chat') {
+                            displayMessage(msg.nickname, msg.text, msg.timestamp);
+                        }
+                    });
+                    break;
+                    
+                case 'chat':
+                    // 다른 사용자의 메시지 표시
+                    displayMessage(data.nickname, data.text, data.timestamp);
+                    break;
+                    
+                case 'nickname_changed':
+                    addSystemMessage(data.message);
+                    break;
+                    
+                case 'user_left':
+                    addSystemMessage(data.message);
+                    break;
+                    
+                case 'typing':
+                    updateTypingIndicator(data.nickname, data.isTyping);
+                    break;
+                    
+                case 'user_count':
+                    updateUserCountDisplay(data.count);
+                    break;
+                    
+                default:
+                    console.log('알 수 없는 메시지 타입:', data.type);
+            }
+        }
+        
+        // 메시지 표시 함수 (WebSocket용)
+        function displayMessage(nickname, text, timestamp) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message';
+            
+            const avatar = nickname.charAt(0).toUpperCase();
+            const time = new Date(timestamp).toLocaleTimeString('ko-KR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            messageElement.innerHTML = `
+                <div class="message-avatar ${getAvatarClass(nickname)}">${avatar}</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-username">${nickname}</span>
+                        <span class="message-status">🟢</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-text">${escapeHtml(text)}</div>
+                    <div class="message-reactions">
+                        <button class="reaction-btn" onclick="addReaction(this, '👍')">👍</button>
+                        <button class="reaction-btn" onclick="addReaction(this, '❤️')">❤️</button>
+                        <button class="reaction-btn" onclick="addReaction(this, '😂')">😂</button>
+                        <button class="reaction-btn" onclick="addReaction(this, '😮')">😮</button>
+                        <button class="reaction-btn" onclick="addReaction(this, '😢')">😢</button>
+                        <button class="reaction-btn" onclick="addReaction(this, '😡')">😡</button>
+                    </div>
+                </div>
+            `;
+            
+            // 애니메이션 효과
+            messageElement.style.opacity = '0';
+            messageElement.style.transform = 'translateY(20px) scale(0.95)';
+            
+            chatMessages.appendChild(messageElement);
+            
+            // 애니메이션 실행
+            setTimeout(() => {
+                messageElement.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                messageElement.style.opacity = '1';
+                messageElement.style.transform = 'translateY(0) scale(1)';
+            }, 50);
+            
+            // 스크롤을 맨 아래로
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // 타이핑 효과 (긴 메시지의 경우)
+            if (text.length > 20) {
+                addTypingEffect(messageElement.querySelector('.message-text'), text);
+            }
+        }
+        
+        // 타이핑 인디케이터 업데이트
+        function updateTypingIndicator(nickname, isTyping) {
+            if (isTyping) {
+                showTypingIndicator(nickname);
+            } else {
+                // 특정 사용자의 타이핑이 중지된 경우 처리
+                // (현재는 간단하게 구현)
+                if (typingIndicator.classList.contains('show')) {
+                    const currentText = typingText.textContent;
+                    if (currentText.includes(nickname)) {
+                        stopTyping();
+                    }
+                }
+            }
+        }
+        
+        // 사용자 수 표시 업데이트
+        function updateUserCountDisplay(count) {
+            const userCountElement = document.querySelector('.user-count');
+            if (userCountElement) {
+                userCountElement.textContent = `👥 ${count}명`;
+            }
+        }
+        
         // 페이지 로드 시 초기화
         document.addEventListener('DOMContentLoaded', function() {
             // 랜덤 닉네임 생성
@@ -770,6 +950,8 @@
             messageInput.addEventListener('input', handleTyping);
             nicknameInput.addEventListener('keypress', handleNicknameKeyPress);
             
+            // WebSocket 연결
+            connectWebSocket();
             
             // AI 설정 로드 및 패널 추가
             
@@ -778,10 +960,10 @@
             
             // 환영 메시지 추가
             setTimeout(() => {
-                if (aiApiConfig.enabled && aiApiConfig.apiKey) {
-                    addSystemMessage('🤖 실시간 AI가 활성화되었습니다! 진짜 AI와 대화해보세요!');
+                if (isConnected) {
+                    addSystemMessage('🚀 실시간 채팅이 활성화되었습니다! 다른 사용자들과 대화해보세요!');
                 } else {
-                    addSystemMessage('💡 팁: /nick 명령어로 닉네임을 변경할 수 있습니다. 설정에서 AI를 활성화하세요!');
+                    addSystemMessage('💡 팁: /nick 명령어로 닉네임을 변경할 수 있습니다.');
                 }
             }, 2000);
         });
@@ -799,7 +981,7 @@
             nicknameInput.value = currentNickname;
         }
         
-        // 메시지 전송 (활동 추적 포함)
+        // 메시지 전송 (WebSocket 사용)
         function sendMessage() {
             const message = messageInput.value.trim();
             const nickname = nicknameInput.value.trim() || currentNickname;
@@ -815,8 +997,26 @@
                 return;
             }
             
-            // 메시지 추가
-            addMessage(nickname, message);
+            // WebSocket이 연결되어 있으면 서버로 전송
+            if (isConnected && ws && ws.readyState === WebSocket.OPEN) {
+                // 닉네임이 변경되었으면 서버에 알림
+                if (nickname !== currentNickname) {
+                    currentNickname = nickname;
+                    ws.send(JSON.stringify({
+                        type: 'nickname',
+                        nickname: nickname
+                    }));
+                }
+                
+                // 메시지 전송
+                ws.send(JSON.stringify({
+                    type: 'chat',
+                    text: message
+                }));
+            } else {
+                // WebSocket이 연결되지 않은 경우 로컬 모드
+                addMessage(nickname, message);
+            }
             
             // 입력 필드 초기화
             messageInput.value = '';
@@ -824,8 +1024,8 @@
             // 타이핑 상태 초기화
             stopTyping();
             
-            // 실시간 AI API 응답 (80% 확률)
-            if (Math.random() < 0.8) {
+            // 실시간 AI API 응답 (WebSocket 연결이 없을 때만)
+            if (!isConnected && Math.random() < 0.8) {
                 setTimeout(() => {
                     generateRealTimeAIResponse(message, nickname);
                 }, 1000 + Math.random() * 2000);
@@ -2137,13 +2337,21 @@
             }
         }
         
-        // 타이핑 처리 (활동 추적 포함)
+        // 타이핑 처리 (WebSocket 사용)
         function handleTyping() {
             lastActivityTime = Date.now();
             
             if (!isTyping) {
                 isTyping = true;
                 showTypingIndicator();
+                
+                // WebSocket으로 타이핑 상태 전송
+                if (isConnected && ws && ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({
+                        type: 'typing',
+                        isTyping: true
+                    }));
+                }
             }
             
             clearTimeout(typingTimeout);
@@ -2162,6 +2370,14 @@
         function stopTyping() {
             isTyping = false;
             typingIndicator.classList.remove('show');
+            
+            // WebSocket으로 타이핑 중지 상태 전송
+            if (isConnected && ws && ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({
+                    type: 'typing',
+                    isTyping: false
+                }));
+            }
         }
         
         // 키보드 이벤트 처리

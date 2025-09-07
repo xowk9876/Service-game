@@ -1,0 +1,24 @@
+{
+  "name": "realtime-chat",
+  "version": "1.0.0",
+  "description": "실시간 채팅 애플리케이션",
+  "main": "chat-server.js",
+  "scripts": {
+    "start": "node chat-server.js",
+    "dev": "nodemon chat-server.js"
+  },
+  "dependencies": {
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "chat",
+    "websocket",
+    "realtime",
+    "nodejs"
+  ],
+  "author": "Tae_system",
+  "license": "MIT"
+}
