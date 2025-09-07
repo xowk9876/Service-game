@@ -5,5 +5,15 @@
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://xowk9876.github.io/Service-game/community.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://xowk9876.github.io/Service-game/chat.html</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
 

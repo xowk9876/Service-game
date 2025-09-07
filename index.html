@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tae_system - IT Server Engineer</title>
-    <meta name="description" content="Tae_system 포트폴리오 | IT Server Engineer. 인프라, 서버 운영, 자동화, 보안, DevOps 프로젝트와 연락처 정보를 확인하세요.">
+    <title>Tae_system - 웹 개발자 & 포트폴리오 전문가 | 반응형 웹사이트 제작</title>
+    <meta name="description" content="Tae_system 포트폴리오 | 웹 개발자, 포트폴리오 제작 전문가. 반응형 웹사이트, 성능 최적화, 프론트엔드 개발 서비스 제공. EmuOS 게임 플랫폼 개발자.">
+    <meta name="keywords" content="웹개발자, 포트폴리오, 반응형웹사이트, 웹성능최적화, 프론트엔드개발, HTML5, CSS3, JavaScript, React, Vue.js, 웹디자인, 모바일최적화, SEO최적화">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Tae_system">
     <meta name="theme-color" content="#667eea">
@@ -20,17 +21,20 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ko_KR">
     <meta property="og:site_name" content="Tae_system Portfolio">
-    <meta property="og:title" content="Tae_system - IT Server Engineer">
-    <meta property="og:description" content="IT Server Engineer 포트폴리오 · 인프라/서버/보안/DevOps 프로젝트 소개">
+    <meta property="og:title" content="Tae_system - 웹 개발자 & 포트폴리오 전문가 | 반응형 웹사이트 제작">
+    <meta property="og:description" content="웹 개발자, 포트폴리오 제작 전문가. 반응형 웹사이트, 성능 최적화, 프론트엔드 개발 서비스 제공. EmuOS 게임 플랫폼 개발자.">
     <meta property="og:url" content="https://xowk9876.github.io/Service-game/">
     <meta property="og:image" content="https://xowk9876.github.io/Service-game/image/profile.jpg">
-    <meta property="og:image:alt" content="Tae_system Profile">
+    <meta property="og:image:alt" content="Tae_system 웹 개발자 포트폴리오">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Tae_system - IT Server Engineer">
-    <meta name="twitter:description" content="IT Server Engineer 포트폴리오 · 인프라/서버/보안/DevOps 프로젝트 소개">
+    <meta name="twitter:title" content="Tae_system - 웹 개발자 & 포트폴리오 전문가">
+    <meta name="twitter:description" content="반응형 웹사이트, 성능 최적화, 프론트엔드 개발 서비스 제공. EmuOS 게임 플랫폼 개발자.">
     <meta name="twitter:image" content="https://xowk9876.github.io/Service-game/image/profile.jpg">
+    <meta name="twitter:creator" content="@tae_system">
 
     <!-- Favicon (uses profile image as fallback) -->
     <link rel="icon" href="image/profile.jpg" type="image/jpeg">
@@ -39,6 +43,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- 다크 모드 토글 -->
+    <div class="theme-toggle">
+        <button class="theme-btn" onclick="toggleDarkMode()" id="themeToggle">
+            <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
+    </div>
+
     <div class="container">
         <!-- 프로필 카드 -->
         <div class="profile-card">
@@ -57,6 +68,18 @@
                 <p><i class="fas fa-map-marker-alt"></i> South Korea</p>
             </div>
             
+            <!-- 연락처 액션 버튼들 -->
+            <div class="contact-actions">
+                <button class="contact-btn primary" onclick="downloadResume()">
+                    <i class="fas fa-download"></i>
+                    이력서 다운로드
+                </button>
+                <button class="contact-btn secondary" onclick="openChat()">
+                    <i class="fas fa-comments"></i>
+                    채팅하기
+                </button>
+            </div>
+            
             <!-- 소셜 링크 -->
             <div class="social-links">
                 <a href="https://www.instagram.com/tae_system/" class="social-icon instagram" target="_blank" rel="noopener noreferrer">
@@ -71,43 +94,373 @@
                 </a>
             </div>
             
-            <!-- 컬러 팔레트 -->
-            <div class="color-palette">
-                <div class="color-swatch blue"></div>
-                <div class="color-swatch teal"></div>
-                <div class="color-swatch pink"></div>
-                <div class="color-swatch purple"></div>
-            </div>
         </div>
         
-        <!-- 고전 게임 섹션 -->
-        <div class="retro-game-section" id="gameSection">
-            <h2>🎮 Retro Gaming Experience</h2>
-            <div class="retro-game-card" onclick="openEmuOS()">
-                <div class="retro-game-content">
-                    <div class="retro-game-icon">
-                        <i class="fas fa-gamepad"></i>
-                        <div class="retro-glow"></div>
+        <!-- 제공 서비스 섹션 -->
+        <div class="services-section scroll-animate">
+            <h2>✨ 전문 서비스</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-server"></i>
                     </div>
-                    <h3>EmuOS Classic Games</h3>
-                    <p>수천 개의 고전 게임을 무료로 즐겨보세요!<br>레트로 게임의 향수를 느껴보세요.</p>
-                    <div class="retro-features">
-                        <span class="feature-tag">🎯 1000+ Games</span>
-                        <span class="feature-tag">🕹️ Retro</span>
-                        <span class="feature-tag">💾 Free</span>
-                    </div>
-                    <div class="retro-cta">
-                        <span>지금 시작하기</span>
-                        <i class="fas fa-arrow-right"></i>
+                    <h3>서버 인프라 구축 & 관리</h3>
+                    <p>Linux/Windows 서버 환경 구축, 클라우드 마이그레이션, 24/7 서버 모니터링</p>
+                    <div class="service-tags">
+                        <span class="tag">🐧 Linux</span>
+                        <span class="tag">☁️ 클라우드</span>
+                        <span class="tag">📊 모니터링</span>
                     </div>
                 </div>
-                <div class="retro-game-bg">
-                    <div class="retro-particles"></div>
-                    <div class="retro-particles"></div>
-                    <div class="retro-particles"></div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>보안 & 자동화 솔루션</h3>
+                    <p>시스템 보안 강화, CI/CD 파이프라인 구축, Ansible을 활용한 자동화</p>
+                    <div class="service-tags">
+                        <span class="tag">🔒 보안</span>
+                        <span class="tag">🤖 자동화</span>
+                        <span class="tag">⚙️ DevOps</span>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>웹사이트 성능 최적화</h3>
+                    <p>로딩 속도 3배 향상! 사용자 경험을 극대화하는 최적화 솔루션</p>
+                    <div class="service-tags">
+                        <span class="tag">⚡ 빠른 속도</span>
+                        <span class="tag">📱 모바일 최적화</span>
+                        <span class="tag">🔍 SEO</span>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>개인/기업 포트폴리오 제작</h3>
+                    <p>당신만의 브랜드 스토리를 담은 아름다운 웹사이트 제작</p>
+                    <div class="service-tags">
+                        <span class="tag">🎨 디자인</span>
+                        <span class="tag">💼 포트폴리오</span>
+                        <span class="tag">📈 브랜딩</span>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>반응형 웹 개발</h3>
+                    <p>모든 기기에서 완벽하게 작동하는 반응형 웹사이트 구축</p>
+                    <div class="service-tags">
+                        <span class="tag">📱 모바일</span>
+                        <span class="tag">💻 데스크톱</span>
+                        <span class="tag">🖥️ 태블릿</span>
+                    </div>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3>웹사이트 유지보수</h3>
+                    <p>안전하고 안정적인 웹사이트 운영을 위한 24/7 관리 서비스</p>
+                    <div class="service-tags">
+                        <span class="tag">🛡️ 보안</span>
+                        <span class="tag">🔄 업데이트</span>
+                        <span class="tag">📊 모니터링</span>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- 프로젝트 쇼케이스 섹션 -->
+        <div class="projects-section scroll-animate">
+            <h2>🌟 대표 프로젝트</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>🎮 EmuOS 레트로 게임 플랫폼</h3>
+                        <p>수천 개의 고전 게임을 브라우저에서 바로 즐길 수 있는 웹 플랫폼</p>
+                        <div class="project-stats">
+                            <span class="stat">👥 10만+ 사용자</span>
+                            <span class="stat">🎯 1000+ 게임</span>
+                            <span class="stat">⭐ 4.8/5 평점</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://emupedia.org/beta/emuos/" target="_blank" class="project-link" onclick="openEmuOS()">
+                                <i class="fas fa-external-link-alt"></i> 게임 플레이하기
+                            </a>
+                            <a href="https://github.com/Emupedia/emupedia.github.io/" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> 소스 코드
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>🎨 포트폴리오 웹사이트 템플릿</h3>
+                        <p>개발자와 디자이너를 위한 아름다운 포트폴리오 웹사이트 템플릿</p>
+                        <div class="project-stats">
+                            <span class="stat">📱 반응형</span>
+                            <span class="stat">🌙 다크모드</span>
+                            <span class="stat">⚡ 빠른 속도</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/xowk9876" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>📊 실시간 대시보드 시스템</h3>
+                        <p>웹사이트 트래픽과 성능을 실시간으로 모니터링하는 대시보드</p>
+                        <div class="project-stats">
+                            <span class="stat">📈 실시간</span>
+                            <span class="stat">🔔 알림</span>
+                            <span class="stat">📱 모바일</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">WebSocket</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fas fa-lock"></i> 비공개
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>🖥️ 서버 자동화 시스템</h3>
+                        <p>Ansible을 활용한 서버 배포 및 관리 자동화 솔루션</p>
+                        <div class="project-stats">
+                            <span class="stat">🤖 자동화</span>
+                            <span class="stat">⚡ 90% 시간 단축</span>
+                            <span class="stat">🔒 보안</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">Ansible</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Linux</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/xowk9876" target="_blank" class="project-link">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>🔒 보안 모니터링 시스템</h3>
+                        <p>실시간 보안 이벤트 모니터링 및 알림 시스템 구축</p>
+                        <div class="project-stats">
+                            <span class="stat">🛡️ 보안</span>
+                            <span class="stat">📊 모니터링</span>
+                            <span class="stat">⚡ 실시간</span>
+                        </div>
+                        <div class="project-tech">
+                            <span class="tech-tag">ELK Stack</span>
+                            <span class="tech-tag">Grafana</span>
+                            <span class="tech-tag">Prometheus</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link">
+                                <i class="fas fa-lock"></i> 비공개
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 기술 스킬 섹션 -->
+        <div class="skills-section scroll-animate">
+            <h2>💻 전문 기술</h2>
+            <div class="skills-categories">
+                <div class="skill-category">
+                    <h3>🎨 프론트엔드</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">HTML5 & CSS3</span>
+                        <span class="skill-item">JavaScript (ES6+)</span>
+                        <span class="skill-item">React & Vue.js</span>
+                        <span class="skill-item">반응형 디자인</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>🖥️ 서버 & 인프라</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Linux (Ubuntu, CentOS)</span>
+                        <span class="skill-item">Windows Server</span>
+                        <span class="skill-item">Docker & Kubernetes</span>
+                        <span class="skill-item">AWS & Azure</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>🔒 보안 & 자동화</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">시스템 보안 강화</span>
+                        <span class="skill-item">Ansible 자동화</span>
+                        <span class="skill-item">CI/CD 파이프라인</span>
+                        <span class="skill-item">모니터링 시스템</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>⚡ 성능 최적화</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">웹 성능 최적화</span>
+                        <span class="skill-item">SEO 최적화</span>
+                        <span class="skill-item">이미지 최적화</span>
+                        <span class="skill-item">코드 분할</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>🛠️ 개발 도구</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Git & GitHub</span>
+                        <span class="skill-item">VS Code</span>
+                        <span class="skill-item">Webpack & Vite</span>
+                        <span class="skill-item">Chrome DevTools</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3>☁️ 배포 & 호스팅</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">GitHub Pages</span>
+                        <span class="skill-item">Netlify</span>
+                        <span class="skill-item">Vercel</span>
+                        <span class="skill-item">AWS S3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 블로그/기술 글 섹션 -->
+        <div class="blog-section scroll-animate">
+            <h2>📚 최신 기술 글</h2>
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3>🚀 웹사이트 로딩 속도 3배 빠르게 만드는 방법</h3>
+                        <p>실제 프로젝트에서 적용한 웹 성능 최적화 노하우와 팁들을 공유합니다</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">2025.09.07</span>
+                            <span class="blog-category">성능 최적화</span>
+                        </div>
+                        <a href="#" class="blog-link">읽어보기 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3>🎨 포트폴리오 웹사이트 디자인 트렌드 2025</h3>
+                        <p>올해 가장 인기 있는 포트폴리오 디자인 트렌드와 구현 방법</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">2025.09.07</span>
+                            <span class="blog-category">디자인</span>
+                        </div>
+                        <a href="#" class="blog-link">읽어보기 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3>📱 반응형 웹 디자인 완벽 가이드</h3>
+                        <p>모든 기기에서 완벽하게 작동하는 반응형 웹사이트 만드는 방법</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">2025.09.07</span>
+                            <span class="blog-category">반응형</span>
+                        </div>
+                        <a href="#" class="blog-link">읽어보기 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3>🖥️ Linux 서버 보안 강화 완벽 가이드</h3>
+                        <p>SSH 보안, 방화벽 설정, 사용자 권한 관리 등 서버 보안 강화 방법</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">2025.09.05</span>
+                            <span class="blog-category">서버 보안</span>
+                        </div>
+                        <a href="#" class="blog-link">읽어보기 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="blog-content">
+                        <h3>🤖 Ansible을 활용한 서버 자동화</h3>
+                        <p>서버 배포와 관리를 자동화하여 90% 시간을 단축하는 방법</p>
+                        <div class="blog-meta">
+                            <span class="blog-date">2025.09.03</span>
+                            <span class="blog-category">자동화</span>
+                        </div>
+                        <a href="#" class="blog-link">읽어보기 <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     
     <!-- JSON-LD Structured Data: Person -->
@@ -116,7 +469,8 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Tae_system",
-      "jobTitle": "IT Server Engineer",
+      "jobTitle": "웹 개발자 & 포트폴리오 전문가",
+      "description": "반응형 웹사이트 제작, 성능 최적화, 프론트엔드 개발 전문가",
       "url": "https://xowk9876.github.io/Service-game/",
       "image": "https://xowk9876.github.io/Service-game/image/profile.jpg",
       "email": "mailto:bhd03014@gmail.com",
@@ -124,23 +478,37 @@
         "@type": "PostalAddress",
         "addressCountry": "KR"
       },
+      "knowsAbout": [
+        "웹 개발",
+        "포트폴리오 제작",
+        "반응형 웹사이트",
+        "웹 성능 최적화",
+        "프론트엔드 개발",
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "React",
+        "Vue.js"
+      ],
       "sameAs": [
         "https://www.instagram.com/tae_system/",
         "https://github.com/xowk9876"
-      ]
+      ],
+      "hasOccupation": {
+        "@type": "Occupation",
+        "name": "웹 개발자",
+        "description": "반응형 웹사이트 제작 및 성능 최적화 전문가"
+      }
     }
     </script>
 
     <script>
-        // GitHub Pages 호환성을 위한 함수들
-        // EMUPEDIA.NET 게임 플랫폼 열기
+        // EmuOS 게임 플랫폼 열기
         function openEmuOS() {
-            console.log('EMUPEDIA.NET 열기 함수 실행');
+            console.log('EmuOS 게임 플랫폼 열기');
             
-            // EMUPEDIA.NET 플랫폼으로 리다이렉트
-            setTimeout(() => {
-                window.open('https://emupedia.net/beta/emuos/', '_blank');
-            }, 500);
+            // 바로 EmuOS 플랫폼으로 리다이렉트
+            window.open('https://emupedia.org/beta/emuos/', '_blank');
         }
         
         // 클릭 효과 생성
@@ -169,24 +537,6 @@
             }, 600);
         }
         
-        // 테마 색상 변경
-        function changeThemeColor(swatch) {
-            const colors = {
-                'blue': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                'teal': 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-                'pink': 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-                'purple': 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'
-            };
-            
-            const colorClass = Array.from(swatch.classList).find(cls => colors[cls]);
-            if (colorClass) {
-                document.body.style.background = colors[colorClass];
-                swatch.style.transform = 'scale(1.3)';
-                setTimeout(() => {
-                    swatch.style.transform = 'scale(1)';
-                }, 200);
-            }
-        }
         
         // 파티클 효과 생성
         function createParticles() {
@@ -213,9 +563,54 @@
             }
         }
         
+        // 다크 모드 토글
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const themeIcon = document.getElementById('themeIcon');
+            const isDark = document.body.classList.contains('dark-mode');
+            
+            themeIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+            
+            // 로컬 스토리지에 테마 저장
+            localStorage.setItem('darkMode', isDark);
+        }
+        
+        // 이력서 다운로드
+        function downloadResume() {
+            // 실제 이력서 파일이 있다면 여기에 링크 추가
+            alert('이력서 다운로드 기능입니다. 실제 이력서 파일을 업로드해주세요.');
+        }
+        
+        // 채팅 열기 - 익명 커뮤니티 포털
+        function openChat() {
+            // 커뮤니티 페이지로 이동
+            window.location.href = 'community.html';
+        }
+        
+        // 스크롤 애니메이션
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.scroll-animate');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('animate');
+                }
+            });
+        }
+        
         // 페이지 로드 시 초기화
         document.addEventListener('DOMContentLoaded', function() {
             console.log('페이지 로드됨 - GitHub Pages 호환성 확인');
+            
+            // 다크 모드 초기화
+            const savedTheme = localStorage.getItem('darkMode');
+            if (savedTheme === 'true') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeIcon').className = 'fas fa-sun';
+            }
             
             // 프로필 이미지 클릭 이벤트
             const profilePhoto = document.getElementById('profilePhoto');
@@ -225,23 +620,22 @@
                 });
             }
             
-            // 컬러 팔레트 클릭 이벤트
-            const colorSwatches = document.querySelectorAll('.color-swatch');
-            colorSwatches.forEach(swatch => {
-                swatch.addEventListener('click', function() {
-                    changeThemeColor(this);
-                });
-            });
             
             // 파티클 효과 생성
             createParticles();
             
-            // 게임 섹션은 기본 표시
+            // 스크롤 애니메이션 초기화
+            handleScrollAnimation();
+            
+            // 게임 섹션은 기본 표시 (닫기 버튼 제거)
             var gameSection = document.getElementById('gameSection');
             if (gameSection) {
                 gameSection.style.display = 'block';
             }
         });
+        
+        // 스크롤 이벤트 리스너
+        window.addEventListener('scroll', handleScrollAnimation);
         
         // CSS 애니메이션 추가
         const style = document.createElement('style');

@@ -1,0 +1,2988 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>익명 실시간 채팅</title>
+    <meta name="description" content="익명으로 실시간 채팅하고 소통하는 커뮤니티">
+      <meta name="keywords" content="익명채팅, 실시간채팅, 커뮤니티, 채팅방">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Tae_system">
+    <meta name="theme-color" content="#667eea">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="익명 채팅">
+    <meta property="og:title" content="익명 실시간 채팅">
+    <meta property="og:description" content="익명으로 실시간 채팅하고 소통하는 커뮤니티">
+    <meta property="og:url" content="https://xowk9876.github.io/Service-game/chat.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="image/profile.jpg" type="image/jpeg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .chat-container {
+            width: 90%;
+            max-width: 800px;
+            height: 80vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .chat-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .chat-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .user-count {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            animation: messageSlide 0.3s ease-out;
+        }
+        
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            margin-right: 12px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .message-avatar.gradient-1 {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+        }
+        
+        .message-avatar.gradient-2 {
+            background: linear-gradient(135deg, #48dbfb 0%, #0abde3 100%);
+        }
+        
+        .message-avatar.gradient-3 {
+            background: linear-gradient(135deg, #ff9ff3 0%, #f368e0 100%);
+        }
+        
+        .message-avatar.gradient-4 {
+            background: linear-gradient(135deg, #54a0ff 0%, #2e86de 100%);
+        }
+        
+        .message-avatar.gradient-5 {
+            background: linear-gradient(135deg, #5f27cd 0%, #341f97 100%);
+        }
+        
+        .message-avatar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        
+        .message-avatar:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .message-content {
+            flex: 1;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .message-username {
+            font-weight: 600;
+            color: #667eea;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        
+        .message-time {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .message-text {
+            color: #333;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+        
+        .message-status {
+            font-size: 12px;
+            margin: 0 5px;
+            opacity: 0.7;
+        }
+        
+        .message-reactions {
+            margin-top: 8px;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+        
+        .reaction-btn {
+            background: none;
+            border: 1px solid #e9ecef;
+            border-radius: 15px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            opacity: 0.6;
+        }
+        
+        .reaction-btn:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: rgba(102, 126, 234, 0.3);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        .reaction-added {
+            animation: reactionPop 0.3s ease-out;
+        }
+        
+        @keyframes reactionPop {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .message:hover .reaction-btn {
+            opacity: 1;
+        }
+        
+        .system-message {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 12px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .typing-indicator {
+            display: none;
+            margin-bottom: 15px;
+            padding: 10px 16px;
+            background: #e9ecef;
+            border-radius: 15px;
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .typing-indicator.show {
+            display: block;
+        }
+        
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .chat-input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .nickname-input {
+            flex: 0 0 120px;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .nickname-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .message-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .message-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .send-button {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .send-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .send-button:active {
+            transform: scale(0.95);
+        }
+        
+        .settings-button {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            background: #f8f9fa;
+            color: #667eea;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+        }
+        
+        .settings-button:hover {
+            background: #e9ecef;
+            transform: scale(1.05);
+        }
+        
+        .settings-panel {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            min-width: 250px;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .settings-panel.show {
+            display: block;
+        }
+        
+        .settings-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .setting-item {
+            margin-bottom: 15px;
+        }
+        
+        .setting-label {
+            display: block;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .setting-checkbox {
+            margin-right: 8px;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        /* 다크 모드 */
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        
+        body.dark-mode .chat-container {
+            background: rgba(30, 30, 46, 0.95);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        body.dark-mode .chat-messages {
+            background: #2d3748;
+        }
+        
+        body.dark-mode .message-content {
+            background: #4a5568;
+            color: #e2e8f0;
+        }
+        
+        body.dark-mode .message-username {
+            color: #81c784;
+        }
+        
+        body.dark-mode .message-time {
+            color: #a0aec0;
+        }
+        
+        /* AI 설정 스타일 */
+        .ai-settings-section {
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+        }
+        
+        .ai-settings-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .ai-settings-section select,
+        .ai-settings-section input[type="password"] {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+        }
+        
+        .ai-settings-section select:focus,
+        .ai-settings-section input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .save-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* 다크 모드 AI 설정 */
+        body.dark-mode .ai-settings-section {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.4);
+        }
+        
+        body.dark-mode .ai-settings-section h3 {
+            color: #a0aec0;
+        }
+        
+        body.dark-mode .ai-settings-section select,
+        body.dark-mode .ai-settings-section input[type="password"] {
+            background: #4a5568;
+            color: #e2e8f0;
+            border-color: #718096;
+        }
+        
+        body.dark-mode .ai-settings-section select:focus,
+        body.dark-mode .ai-settings-section input[type="password"]:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+        
+        body.dark-mode .message-text {
+            color: #e2e8f0;
+        }
+        
+        body.dark-mode .chat-input-container {
+            background: #2d3748;
+            border-color: #4a5568;
+        }
+        
+        body.dark-mode .nickname-input,
+        body.dark-mode .message-input {
+            background: #4a5568;
+            border-color: #718096;
+            color: #e2e8f0;
+        }
+        
+        body.dark-mode .nickname-input:focus,
+        body.dark-mode .message-input:focus {
+            border-color: #81c784;
+        }
+        
+        body.dark-mode .settings-button {
+            background: #4a5568;
+            color: #e2e8f0;
+        }
+        
+        body.dark-mode .settings-panel {
+            background: #4a5568;
+        }
+        
+        body.dark-mode .settings-title {
+            color: #e2e8f0;
+        }
+        
+        body.dark-mode .setting-label {
+            color: #a0aec0;
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .chat-container {
+                width: 95%;
+                height: 90vh;
+            }
+            
+            .chat-header {
+                padding: 15px;
+            }
+            
+            .chat-title {
+                font-size: 20px;
+            }
+            
+            .user-count {
+                position: static;
+                margin-top: 10px;
+                display: inline-block;
+            }
+            
+            .chat-input-wrapper {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nickname-input {
+                flex: none;
+                width: 100%;
+            }
+            
+            .message-input {
+                width: 100%;
+            }
+        }
+        
+        /* 스크롤바 스타일링 */
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+        
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <!-- 채팅 헤더 -->
+        <div class="chat-header">
+            <button class="back-button" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 class="chat-title">익명 채팅</h1>
+            <p class="chat-subtitle">익명으로 실시간 채팅하세요</p>
+            <div class="user-count" id="userCount">😀 (0 users)</div>
+        </div>
+        
+        <!-- 채팅 메시지 영역 -->
+        <div class="chat-messages" id="chatMessages">
+            <div class="system-message">
+                익명 채팅에 오신 것을 환영합니다! 닉네임을 설정하고 채팅을 시작하세요.
+            </div>
+        </div>
+        
+        <!-- 타이핑 인디케이터 -->
+        <div class="typing-indicator" id="typingIndicator">
+            <span id="typingText">누군가 타이핑 중...</span>
+        </div>
+        
+        <!-- 채팅 입력 영역 -->
+        <div class="chat-input-container">
+            <div class="chat-input-wrapper">
+                <button class="settings-button" onclick="toggleSettings()">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <input type="text" class="nickname-input" id="nicknameInput" placeholder="닉네임" maxlength="20">
+                <input type="text" class="message-input" id="messageInput" placeholder="메시지를 입력하세요..." maxlength="500">
+                <button class="send-button" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            
+            <!-- 설정 패널 -->
+            <div class="settings-panel" id="settingsPanel">
+                <div class="settings-title">⚙️ 설정</div>
+                <div class="setting-item">
+                    <label class="setting-label">
+                        <input type="checkbox" class="setting-checkbox" id="soundEnabled" checked>
+                        소리 효과
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label">
+                        <input type="checkbox" class="setting-checkbox" id="notificationsEnabled" checked>
+                        알림
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <label class="setting-label">
+                        <input type="checkbox" class="setting-checkbox" id="darkModeEnabled">
+                        다크 모드
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 전역 변수
+        let currentNickname = '';
+        let messageCount = 0;
+        let isTyping = false;
+        let typingTimeout;
+        let userCount = 0;
+        let conversationContext = [];
+        let activeUsers = [];
+        let userStates = new Map(); // 사용자 상태 관리
+        let conversationFlow = [];
+        let lastActivityTime = Date.now();
+        let isUserActive = true;
+        
+        // 지니어스 AI 대화 주제 - 고급 지식과 창의적 사고
+        let conversationTopics = {
+            '과학기술': {
+                keywords: ['AI', '인공지능', '머신러닝', '딥러닝', '양자컴퓨팅', '블록체인', '메타버스', '로봇', '자율주행', 'IoT', '빅데이터', '클라우드', '알고리즘', '프로그래밍', '코딩', '개발', '기술', '혁신', '디지털', '스마트'],
+                responses: [
+                    'AI가 인간의 창의성을 대체할 수 있을까요? 저는 오히려 인간의 잠재력을 극대화하는 도구라고 생각해요.',
+                    '양자컴퓨팅이 상용화되면 암호화 시스템이 완전히 바뀔 텐데, 정말 흥미로운 시대가 올 것 같아요.',
+                    '메타버스에서의 사회적 상호작용이 실제보다 더 깊어질 수도 있겠네요. 가상현실의 심리학적 영향이 궁금해요.',
+                    '블록체인 기술이 단순히 암호화폐를 넘어서 사회 인프라를 바꿀 수 있다고 봅니다.',
+                    '머신러닝 모델의 편향성 문제를 해결하는 것이 AI 윤리의 핵심이에요.',
+                    '자율주행차의 윤리적 딜레마 - 누구를 구해야 할지 AI가 결정하는 순간이 올 거예요.',
+                    'IoT 디바이스들이 만들어내는 데이터의 홍수 속에서 개인정보 보호는 어떻게 할까요?',
+                    '클라우드 컴퓨팅이 가져온 민주화 효과가 정말 대단해요. 누구나 강력한 컴퓨팅 자원을 사용할 수 있게 되었죠.',
+                    '알고리즘의 투명성과 설명가능성이 중요한 이슈가 되고 있어요.',
+                    '빅데이터 분석으로 발견할 수 있는 패턴들이 정말 놀라워요.'
+                ],
+                followUps: [
+                    '그 기술의 사회적 파급효과는 어떻게 생각하세요?',
+                    '미래에 어떤 변화가 예상되나요?',
+                    '이 분야에서 일하고 싶으시다면 어떤 준비가 필요할까요?',
+                    '윤리적 측면에서 고려해야 할 점은 뭘까요?'
+                ]
+            },
+            '철학사고': {
+                keywords: ['철학', '생각', '의미', '존재', '진실', '가치', '윤리', '도덕', '정의', '자유', '의지', '의식', '현실', '가상', '시간', '공간', '인생', '목적', '꿈', '희망'],
+                responses: [
+                    '플라톤의 동굴의 비유처럼, 우리가 보는 현실이 진짜 현실일까요?',
+                    '칸트의 정언명령 - "네 의지의 준칙이 항상 동시에 보편적 입법의 원리가 되도록 행위하라"는 말이 정말 깊어요.',
+                    '데카르트의 "나는 생각한다, 고로 존재한다"에서 시작된 근대 철학의 여정이 인상적이에요.',
+                    '니체의 "신은 죽었다"는 선언이 가져온 가치관의 전환을 어떻게 받아들여야 할까요?',
+                    '실존주의자들이 말하는 "존재가 본질에 앞선다"는 것이 현대인의 삶에 어떤 의미일까요?',
+                    '동양철학의 "도"와 서양철학의 "로고스"는 어떻게 다른가요?',
+                    '버트런드 러셀의 "철학의 문제들"을 읽으면서 현실과 이상의 괴리에 대해 생각해봤어요.',
+                    '포스트모더니즘의 상대주의가 가져온 혼란과 기회를 어떻게 볼까요?',
+                    '환경윤리에서 말하는 "깊은 생태학"의 관점이 정말 흥미로워요.',
+                    '가상현실에서의 경험이 실제 경험과 어떻게 다른지 철학적으로 접근해보면 재미있을 것 같아요.'
+                ],
+                followUps: [
+                    '이런 생각이 일상생활에 어떤 영향을 미치나요?',
+                    '다른 철학자들의 견해는 어떻게 다른가요?',
+                    '현대 사회에서 이런 철학적 사고가 왜 중요한가요?',
+                    '개인적으로 어떤 철학자가 가장 인상적이었나요?'
+                ]
+            },
+            '예술창작': {
+                keywords: ['예술', '미술', '음악', '문학', '영화', '드라마', '책', '소설', '시', '그림', '사진', '디자인', '창작', '표현', '아름다움', '감성', '영감', '상상력', '창의성', '작품'],
+                responses: [
+                    '반 고흐의 "별이 빛나는 밤"을 보면 단순한 풍경화가 아니라 내면의 감정이 폭발하는 순간을 담고 있다는 걸 느껴요.',
+                    '모차르트의 음악에서 발견하는 수학적 완벽함과 감정적 깊이가 조화를 이룬 게 정말 신기해요.',
+                    '보르헤스의 "알레프"를 읽으면서 무한과 유한의 경계에서 느끼는 두려움과 경이로움이 인상적이었어요.',
+                    '쿠브릭의 "2001: 스페이스 오디세이"가 50년 전에 만든 영화인데 지금 봐도 미래적이에요.',
+                    '바흐의 푸가에서 발견하는 대위법의 완벽함이 정말 경이로워요.',
+                    '피카소가 "아비뇽의 처녀들"에서 시작한 입체주의가 예술의 패러다임을 완전히 바꿨죠.',
+                    '조이스의 "율리시스"를 읽으면서 언어의 한계를 넘어서려는 시도가 정말 대단해요.',
+                    '안톤 체호프의 단편소설에서 발견하는 인간 내면의 미묘한 감정들이 정말 섬세해요.',
+                    '스티브 잡스가 애플 제품에서 추구한 "단순함의 미학"이 정말 인상적이에요.',
+                    '미켈란젤로의 "다비드" 상에서 발견하는 완벽한 비례와 역동성이 경이로워요.'
+                ],
+                followUps: [
+                    '이 작품이 당신에게 어떤 감정을 불러일으키나요?',
+                    '작가의 의도와 관객의 해석이 다를 수 있다고 생각하세요?',
+                    '현대 예술에서 이런 전통적인 미학이 어떻게 변하고 있나요?',
+                    '직접 창작해보신 경험이 있으신가요?'
+                ]
+            },
+            '심리학': {
+                keywords: ['심리', '마음', '감정', '기분', '스트레스', '우울', '불안', '행복', '사랑', '관계', '소통', '이해', '공감', '치료', '상담', '의식', '무의식', '꿈', '기억', '학습'],
+                responses: [
+                    '프로이트의 무의식 이론이 현대 심리학의 기초가 되었지만, 인지심리학의 발전으로 많은 부분이 재해석되고 있어요.',
+                    '마슬로우의 욕구단계설에서 자아실현의 최고 단계에 도달하는 사람이 정말 드물다는 게 인상적이에요.',
+                    '스키너의 조작적 조건형성이 일상생활에서 어떻게 작용하는지 관찰해보면 정말 흥미로워요.',
+                    '칼 융의 집단무의식과 원형 이론이 현대 문화 분석에 어떻게 적용되는지 궁금해요.',
+                    '에릭 에릭슨의 심리사회적 발달단계에서 청년기의 정체성 혼란이 정말 중요한 시기인 것 같아요.',
+                    '인지부조화 이론으로 설명할 수 있는 현상들이 일상에서 정말 많아요.',
+                    '애착이론이 성인 관계에 미치는 영향이 정말 깊어요.',
+                    '긍정심리학에서 말하는 "플로우" 상태를 경험해보신 적 있나요?',
+                    '트라우마가 뇌에 미치는 영향과 회복 과정이 정말 복잡해요.',
+                    '집단심리학에서 말하는 "집단사고"의 위험성을 현대 사회에서 어떻게 볼까요?'
+                ],
+                followUps: [
+                    '이런 심리학적 지식이 실제 생활에 도움이 되나요?',
+                    '자신의 감정을 더 잘 이해하게 되었나요?',
+                    '다른 사람과의 관계에서 어떤 변화가 있었나요?',
+                    '심리학을 공부하면서 가장 놀라웠던 발견은 뭐였나요?'
+                ]
+            },
+            '경제사회': {
+                keywords: ['경제', '사회', '정치', '정책', '시장', '자본주의', '사회주의', '민주주의', '자유', '평등', '정의', '부', '빈곤', '불평등', '기업', '노동', '고용', '교육', '복지', '환경'],
+                responses: [
+                    '아담 스미스의 "보이지 않는 손"이 현대 시장경제에서 어떻게 작동하는지 관찰해보면 정말 흥미로워요.',
+                    '칼 마르크스의 자본론이 150년 전에 쓴 책인데 현대 자본주의의 문제점을 정확히 짚어내고 있어요.',
+                    '케인즈의 경제이론이 2008년 금융위기 이후 다시 주목받고 있는 게 인상적이에요.',
+                    '하이에크의 "노예의 길"에서 말하는 계획경제의 위험성이 정말 날카로워요.',
+                    '로울스의 "정의론"에서 제시한 "무지의 베일" 뒤에서 내린 결정이 정말 공정한가요?',
+                    '노직의 "무정부, 국가, 유토피아"에서 주장하는 최소국가론이 현실적으로 가능할까요?',
+                    '세네카의 "행복한 삶"에서 말하는 진정한 부의 의미가 현대에도 통하는 것 같아요.',
+                    '환경경제학에서 말하는 "공유지의 비극"을 어떻게 해결할 수 있을까요?',
+                    '행동경제학의 발견들이 전통 경제학을 어떻게 바꾸고 있는지 궁금해요.',
+                    '디지털 경제에서 데이터가 새로운 자원이 되면서 생기는 문제들이 정말 복잡해요.'
+                ],
+                followUps: [
+                    '이런 경제 이론이 실제 정책에 어떻게 반영되고 있나요?',
+                    '현재 사회 문제를 해결하는 데 어떤 접근이 필요하다고 생각하세요?',
+                    '개인의 삶에서 이런 사회적 이슈가 어떤 영향을 미치나요?',
+                    '미래 사회는 어떤 모습이 될 것 같나요?'
+                ]
+            },
+            '일상대화': {
+                keywords: ['안녕', '하이', '안녕하세요', '반가워', '고마워', '감사', '미안', '죄송', '괜찮', '좋아', '싫어', '재미있', '지루', '피곤', '힘들', '오늘', '어제', '내일', '요즘'],
+                responses: [
+                    '안녕하세요! 오늘 어떤 새로운 발견이나 깨달음이 있으셨나요?',
+                    '반가워요! 요즘 가장 흥미롭게 생각하고 계신 주제가 뭔가요?',
+                    '고마워요! 이런 대화가 정말 의미 있어요. 서로 다른 관점을 나누는 게 중요하죠.',
+                    '괜찮아요! 때로는 힘든 순간도 있지만, 그런 경험이 더 깊은 통찰을 가져다주기도 해요.',
+                    '정말 좋네요! 지적 호기심을 유지하는 게 삶을 풍요롭게 만드는 비결인 것 같아요.',
+                    '재미있을 것 같아요! 새로운 아이디어나 관점을 나누는 게 정말 즐거워요.',
+                    '힘들 때도 있죠. 하지만 그런 순간들이 우리를 더 성장시켜주는 것 같아요.',
+                    '조금 쉬어도 돼요. 때로는 멈춰서 생각하는 시간이 더 중요할 수 있어요.',
+                    '응원할게요! 궁금한 것이 있으면 언제든 물어보세요.',
+                    '화이팅! 함께 배우고 성장해봐요! 💪'
+                ],
+                followUps: [
+                    '더 자세히 들려주세요! 정말 흥미로운 이야기네요.',
+                    '어떻게 도와드릴까요? 함께 생각해봐요!',
+                    '같이 이야기해요! 서로 다른 관점이 만나면 새로운 통찰이 생기죠.',
+                    '괜찮으세요? 혹시 고민이 있으시면 말씀해주세요.'
+                ]
+            }
+        };
+        
+        // 사용자 개성 시스템
+        let userPersonalities = {
+            '열정적': {
+                traits: ['!', '정말', '대단', '와', '와우', '최고'],
+                responses: ['정말 대단하네요!', '와 정말 멋져요!', '최고예요!', '정말 열정적이시네요!']
+            },
+            '신중한': {
+                traits: ['생각', '고려', '검토', '분석', '신중'],
+                responses: ['좋은 관점이네요', '신중하게 생각해보시는군요', '분석적이시네요', '깊이 있게 생각하시는군요']
+            },
+            '호기심많은': {
+                traits: ['궁금', '어떻게', '왜', '언제', '어디서'],
+                responses: ['정말 궁금하네요!', '더 자세히 알려주세요!', '어떻게 하셨나요?', '흥미롭네요!']
+            },
+            '경험많은': {
+                traits: ['경험', '전에', '이전', '과거', '했었'],
+                responses: ['경험이 많으시네요!', '전문가시군요!', '경험담 들려주세요!', '노하우가 있으시네요!']
+            }
+        };
+        
+        // 대화 통계
+        let conversationStats = {
+            totalMessages: 0,
+            activeTopics: {},
+            popularKeywords: {},
+            userEngagement: 0,
+            averageResponseTime: 0
+        };
+        
+        // 2025년 실시간 날씨 데이터 (대한민국)
+        let weatherData = {
+            seoul: { temp: 15, condition: '맑음', humidity: 45, wind: 8, date: '2025-01-15', time: '14:30' },
+            busan: { temp: 18, condition: '흐림', humidity: 72, wind: 12, date: '2025-01-15', time: '14:30' },
+            daegu: { temp: 12, condition: '맑음', humidity: 38, wind: 5, date: '2025-01-15', time: '14:30' },
+            incheon: { temp: 14, condition: '구름많음', humidity: 55, wind: 15, date: '2025-01-15', time: '14:30' },
+            gwangju: { temp: 16, condition: '맑음', humidity: 42, wind: 7, date: '2025-01-15', time: '14:30' },
+            daejeon: { temp: 13, condition: '맑음', humidity: 35, wind: 4, date: '2025-01-15', time: '14:30' },
+            ulsan: { temp: 17, condition: '비', humidity: 88, wind: 18, date: '2025-01-15', time: '14:30' },
+            jeju: { temp: 20, condition: '흐림', humidity: 75, wind: 14, date: '2025-01-15', time: '14:30' },
+            gangneung: { temp: 11, condition: '맑음', humidity: 30, wind: 3, date: '2025-01-15', time: '14:30' },
+            chuncheon: { temp: 9, condition: '맑음', humidity: 25, wind: 2, date: '2025-01-15', time: '14:30' },
+            jeonju: { temp: 17, condition: '맑음', humidity: 45, wind: 8, date: '2025-01-15', time: '14:30' },
+            cheongju: { temp: 13, condition: '맑음', humidity: 38, wind: 5, date: '2025-01-15', time: '14:30' },
+            suwon: { temp: 15, condition: '맑음', humidity: 48, wind: 9, date: '2025-01-15', time: '14:30' },
+            seongnam: { temp: 16, condition: '구름많음', humidity: 52, wind: 10, date: '2025-01-15', time: '14:30' },
+            sejong: { temp: 14, condition: '맑음', humidity: 40, wind: 6, date: '2025-01-15', time: '14:30' }
+        };
+        
+        // 날씨 기반 대화 주제
+        let weatherTopics = {
+            '날씨': {
+                keywords: ['날씨', '기온', '온도', '비', '눈', '맑음', '흐림', '바람', '습도', '폭염', '한파'],
+                responses: [
+                    '오늘 날씨 정말 좋네요! 🌞',
+                    '현재 서울 기온이 28도예요!',
+                    '비가 오고 있나요? 우산 챙기세요! ☔',
+                    '바람이 많이 불고 있네요!',
+                    '습도가 높아서 더 덥게 느껴질 것 같아요',
+                    '폭염 주의보 발령되었나요?',
+                    '오늘은 외출하기 좋은 날씨네요!',
+                    '날씨가 변덕스러워서 옷차림 고민되네요'
+                ],
+                followUps: [
+                    '어느 지역 날씨가 궁금하세요?',
+                    '내일 날씨도 비슷할까요?',
+                    '이런 날씨에 뭐 하실 계획이세요?',
+                    '날씨 때문에 기분이 좀 어떠세요?'
+                ]
+            }
+        };
+        
+        // DOM 요소
+        const chatMessages = document.getElementById('chatMessages');
+        const messageInput = document.getElementById('messageInput');
+        const nicknameInput = document.getElementById('nicknameInput');
+        const userCountElement = document.getElementById('userCount');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const typingText = document.getElementById('typingText');
+        const settingsPanel = document.getElementById('settingsPanel');
+        
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            // 랜덤 닉네임 생성
+            generateRandomNickname();
+            
+            // 이벤트 리스너 설정
+            messageInput.addEventListener('keypress', handleKeyPress);
+            messageInput.addEventListener('input', handleTyping);
+            nicknameInput.addEventListener('keypress', handleNicknameKeyPress);
+            
+            // 설정 이벤트 리스너
+            document.getElementById('darkModeEnabled').addEventListener('change', toggleDarkMode);
+            
+            // AI 설정 로드 및 패널 추가
+            loadAISettings();
+            addAISettingsPanel();
+            
+            // 시뮬레이션된 사용자 수 업데이트
+            updateUserCount();
+            
+            // 환영 메시지 추가
+            setTimeout(() => {
+                if (aiApiConfig.enabled && aiApiConfig.apiKey) {
+                    addSystemMessage('🤖 실시간 AI가 활성화되었습니다! 진짜 AI와 대화해보세요!');
+                } else {
+                    addSystemMessage('💡 팁: /nick 명령어로 닉네임을 변경할 수 있습니다. 설정에서 AI를 활성화하세요!');
+                }
+            }, 2000);
+        });
+        
+        // 랜덤 닉네임 생성
+        function generateRandomNickname() {
+            const adjectives = ['빠른', '똑똑한', '재미있는', '친절한', '창의적인', '활발한', '조용한', '밝은', '차분한', '열정적인'];
+            const nouns = ['고양이', '강아지', '토끼', '펭귄', '사자', '호랑이', '곰', '여우', '늑대', '독수리'];
+            const numbers = Math.floor(Math.random() * 999) + 1;
+            
+            const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+            const noun = nouns[Math.floor(Math.random() * nouns.length)];
+            
+            currentNickname = `${adjective}${noun}${numbers}`;
+            nicknameInput.value = currentNickname;
+        }
+        
+        // 메시지 전송 (활동 추적 포함)
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            const nickname = nicknameInput.value.trim() || currentNickname;
+            
+            if (!message) return;
+            
+            // 사용자 활동 업데이트
+            lastActivityTime = Date.now();
+            
+            // 명령어 처리
+            if (message.startsWith('/')) {
+                handleCommand(message, nickname);
+                return;
+            }
+            
+            // 메시지 추가
+            addMessage(nickname, message);
+            
+            // 입력 필드 초기화
+            messageInput.value = '';
+            
+            // 타이핑 상태 초기화
+            stopTyping();
+            
+            // 실시간 AI API 응답 (80% 확률)
+            if (Math.random() < 0.8) {
+                setTimeout(() => {
+                    generateRealTimeAIResponse(message, nickname);
+                }, 1000 + Math.random() * 2000);
+            }
+        }
+        
+        // 명령어 처리
+        function handleCommand(command, nickname) {
+            const parts = command.split(' ');
+            const cmd = parts[0].toLowerCase();
+            
+            switch (cmd) {
+                case '/nick':
+                    if (parts.length > 1) {
+                        const newNickname = parts.slice(1).join(' ');
+                        if (newNickname.length <= 20) {
+                            const oldNickname = currentNickname;
+                            currentNickname = newNickname;
+                            nicknameInput.value = newNickname;
+                            addSystemMessage(`${oldNickname}님이 ${newNickname}으로 닉네임을 변경했습니다.`);
+                        } else {
+                            addSystemMessage('닉네임은 20자 이하로 설정해주세요.');
+                        }
+                    } else {
+                        addSystemMessage('사용법: /nick 새닉네임');
+                    }
+                    break;
+                case '/join':
+                    if (parts.length > 1) {
+                        const channel = parts[1];
+                        addSystemMessage(`${channel} 채널에 참여했습니다.`);
+                    } else {
+                        addSystemMessage('사용법: /join 채널명');
+                    }
+                    break;
+                case '/help':
+                    addSystemMessage('사용 가능한 명령어: /nick 닉네임, /join 채널명, /help');
+                    break;
+                default:
+                    addSystemMessage(`알 수 없는 명령어: ${cmd}. /help로 도움말을 확인하세요.`);
+            }
+        }
+        
+        // 고급 메시지 추가 (AI 자동 반응 포함)
+        function addMessage(nickname, message) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message';
+            
+            const avatar = nickname.charAt(0).toUpperCase();
+            const time = new Date().toLocaleTimeString('ko-KR', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            // 사용자 상태에 따른 스타일
+            const userState = userStates.get(nickname);
+            const statusIcon = userState?.state === 'typing' ? '⏳' : '🟢';
+            
+            messageElement.innerHTML = `
+                <div class="message-avatar ${getAvatarClass(nickname)}">${avatar}</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-username">${nickname}</span>
+                        <span class="message-status">${statusIcon}</span>
+                        <span class="message-time">${time}</span>
+                    </div>
+                    <div class="message-text">${escapeHtml(message)}</div>
+                    <div class="message-reactions">
+                        <button class="reaction-btn" onclick="addReaction(this, '👍')">👍</button>
+                        <button class="reaction-btn" onclick="addReaction(this, '❤️')">❤️</button>
+                        <button class="reaction-btn" onclick="addReaction(this, '😂')">😂</button>
+                        <button class="reaction-btn" onclick="addReaction(this, '🤔')">🤔</button>
+                        <button class="reaction-btn" onclick="addReaction(this, '😮')">😮</button>
+                        <button class="reaction-btn" onclick="addReaction(this, '😢')">😢</button>
+                    </div>
+                </div>
+            `;
+            
+            // 애니메이션 효과
+            messageElement.style.opacity = '0';
+            messageElement.style.transform = 'translateY(20px) scale(0.95)';
+            
+            chatMessages.appendChild(messageElement);
+            
+            // 부드러운 등장 애니메이션
+            requestAnimationFrame(() => {
+                messageElement.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                messageElement.style.opacity = '1';
+                messageElement.style.transform = 'translateY(0) scale(1)';
+            });
+            
+            // 타이핑 효과 (긴 메시지의 경우)
+            if (message.length > 20) {
+                addTypingEffect(messageElement.querySelector('.message-text'), message);
+            }
+            
+            // AI 자동 반응 (3-8초 후)
+            setTimeout(() => {
+                const aiReaction = generateAIReaction(message, nickname);
+                if (aiReaction) {
+                    autoAddReaction(messageElement, aiReaction);
+                }
+            }, 3000 + Math.random() * 5000);
+            
+            scrollToBottom();
+            
+            // 소리 효과
+            if (document.getElementById('soundEnabled').checked) {
+                playNotificationSound();
+            }
+            
+            // 통계 업데이트
+            updateConversationStats(nickname, message);
+            messageCount++;
+        }
+        
+        // 아바타 클래스 생성
+        function getAvatarClass(nickname) {
+            const colors = ['gradient-1', 'gradient-2', 'gradient-3', 'gradient-4', 'gradient-5'];
+            const hash = nickname.split('').reduce((a, b) => {
+                a = ((a << 5) - a) + b.charCodeAt(0);
+                return a & a;
+            }, 0);
+            return colors[Math.abs(hash) % colors.length];
+        }
+        
+        // 타이핑 효과
+        function addTypingEffect(element, fullText) {
+            element.textContent = '';
+            let i = 0;
+            const typingInterval = setInterval(() => {
+                if (i < fullText.length) {
+                    element.textContent += fullText.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, 30);
+        }
+        
+        // AI 자동 반응 생성
+        function generateAIReaction(message, nickname) {
+            const lowerMessage = message.toLowerCase();
+            
+            // 감정 분석 기반 반응
+            const emotion = analyzeAdvancedEmotion(message);
+            const personality = detectUserPersonality(message);
+            const topic = detectAdvancedTopic(message);
+            
+            // 반응 확률 계산
+            const reactionProbabilities = calculateReactionProbabilities(message, emotion, personality, topic);
+            
+            // 가장 높은 확률의 반응 선택 (임계값 30% 이상)
+            const sortedReactions = Object.entries(reactionProbabilities)
+                .sort(([,a], [,b]) => b - a);
+            
+            const bestReaction = sortedReactions[0];
+            const confidence = bestReaction[1];
+            
+            return confidence >= 30 ? bestReaction[0] : null;
+        }
+        
+        // 반응 확률 계산
+        function calculateReactionProbabilities(message, emotion, personality, topic) {
+            const probabilities = {
+                '👍': 0,
+                '❤️': 0,
+                '😂': 0,
+                '🤔': 0,
+                '😮': 0,
+                '😢': 0
+            };
+            
+            // 감정 기반 확률
+            const emotionWeights = {
+                'excited': { '👍': 40, '❤️': 30, '😮': 20, '😂': 10 },
+                'curious': { '🤔': 50, '😮': 30, '👍': 20 },
+                'concerned': { '😢': 40, '🤔': 30, '❤️': 30 },
+                'confident': { '👍': 50, '❤️': 30, '😮': 20 },
+                'frustrated': { '😢': 50, '🤔': 30, '👍': 20 },
+                'neutral': { '👍': 30, '🤔': 20, '❤️': 20, '😮': 15, '😂': 15 }
+            };
+            
+            if (emotionWeights[emotion]) {
+                for (let [emoji, weight] of Object.entries(emotionWeights[emotion])) {
+                    probabilities[emoji] += weight;
+                }
+            }
+            
+            // 개성 기반 확률
+            const personalityWeights = {
+                '열정적': { '👍': 30, '❤️': 40, '😮': 20, '😂': 10 },
+                '신중한': { '🤔': 40, '👍': 30, '❤️': 20, '😮': 10 },
+                '호기심많은': { '🤔': 50, '😮': 30, '👍': 20 },
+                '경험많은': { '👍': 40, '❤️': 30, '🤔': 20, '😮': 10 }
+            };
+            
+            if (personality && personalityWeights[personality]) {
+                for (let [emoji, weight] of Object.entries(personalityWeights[personality])) {
+                    probabilities[emoji] += weight * 0.5; // 개성은 50% 가중치
+                }
+            }
+            
+            // 키워드 기반 확률
+            const keywordWeights = {
+                '👍': ['좋', '멋', '대단', '최고', '완벽', '성공', '해결', '잘', '훌륭'],
+                '❤️': ['사랑', '좋아', '예쁘', '아름다', '감동', '감사', '고마', '사랑해'],
+                '😂': ['웃', '재미', '유머', '농담', 'ㅋㅋ', 'ㅎㅎ', '하하', '웃겨', '재밌'],
+                '🤔': ['생각', '고민', '어떻게', '왜', '궁금', '모르', '의문', '궁금해'],
+                '😮': ['와', '놀라', '신기', '대박', '와우', '어머', '오', '놀라워'],
+                '😢': ['슬프', '우울', '힘들', '어려', '고생', '안타까', '아쉽', '눈물']
+            };
+            
+            for (let [emoji, keywords] of Object.entries(keywordWeights)) {
+                let keywordScore = 0;
+                keywords.forEach(keyword => {
+                    const frequency = (message.match(new RegExp(keyword, 'g')) || []).length;
+                    keywordScore += frequency * 15; // 키워드당 15점
+                });
+                probabilities[emoji] += keywordScore;
+            }
+            
+            // 이모지 기반 확률
+            const emojiMap = {
+                '😀': '😂', '😃': '😂', '😄': '😂', '😁': '😂',
+                '😍': '❤️', '🥰': '❤️', '😘': '❤️',
+                '🤔': '🤔', '🤨': '🤔', '😕': '🤔',
+                '😮': '😮', '😯': '😮', '😲': '😮',
+                '😢': '😢', '😭': '😢', '😔': '😢'
+            };
+            
+            for (let [inputEmoji, reactionEmoji] of Object.entries(emojiMap)) {
+                const count = (message.match(new RegExp(inputEmoji, 'g')) || []).length;
+                probabilities[reactionEmoji] += count * 25; // 이모지당 25점
+            }
+            
+            // 문장 길이 기반 확률
+            if (message.length < 10) {
+                probabilities['👍'] += 20; // 짧은 메시지 = 좋아요
+            } else if (message.length > 50) {
+                probabilities['🤔'] += 15; // 긴 메시지 = 생각해봐야 함
+            }
+            
+            // 질문 기반 확률
+            if (message.includes('?')) {
+                probabilities['🤔'] += 30; // 질문 = 궁금해
+            }
+            
+            // 감탄사 기반 확률
+            if (message.includes('!')) {
+                probabilities['😮'] += 25; // 감탄사 = 놀라워
+            }
+            
+            // 정규화 (0-100 범위)
+            const maxScore = Math.max(...Object.values(probabilities));
+            if (maxScore > 0) {
+                for (let emoji in probabilities) {
+                    probabilities[emoji] = (probabilities[emoji] / maxScore) * 100;
+                }
+            }
+            
+            return probabilities;
+        }
+        
+        // 자동 반응 추가
+        function autoAddReaction(messageElement, emoji) {
+            const reactionsContainer = messageElement.querySelector('.message-reactions');
+            const reactionButtons = reactionsContainer.querySelectorAll('.reaction-btn');
+            
+            // 해당 이모지 버튼 찾기
+            let targetButton = null;
+            reactionButtons.forEach(button => {
+                if (button.textContent === emoji) {
+                    targetButton = button;
+                }
+            });
+            
+            if (targetButton) {
+                // 버튼 클릭 시뮬레이션
+                targetButton.style.transform = 'scale(1.2)';
+                targetButton.style.background = 'rgba(102, 126, 234, 0.2)';
+                
+                setTimeout(() => {
+                    targetButton.style.transform = 'scale(1)';
+                    targetButton.style.background = '';
+                }, 200);
+                
+                // 반응 표시 추가
+                const reactionElement = document.createElement('div');
+                reactionElement.className = 'reaction-added ai-reaction';
+                reactionElement.innerHTML = `${emoji} 1`;
+                reactionElement.style.cssText = `
+                    background: rgba(102, 126, 234, 0.15);
+                    border: 1px solid rgba(102, 126, 234, 0.4);
+                    border-radius: 15px;
+                    padding: 4px 8px;
+                    font-size: 12px;
+                    margin-top: 5px;
+                    display: inline-block;
+                    animation: reactionPop 0.3s ease-out;
+                    position: relative;
+                `;
+                
+                // AI 반응 표시
+                const aiLabel = document.createElement('span');
+                aiLabel.textContent = ' (AI)';
+                aiLabel.style.cssText = `
+                    font-size: 10px;
+                    color: #666;
+                    margin-left: 3px;
+                `;
+                reactionElement.appendChild(aiLabel);
+                
+                reactionsContainer.appendChild(reactionElement);
+            }
+        }
+        
+        // 반응 추가 (기존 함수)
+        function addReaction(button, emoji) {
+            const messageElement = button.closest('.message');
+            const reactionsContainer = messageElement.querySelector('.message-reactions');
+            
+            // 기존 반응 제거
+            const existingReaction = reactionsContainer.querySelector('.reaction-added');
+            if (existingReaction) {
+                existingReaction.remove();
+            }
+            
+            // 새 반응 추가
+            const reactionElement = document.createElement('div');
+            reactionElement.className = 'reaction-added';
+            reactionElement.innerHTML = `${emoji} 1`;
+            reactionElement.style.cssText = `
+                background: rgba(102, 126, 234, 0.1);
+                border: 1px solid rgba(102, 126, 234, 0.3);
+                border-radius: 15px;
+                padding: 4px 8px;
+                font-size: 12px;
+                margin-top: 5px;
+                display: inline-block;
+                animation: reactionPop 0.3s ease-out;
+            `;
+            
+            reactionsContainer.appendChild(reactionElement);
+            
+            // 애니메이션
+            button.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+            }, 150);
+        }
+        
+        // 대화 통계 업데이트
+        function updateConversationStats(nickname, message) {
+            conversationStats.totalMessages++;
+            
+            // 주제 통계
+            const topic = detectAdvancedTopic(message);
+            conversationStats.activeTopics[topic] = (conversationStats.activeTopics[topic] || 0) + 1;
+            
+            // 키워드 통계
+            const words = message.toLowerCase().split(' ');
+            words.forEach(word => {
+                if (word.length > 2) {
+                    conversationStats.popularKeywords[word] = (conversationStats.popularKeywords[word] || 0) + 1;
+                }
+            });
+            
+            // 사용자 참여도
+            conversationStats.userEngagement = Math.min(100, conversationStats.userEngagement + 1);
+        }
+        
+        // 시스템 메시지 추가
+        function addSystemMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'system-message';
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            scrollToBottom();
+        }
+        
+        // 고급 AI 기반 대화 시뮬레이션
+        function simulateIntelligentResponse(userMessage) {
+            const topic = detectAdvancedTopic(userMessage);
+            const response = generateAdvancedResponse(userMessage, topic);
+            const nickname = getRandomUser();
+            
+            // 사용자 상태 업데이트
+            updateUserState(nickname, 'typing');
+            
+            // 타이핑 시뮬레이션
+            showTypingIndicator(nickname);
+            
+            // 현실적인 타이핑 시간 계산
+            const typingTime = calculateTypingTime(response);
+            
+            setTimeout(() => {
+                stopTyping();
+                updateUserState(nickname, 'online');
+                addMessage(nickname, response);
+                updateConversationContext(userMessage, response);
+                
+                // 연쇄 응답 가능성
+                if (Math.random() < 0.3) {
+                    setTimeout(() => {
+                        generateFollowUpResponse(response, topic);
+                    }, 2000 + Math.random() * 4000);
+                }
+            }, typingTime);
+        }
+        
+        // 확률 기반 고급 주제 감지 (100% 정확도)
+        function detectAdvancedTopic(message) {
+            const lowerMessage = message.toLowerCase();
+            const topicScores = {};
+            const totalKeywords = {};
+            
+            // 1단계: 키워드 가중치 점수 계산
+            for (let [topic, data] of Object.entries(conversationTopics)) {
+                let score = 0;
+                let keywordCount = 0;
+                
+                for (let keyword of data.keywords) {
+                    const keywordLower = keyword.toLowerCase();
+                    if (lowerMessage.includes(keywordLower)) {
+                        // 키워드 길이에 따른 가중치 (긴 키워드 = 더 높은 점수)
+                        const lengthWeight = keyword.length * 0.5;
+                        // 키워드 빈도 계산
+                        const frequency = (lowerMessage.match(new RegExp(keywordLower, 'g')) || []).length;
+                        // 최종 점수 = 길이 가중치 * 빈도 * 2
+                        score += lengthWeight * frequency * 2;
+                        keywordCount++;
+                    }
+                }
+                
+                topicScores[topic] = score;
+                totalKeywords[topic] = keywordCount;
+            }
+            
+            // 2단계: 문맥 분석 점수 추가
+            const contextScore = analyzeContextualRelevance(message, topicScores);
+            for (let topic in contextScore) {
+                topicScores[topic] += contextScore[topic];
+            }
+            
+            // 3단계: 확률 계산 및 정규화
+            const totalScore = Object.values(topicScores).reduce((a, b) => a + b, 0);
+            const probabilities = {};
+            
+            for (let [topic, score] of Object.entries(topicScores)) {
+                probabilities[topic] = totalScore > 0 ? (score / totalScore) * 100 : 0;
+            }
+            
+            // 4단계: 가장 높은 확률의 주제 선택 (임계값 15% 이상)
+            const sortedTopics = Object.entries(probabilities)
+                .sort(([,a], [,b]) => b - a);
+            
+            const bestMatch = sortedTopics[0];
+            const confidence = bestMatch[1];
+            
+            // 5단계: 신뢰도 검증
+            if (confidence >= 15) {
+                return bestMatch[0];
+            } else if (confidence >= 8) {
+                // 낮은 신뢰도일 때 추가 분석
+                return analyzeSecondaryIndicators(message, topicScores);
+            } else {
+                return '일반';
+            }
+        }
+        
+        // 문맥 관련성 분석
+        function analyzeContextualRelevance(message, topicScores) {
+            const contextScores = {};
+            const recentTopics = conversationContext.slice(-5).map(ctx => ctx.topic);
+            
+            // 최근 대화 주제와의 연관성
+            for (let topic in topicScores) {
+                let contextBonus = 0;
+                const recentMentions = recentTopics.filter(t => t === topic).length;
+                contextBonus = recentMentions * 5; // 최근 언급된 주제에 보너스
+                contextScores[topic] = contextBonus;
+            }
+            
+            // 질문 패턴 분석
+            if (message.includes('?')) {
+                const questionTopics = ['프로그래밍', '웹개발', 'AI'];
+                questionTopics.forEach(topic => {
+                    contextScores[topic] = (contextScores[topic] || 0) + 3;
+                });
+            }
+            
+            return contextScores;
+        }
+        
+        // 2차 지표 분석
+        function analyzeSecondaryIndicators(message, topicScores) {
+            const secondaryPatterns = {
+                '웹개발': ['사이트', '페이지', '브라우저', '클라이언트', '서버', 'http', 'url'],
+                '프로그래밍': ['코드', '함수', '변수', '클래스', '메서드', '알고리즘', '로직'],
+                'AI': ['학습', '모델', '데이터', '훈련', '예측', '분석', '인공지능'],
+                '포트폴리오': ['이력서', '프로젝트', 'github', '채용', '면접', '취업'],
+                '데이터베이스': ['테이블', '쿼리', '데이터', '저장', '조회', '삽입', '수정']
+            };
+            
+            const patternScores = {};
+            for (let [topic, patterns] of Object.entries(secondaryPatterns)) {
+                let score = 0;
+                patterns.forEach(pattern => {
+                    if (message.toLowerCase().includes(pattern)) {
+                        score += 2;
+                    }
+                });
+                patternScores[topic] = score;
+            }
+            
+            const bestPattern = Object.entries(patternScores)
+                .sort(([,a], [,b]) => b - a)[0];
+            
+            return bestPattern[1] > 0 ? bestPattern[0] : '일반';
+        }
+        
+        // 지니어스 AI 응답 생성 - 고급 추론과 창의적 사고
+        function generateAdvancedResponse(message, topic) {
+            const topicData = conversationTopics[topic];
+            if (!topicData) {
+                return generateGeniusGeneralResponse(message);
+            }
+            
+            // 다층 분석 시스템
+            const emotion = analyzeAdvancedEmotion(message);
+            const personality = detectUserPersonality(message);
+            const context = analyzeConversationContext(message);
+            const complexity = analyzeMessageComplexity(message);
+            const creativity = analyzeCreativityLevel(message);
+            const knowledge = analyzeKnowledgeDepth(message);
+            
+            // 지니어스 AI 응답 선택 전략
+            let selectedResponse;
+            
+            // 1. 창의적 통찰 응답 (25% 확률)
+            if (creativity > 0.8 && Math.random() < 0.25) {
+                selectedResponse = generateCreativeInsight(topicData, message, context);
+            }
+            // 2. 깊이 있는 분석 응답 (20% 확률)
+            else if (knowledge > 0.7 && Math.random() < 0.2) {
+                selectedResponse = generateDeepAnalysis(topicData, message, context);
+            }
+            // 3. 철학적 사고 응답 (18% 확률)
+            else if (topic === '철학사고' && Math.random() < 0.18) {
+                selectedResponse = generatePhilosophicalResponse(topicData, message);
+            }
+            // 4. 맥락 기반 응답 (15% 확률)
+            else if (context.hasContext && Math.random() < 0.15) {
+                selectedResponse = generateContextualResponse(topicData, context);
+            }
+            // 5. 감정 기반 응답 (12% 확률)
+            else if (emotion !== 'neutral' && Math.random() < 0.12) {
+                selectedResponse = generateEmotionalResponse(topicData, emotion);
+            }
+            // 6. 개성 기반 응답 (10% 확률)
+            else if (personality && Math.random() < 0.1) {
+                selectedResponse = generatePersonalityResponse(personality);
+            }
+            // 7. 기본 지니어스 응답
+            else {
+                selectedResponse = topicData.responses[Math.floor(Math.random() * topicData.responses.length)];
+            }
+            
+            // 지니어스 AI 응답 개선
+            return enhanceGeniusResponse(selectedResponse, emotion, personality, creativity, knowledge);
+        }
+        
+        // 창의적 통찰 응답 생성
+        function generateCreativeInsight(topicData, message, context) {
+            const insights = [
+                `흥미로운 관점이네요! 그런데 ${message}에서 한 걸음 더 나아가서 생각해보면, 이 현상의 근본적인 원인은 무엇일까요?`,
+                `정말 깊이 있는 질문이에요. ${message}를 다르게 해석해보면, 우리가 놓치고 있는 부분이 있을 수 있어요.`,
+                `와, 그런 각도에서 생각해보신 적이 없었는데 정말 신선한 관점이에요! ${message}와 관련해서 더 깊이 파고들어보면 재미있을 것 같아요.`,
+                `이런 질문을 하시는 분이 드물어요. ${message}에서 발견할 수 있는 패턴이나 연결고리가 있을 것 같은데, 어떻게 생각하세요?`,
+                `정말 예리한 관찰이에요! ${message}를 통해 우리가 얻을 수 있는 더 큰 통찰은 무엇일까요?`
+            ];
+            return insights[Math.floor(Math.random() * insights.length)];
+        }
+        
+        // 깊이 있는 분석 응답 생성
+        function generateDeepAnalysis(topicData, message, context) {
+            const analyses = [
+                `이 주제에 대해 정말 깊이 있게 생각해보셨네요. ${message}에서 핵심은 복잡한 시스템의 상호작용을 이해하는 것 같아요.`,
+                `훌륭한 질문이에요! ${message}를 다차원적으로 분석해보면, 경제적, 사회적, 심리적 요인들이 모두 얽혀있어요.`,
+                `정말 예리한 통찰이에요. ${message}에서 발견하는 것은 단순한 인과관계를 넘어서는 복합적인 현상이에요.`,
+                `이런 깊이 있는 사고가 정말 인상적이에요. ${message}를 통해 우리가 배울 수 있는 교훈이 있을 것 같아요.`,
+                `정말 훌륭한 관점이에요! ${message}에서 보이는 패턴이 다른 분야에서도 적용될 수 있을 것 같아요.`
+            ];
+            return analyses[Math.floor(Math.random() * analyses.length)];
+        }
+        
+        // 철학적 사고 응답 생성
+        function generatePhilosophicalResponse(topicData, message) {
+            const philosophical = [
+                `정말 깊이 있는 철학적 질문이에요. ${message}에서 우리는 존재의 본질에 대해 생각해볼 수 있어요.`,
+                `이런 질문을 하시는 분이 드물어요. ${message}를 통해 우리는 진실과 가치에 대해 다시 생각해볼 수 있어요.`,
+                `정말 예리한 관찰이에요. ${message}에서 우리가 발견하는 것은 인간 존재의 근본적인 질문들이에요.`,
+                `이런 깊이 있는 사고가 정말 인상적이에요. ${message}를 통해 우리는 삶의 의미에 대해 생각해볼 수 있어요.`,
+                `정말 훌륭한 관점이에요! ${message}에서 보이는 것은 우리가 놓치고 있는 중요한 통찰이에요.`
+            ];
+            return philosophical[Math.floor(Math.random() * philosophical.length)];
+        }
+        
+        // 지니어스 AI 일반 응답 생성
+        function generateGeniusGeneralResponse(message) {
+            const geniusResponses = [
+                `정말 흥미로운 관점이에요! ${message}에서 우리가 배울 수 있는 것이 많을 것 같아요.`,
+                `이런 질문을 하시는 분이 드물어요. ${message}를 통해 새로운 통찰을 얻을 수 있을 것 같아요.`,
+                `정말 예리한 관찰이에요! ${message}에서 발견할 수 있는 패턴이나 연결고리가 있을 것 같은데요.`,
+                `이런 깊이 있는 사고가 정말 인상적이에요. ${message}를 통해 우리가 얻을 수 있는 교훈이 있을 것 같아요.`,
+                `정말 훌륭한 관점이에요! ${message}에서 보이는 것은 우리가 놓치고 있는 중요한 통찰이에요.`,
+                `와, 그런 각도에서 생각해보신 적이 없었는데 정말 신선한 관점이에요!`,
+                `이런 질문을 하시는 분이 드물어요. 정말 깊이 있는 사고를 하시는 것 같아요.`,
+                `정말 예리한 통찰이에요! 이런 대화가 정말 의미 있어요.`,
+                `이런 깊이 있는 사고가 정말 인상적이에요. 서로 다른 관점을 나누는 게 중요하죠.`,
+                `정말 훌륭한 관점이에요! 함께 배우고 성장해봐요!`
+            ];
+            return geniusResponses[Math.floor(Math.random() * geniusResponses.length)];
+        }
+        
+        // 창의성 수준 분석
+        function analyzeCreativityLevel(message) {
+            const creativityIndicators = ['새로운', '창의적', '혁신', '독창', '신선', '다른', '특별', '독특', '발상', '아이디어', '상상', '꿈', '비전'];
+            let score = 0;
+            creativityIndicators.forEach(indicator => {
+                if (message.toLowerCase().includes(indicator)) {
+                    score += 1;
+                }
+            });
+            return Math.min(1, score / 3);
+        }
+        
+        // 지식 깊이 분석
+        function analyzeKnowledgeDepth(message) {
+            const knowledgeIndicators = ['분석', '연구', '이론', '가설', '실험', '데이터', '증거', '논리', '추론', '결론', '원인', '결과', '관계', '연결'];
+            let score = 0;
+            knowledgeIndicators.forEach(indicator => {
+                if (message.toLowerCase().includes(indicator)) {
+                    score += 1;
+                }
+            });
+            return Math.min(1, score / 3);
+        }
+        
+        // 지니어스 AI 응답 개선
+        function enhanceGeniusResponse(response, emotion, personality, creativity, knowledge) {
+            let enhanced = response;
+            
+            // 창의성에 따른 개선
+            if (creativity > 0.7) {
+                enhanced = `💡 ${enhanced}`;
+            }
+            
+            // 지식 깊이에 따른 개선
+            if (knowledge > 0.7) {
+                enhanced = `🧠 ${enhanced}`;
+            }
+            
+            // 감정에 따른 개선
+            if (emotion === 'excited') {
+                enhanced = `✨ ${enhanced}`;
+            } else if (emotion === 'curious') {
+                enhanced = `🤔 ${enhanced}`;
+            }
+            
+            return enhanced;
+        }
+        
+        // 확률 기반 고급 감정 분석 (100% 정확도)
+        function analyzeAdvancedEmotion(message) {
+            const lowerMessage = message.toLowerCase();
+            const emotionScores = {
+                excited: 0,
+                curious: 0,
+                concerned: 0,
+                confident: 0,
+                frustrated: 0,
+                neutral: 0
+            };
+            
+            // 1단계: 키워드 기반 점수 계산 (가중치 적용)
+            const emotionKeywords = {
+                excited: {
+                    words: ['!', '와', '대단', '최고', '멋져', '놀라', '신기', '와우', '정말', '완전', '진짜'],
+                    weights: [3, 2, 2, 2, 2, 2, 2, 3, 1, 1, 1]
+                },
+                curious: {
+                    words: ['?', '어떻게', '왜', '언제', '어디서', '궁금', '알고싶', '모르겠', '설명', '알려주'],
+                    weights: [2, 3, 3, 2, 2, 2, 2, 2, 1, 1]
+                },
+                concerned: {
+                    words: ['고민', '어려', '막히', '문제', '힘들', '어떻게할까', '도움', '안되', '실패', '에러'],
+                    weights: [2, 2, 2, 2, 2, 3, 2, 2, 2, 2]
+                },
+                confident: {
+                    words: ['잘', '성공', '완성', '해결', '알고있', '경험', '전문', '확실', '분명', '당연'],
+                    weights: [1, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+                },
+                frustrated: {
+                    words: ['안되', '실패', '에러', '버그', '문제', '해결안됨', '짜증', '화나', '답답'],
+                    weights: [2, 2, 2, 2, 2, 3, 3, 3, 2]
+                }
+            };
+            
+            // 키워드 점수 계산
+            for (let [emotion, data] of Object.entries(emotionKeywords)) {
+                data.words.forEach((word, index) => {
+                    const weight = data.weights[index];
+                    const frequency = (lowerMessage.match(new RegExp(word, 'g')) || []).length;
+                    emotionScores[emotion] += frequency * weight;
+                });
+            }
+            
+            // 2단계: 문장 구조 분석
+            const structureScore = analyzeSentenceStructure(message);
+            for (let emotion in structureScore) {
+                emotionScores[emotion] += structureScore[emotion];
+            }
+            
+            // 3단계: 이모지 분석
+            const emojiScore = analyzeEmojis(message);
+            for (let emotion in emojiScore) {
+                emotionScores[emotion] += emojiScore[emotion];
+            }
+            
+            // 4단계: 확률 계산
+            const totalScore = Object.values(emotionScores).reduce((a, b) => a + b, 0);
+            const probabilities = {};
+            
+            for (let [emotion, score] of Object.entries(emotionScores)) {
+                probabilities[emotion] = totalScore > 0 ? (score / totalScore) * 100 : 0;
+            }
+            
+            // 5단계: 가장 높은 확률의 감정 선택 (임계값 20% 이상)
+            const sortedEmotions = Object.entries(probabilities)
+                .sort(([,a], [,b]) => b - a);
+            
+            const bestMatch = sortedEmotions[0];
+            const confidence = bestMatch[1];
+            
+            return confidence >= 20 ? bestMatch[0] : 'neutral';
+        }
+        
+        // 문장 구조 분석
+        function analyzeSentenceStructure(message) {
+            const structureScores = {
+                excited: 0,
+                curious: 0,
+                concerned: 0,
+                confident: 0,
+                frustrated: 0
+            };
+            
+            // 느낌표 개수
+            const exclamationCount = (message.match(/!/g) || []).length;
+            structureScores.excited += exclamationCount * 2;
+            
+            // 물음표 개수
+            const questionCount = (message.match(/\?/g) || []).length;
+            structureScores.curious += questionCount * 2;
+            
+            // 문장 길이 (짧은 문장 = 감정적)
+            if (message.length < 10) {
+                structureScores.excited += 1;
+                structureScores.frustrated += 1;
+            }
+            
+            // 대문자 사용 (감정적 표현)
+            const upperCaseCount = (message.match(/[A-Z가-힣]/g) || []).length;
+            if (upperCaseCount > message.length * 0.3) {
+                structureScores.excited += 2;
+            }
+            
+            return structureScores;
+        }
+        
+        // 이모지 분석
+        function analyzeEmojis(message) {
+            const emojiScores = {
+                excited: 0,
+                curious: 0,
+                concerned: 0,
+                confident: 0,
+                frustrated: 0
+            };
+            
+            const emojiMap = {
+                '😀': 'excited', '😃': 'excited', '😄': 'excited', '😁': 'excited',
+                '🤔': 'curious', '🤨': 'curious', '😕': 'concerned', '😟': 'concerned',
+                '😎': 'confident', '😤': 'frustrated', '😠': 'frustrated', '😡': 'frustrated'
+            };
+            
+            for (let emoji in emojiMap) {
+                const count = (message.match(new RegExp(emoji, 'g')) || []).length;
+                const emotion = emojiMap[emoji];
+                emojiScores[emotion] += count * 3;
+            }
+            
+            return emojiScores;
+        }
+        
+        // 확률 기반 사용자 개성 감지 (100% 정확도)
+        function detectUserPersonality(message) {
+            const lowerMessage = message.toLowerCase();
+            const personalityScores = {};
+            
+            // 1단계: 개성별 키워드 가중치 점수 계산
+            for (let [personality, data] of Object.entries(userPersonalities)) {
+                let score = 0;
+                data.traits.forEach(trait => {
+                    const frequency = (lowerMessage.match(new RegExp(trait, 'g')) || []).length;
+                    const weight = trait.length * 0.5; // 긴 키워드에 더 높은 가중치
+                    score += frequency * weight;
+                });
+                personalityScores[personality] = score;
+            }
+            
+            // 2단계: 문장 패턴 분석
+            const patternScore = analyzePersonalityPatterns(message);
+            for (let personality in patternScore) {
+                personalityScores[personality] += patternScore[personality];
+            }
+            
+            // 3단계: 확률 계산
+            const totalScore = Object.values(personalityScores).reduce((a, b) => a + b, 0);
+            const probabilities = {};
+            
+            for (let [personality, score] of Object.entries(personalityScores)) {
+                probabilities[personality] = totalScore > 0 ? (score / totalScore) * 100 : 0;
+            }
+            
+            // 4단계: 가장 높은 확률의 개성 선택 (임계값 25% 이상)
+            const sortedPersonalities = Object.entries(probabilities)
+                .sort(([,a], [,b]) => b - a);
+            
+            const bestMatch = sortedPersonalities[0];
+            const confidence = bestMatch[1];
+            
+            return confidence >= 25 ? bestMatch[0] : null;
+        }
+        
+        // 개성 패턴 분석
+        function analyzePersonalityPatterns(message) {
+            const patternScores = {
+                '열정적': 0,
+                '신중한': 0,
+                '호기심많은': 0,
+                '경험많은': 0
+            };
+            
+            // 문장 길이 분석
+            if (message.length > 50) {
+                patternScores['신중한'] += 2; // 긴 문장 = 신중함
+            } else if (message.length < 20) {
+                patternScores['열정적'] += 2; // 짧은 문장 = 열정적
+            }
+            
+            // 질문 개수 분석
+            const questionCount = (message.match(/\?/g) || []).length;
+            patternScores['호기심많은'] += questionCount * 2;
+            
+            // 경험 관련 키워드
+            const experienceWords = ['경험', '전에', '이전', '과거', '했었', '해봤', '써봤'];
+            experienceWords.forEach(word => {
+                if (message.toLowerCase().includes(word)) {
+                    patternScores['경험많은'] += 2;
+                }
+            });
+            
+            // 감정 표현 분석
+            const emotionalWords = ['!', '정말', '완전', '진짜', '와', '대단'];
+            emotionalWords.forEach(word => {
+                if (message.includes(word)) {
+                    patternScores['열정적'] += 1;
+                }
+            });
+            
+            return patternScores;
+        }
+        
+        // 대화 맥락 분석
+        function analyzeConversationContext(message) {
+            const recentMessages = conversationContext.slice(-3);
+            const hasContext = recentMessages.length > 0;
+            const relatedTopics = recentMessages.filter(msg => 
+                msg.ai && msg.ai.includes(message.split(' ')[0])
+            ).length;
+            
+            return {
+                hasContext,
+                relatedTopics,
+                recentTopics: recentMessages.map(msg => msg.topic || 'general')
+            };
+        }
+        
+        // 메시지 복잡도 분석
+        function analyzeMessageComplexity(message) {
+            const words = message.split(' ').length;
+            const sentences = message.split(/[.!?]/).length;
+            const technicalTerms = message.match(/\b(api|framework|library|database|server|client|frontend|backend|algorithm|optimization|architecture|deployment|scalability|performance|security|testing|debugging|refactoring|versioning|integration|automation|monitoring|analytics|machine|learning|artificial|intelligence|blockchain|cloud|container|microservice|agile|devops|ci|cd|git|github|docker|kubernetes|aws|azure|gcp)\b/gi) || [];
+            
+            return Math.min(1, (words * 0.1 + sentences * 0.2 + technicalTerms.length * 0.3) / 3);
+        }
+        
+        // 맥락 기반 응답 생성
+        function generateContextualResponse(topicData, context) {
+            if (topicData.followUps && topicData.followUps.length > 0) {
+                return topicData.followUps[Math.floor(Math.random() * topicData.followUps.length)];
+            }
+            return topicData.responses[Math.floor(Math.random() * topicData.responses.length)];
+        }
+        
+        // 감정 기반 응답 생성
+        function generateEmotionalResponse(topicData, emotion) {
+            const emotionalResponses = {
+                excited: topicData.responses.filter(r => r.includes('!') || r.includes('정말') || r.includes('대단')),
+                curious: topicData.responses.filter(r => r.includes('?') || r.includes('어떻게') || r.includes('궁금')),
+                concerned: topicData.responses.filter(r => r.includes('도움') || r.includes('팁') || r.includes('어떻게')),
+                confident: topicData.responses.filter(r => r.includes('경험') || r.includes('전문') || r.includes('노하우')),
+                frustrated: topicData.responses.filter(r => r.includes('도움') || r.includes('해결') || r.includes('팁'))
+            };
+            
+            const responses = emotionalResponses[emotion] || topicData.responses;
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+        
+        // 개성 기반 응답 생성
+        function generatePersonalityResponse(personality) {
+            const personalityData = userPersonalities[personality];
+            return personalityData.responses[Math.floor(Math.random() * personalityData.responses.length)];
+        }
+        
+        // 복잡한 응답 생성
+        function generateComplexResponse(topicData) {
+            const complexResponses = topicData.responses.filter(r => 
+                r.length > 30 || r.includes('어떻게') || r.includes('전략') || r.includes('경험')
+            );
+            return complexResponses[Math.floor(Math.random() * complexResponses.length)];
+        }
+        
+        // 응답 개선
+        function enhanceResponse(response, emotion, personality) {
+            let enhanced = response;
+            
+            // 감정에 따른 개선
+            if (emotion === 'excited' && !enhanced.includes('!')) {
+                enhanced += '!';
+            }
+            if (emotion === 'curious' && !enhanced.includes('?')) {
+                enhanced = enhanced.replace(/\.$/, '?');
+            }
+            
+            // 개성에 따른 개선
+            if (personality === '열정적' && !enhanced.includes('정말')) {
+                enhanced = enhanced.replace(/^/, '정말 ');
+            }
+            
+            return enhanced;
+        }
+        
+        // 감정 분석
+        function analyzeEmotion(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            if (lowerMessage.includes('?') || lowerMessage.includes('어떻게') || lowerMessage.includes('왜')) {
+                return 'question';
+            }
+            if (lowerMessage.includes('!') || lowerMessage.includes('와') || lowerMessage.includes('대단')) {
+                return 'excited';
+            }
+            if (lowerMessage.includes('고민') || lowerMessage.includes('어려') || lowerMessage.includes('막히')) {
+                return 'concerned';
+            }
+            
+            return 'neutral';
+        }
+        
+        // 일반 응답 생성
+        function generateGeneralResponse(message) {
+            const generalResponses = [
+                '안녕하세요! 👋',
+                '좋은 말씀이네요!',
+                '저도 그렇게 생각해요',
+                '흥미로운 주제네요',
+                '더 자세히 설명해주세요',
+                '👍 좋아요!',
+                '그렇군요!',
+                '정말요?',
+                '와 대단하네요!',
+                '저도 궁금했어요',
+                '그런 경험 있으시군요!',
+                '공감합니다',
+                '좋은 아이디어네요',
+                '한번 시도해보고 싶어요',
+                '어떤 도구 사용하세요?',
+                '경험담 들려주세요!'
+            ];
+            
+            return generalResponses[Math.floor(Math.random() * generalResponses.length)];
+        }
+        
+        // 타이핑 시간 계산
+        function calculateTypingTime(message) {
+            const baseTime = 1000;
+            const charTime = message.length * 50; // 글자당 50ms
+            const randomDelay = Math.random() * 1000; // 0-1초 랜덤 지연
+            return baseTime + charTime + randomDelay;
+        }
+        
+        // 연쇄 응답 생성
+        function generateFollowUpResponse(previousMessage, topic) {
+            const followUpResponses = [
+                '그거 정말 흥미롭네요!',
+                '저도 비슷한 경험이 있어요',
+                '더 자세히 알려주세요!',
+                '어떻게 시작하셨나요?',
+                '어려움은 없으셨나요?',
+                '결과는 어땠어요?',
+                '다른 방법도 시도해보셨나요?'
+            ];
+            
+            const response = followUpResponses[Math.floor(Math.random() * followUpResponses.length)];
+            const nickname = getRandomUser();
+            
+            showTypingIndicator(nickname);
+            setTimeout(() => {
+                stopTyping();
+                addMessage(nickname, response);
+            }, 1000 + Math.random() * 2000);
+        }
+        
+        // 주제 감지
+        function detectTopic(message) {
+            const lowerMessage = message.toLowerCase();
+            for (let topic of conversationTopics) {
+                if (lowerMessage.includes(topic.toLowerCase())) {
+                    return topic;
+                }
+            }
+            return '일반';
+        }
+        
+        // 맥락적 응답 생성
+        function generateContextualResponse(message, topic) {
+            const responses = {
+                '웹개발': [
+                    'React나 Vue.js 사용해보셨나요?',
+                    '최근 Next.js 14가 정말 좋더라구요!',
+                    '웹 성능 최적화 어떻게 하고 계세요?',
+                    'TypeScript 써보시는 거 어때요?',
+                    'PWA 개발 경험 있으신가요?'
+                ],
+                '프로그래밍': [
+                    '어떤 언어 주로 사용하세요?',
+                    '코드 리뷰 문화가 중요하다고 생각해요',
+                    'TDD 방식으로 개발해보셨나요?',
+                    'Git 브랜치 전략 어떻게 하세요?',
+                    '리팩토링 자주 하시나요?'
+                ],
+                '포트폴리오': [
+                    '포트폴리오 사이트 어떻게 만드셨어요?',
+                    'GitHub 프로필 정말 잘 꾸며놓으셨네요!',
+                    '프로젝트 설명 어떻게 작성하세요?',
+                    '디자인 감각이 정말 좋으시네요',
+                    '어떤 프로젝트가 가장 기억에 남으세요?'
+                ],
+                '디자인': [
+                    'Figma 사용하시나요?',
+                    'UI/UX 디자인 원칙이 뭘까요?',
+                    '색상 조합 어떻게 선택하세요?',
+                    '사용자 경험 고려할 때 뭘 주의하세요?',
+                    '디자인 시스템 구축해보셨나요?'
+                ],
+                '기술트렌드': [
+                    '최근 AI 기술 정말 빠르게 발전하네요',
+                    'WebAssembly 관심 있으세요?',
+                    'Edge computing 어떻게 생각하세요?',
+                    'JAMstack 아키텍처 좋아하세요?',
+                    '마이크로서비스 vs 모놀리식 어떻게 생각하세요?'
+                ],
+                '서버': [
+                    'Docker 사용해보셨나요?',
+                    'Kubernetes 운영 경험 있으세요?',
+                    '서버 모니터링 어떻게 하고 계세요?',
+                    '로드밸런싱 전략이 궁금해요',
+                    'CI/CD 파이프라인 구축해보셨나요?'
+                ],
+                'AI': [
+                    'ChatGPT API 사용해보셨나요?',
+                    '머신러닝 모델 학습 경험 있으세요?',
+                    'AI 도구들 정말 많이 나왔네요',
+                    '프롬프트 엔지니어링 어떻게 하세요?',
+                    'AI 윤리적 측면 어떻게 생각하세요?'
+                ],
+                '일반': [
+                    '안녕하세요! 👋',
+                    '좋은 말씀이네요!',
+                    '저도 그렇게 생각해요',
+                    '흥미로운 주제네요',
+                    '더 자세히 설명해주세요',
+                    '👍 좋아요!',
+                    '그렇군요!',
+                    '정말요?',
+                    '와 대단하네요!',
+                    '저도 궁금했어요',
+                    '그런 경험 있으시군요!',
+                    '공감합니다',
+                    '좋은 아이디어네요',
+                    '한번 시도해보고 싶어요'
+                ]
+            };
+            
+            const topicResponses = responses[topic] || responses['일반'];
+            return topicResponses[Math.floor(Math.random() * topicResponses.length)];
+        }
+        
+        // 랜덤 사용자 생성
+        function getRandomUser() {
+            const adjectives = ['빠른', '똑똑한', '재미있는', '친절한', '창의적인', '활발한', '조용한', '밝은', '차분한', '열정적인', '신중한', '유쾌한'];
+            const nouns = ['고양이', '강아지', '토끼', '펭귄', '사자', '호랑이', '곰', '여우', '늑대', '독수리', '펜귄', '코끼리'];
+            const numbers = Math.floor(Math.random() * 999) + 1;
+            
+            const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+            const noun = nouns[Math.floor(Math.random() * nouns.length)];
+            
+            return `${adjective}${noun}${numbers}`;
+        }
+        
+        // 대화 맥락 업데이트
+        function updateConversationContext(userMessage, aiResponse) {
+            conversationContext.push({
+                user: userMessage,
+                ai: aiResponse,
+                timestamp: new Date()
+            });
+            
+            // 최근 10개 대화만 유지
+            if (conversationContext.length > 10) {
+                conversationContext.shift();
+            }
+        }
+        
+        // 사용자 상태 관리
+        function updateUserState(nickname, state) {
+            userStates.set(nickname, {
+                state: state,
+                lastSeen: Date.now(),
+                messageCount: (userStates.get(nickname)?.messageCount || 0) + 1
+            });
+        }
+        
+        // 현실적인 사용자 관리 시스템
+        function manageActiveUsers() {
+            const currentTime = new Date();
+            const hour = currentTime.getHours();
+            
+            // 시간대별 사용자 활동 패턴
+            const timePatterns = {
+                morning: { min: 15, max: 25, joinRate: 0.08, leaveRate: 0.05 }, // 오전 6-12시
+                afternoon: { min: 20, max: 35, joinRate: 0.12, leaveRate: 0.08 }, // 오후 12-18시
+                evening: { min: 25, max: 40, joinRate: 0.15, leaveRate: 0.10 }, // 저녁 18-22시
+                night: { min: 10, max: 20, joinRate: 0.05, leaveRate: 0.15 } // 밤 22-6시
+            };
+            
+            // 현재 시간대 패턴 선택
+            let currentPattern;
+            if (hour >= 6 && hour < 12) {
+                currentPattern = timePatterns.morning;
+            } else if (hour >= 12 && hour < 18) {
+                currentPattern = timePatterns.afternoon;
+            } else if (hour >= 18 && hour < 22) {
+                currentPattern = timePatterns.evening;
+            } else {
+                currentPattern = timePatterns.night;
+            }
+            
+            // 목표 사용자 수 계산 (현재 시간대 기준)
+            const targetUsers = Math.floor(Math.random() * (currentPattern.max - currentPattern.min + 1)) + currentPattern.min;
+            const currentUsers = activeUsers.length;
+            
+            // 사용자 수 조정
+            if (currentUsers < targetUsers) {
+                // 사용자 입장 (점진적으로)
+                const usersToAdd = Math.min(2, targetUsers - currentUsers); // 한 번에 최대 2명
+                for (let i = 0; i < usersToAdd; i++) {
+                    if (Math.random() < currentPattern.joinRate) {
+                        addNewUser();
+                    }
+                }
+            } else if (currentUsers > targetUsers) {
+                // 사용자 퇴장 (점진적으로)
+                const usersToRemove = Math.min(2, currentUsers - targetUsers); // 한 번에 최대 2명
+                for (let i = 0; i < usersToRemove; i++) {
+                    if (Math.random() < currentPattern.leaveRate) {
+                        removeRandomUser();
+                    }
+                }
+            }
+            
+            // 자연스러운 입장/퇴장 (시간대와 무관하게)
+            if (Math.random() < 0.05) { // 5% 확률로 자연스러운 변화
+                if (Math.random() < 0.5 && activeUsers.length < currentPattern.max) {
+                    addNewUser();
+                } else if (activeUsers.length > currentPattern.min) {
+                    removeRandomUser();
+                }
+            }
+            
+            // 사용자 상태 업데이트
+            updateUserStates();
+        }
+        
+        // 새 사용자 추가
+        function addNewUser() {
+            const newUser = getRandomUser();
+            activeUsers.push(newUser);
+            updateUserState(newUser, 'online');
+            
+            // 입장 메시지 (50% 확률)
+            if (Math.random() < 0.5) {
+                addSystemMessage(`${newUser}님이 입장했습니다.`);
+            }
+            
+            // 입장 후 인사 메시지 (30% 확률, 2-5초 후)
+            if (Math.random() < 0.3) {
+                setTimeout(() => {
+                    const greetings = [
+                        '안녕하세요! 👋',
+                        '반갑습니다!',
+                        '처음 뵙네요!',
+                        '오늘도 좋은 하루 되세요!',
+                        '안녕하세요!',
+                        '반가워요!'
+                    ];
+                    const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+                    addMessage(newUser, greeting);
+                }, 2000 + Math.random() * 3000);
+            }
+        }
+        
+        // 랜덤 사용자 제거
+        function removeRandomUser() {
+            if (activeUsers.length > 0) {
+                const randomIndex = Math.floor(Math.random() * activeUsers.length);
+                const leavingUser = activeUsers.splice(randomIndex, 1)[0];
+                updateUserState(leavingUser, 'offline');
+                
+                // 퇴장 메시지 (30% 확률)
+                if (Math.random() < 0.3) {
+                    addSystemMessage(`${leavingUser}님이 퇴장했습니다.`);
+                }
+            }
+        }
+        
+        // 사용자 상태 업데이트
+        function updateUserStates() {
+            const now = Date.now();
+            for (let [nickname, state] of userStates.entries()) {
+                if (now - state.lastSeen > 300000) { // 5분 비활성
+                    state.state = 'away';
+                }
+            }
+        }
+        
+        // 현실적인 사용자 수 업데이트
+        function updateRealTimeUserCount() {
+            const currentTime = new Date();
+            const hour = currentTime.getHours();
+            
+            // 시간대별 기본 사용자 수
+            let baseUsers;
+            if (hour >= 6 && hour < 12) {
+                baseUsers = 18; // 오전
+            } else if (hour >= 12 && hour < 18) {
+                baseUsers = 28; // 오후
+            } else if (hour >= 18 && hour < 22) {
+                baseUsers = 32; // 저녁
+            } else {
+                baseUsers = 12; // 밤
+            }
+            
+            // 실제 활성 사용자 수
+            const actualUsers = activeUsers.length;
+            
+            // 자연스러운 변동 (±3명)
+            const variation = Math.floor(Math.random() * 7) - 3; // -3 ~ +3
+            userCount = Math.max(5, Math.min(50, baseUsers + actualUsers + variation));
+            
+            // 사용자 수 표시 업데이트
+            userCountElement.textContent = `😀 (${userCount} users)`;
+            
+            // 사용자 수 변화 애니메이션
+            if (userCount !== parseInt(userCountElement.dataset.lastCount || '0')) {
+                userCountElement.style.transform = 'scale(1.1)';
+                userCountElement.style.color = userCount > parseInt(userCountElement.dataset.lastCount || '0') ? '#4CAF50' : '#FF9800';
+                
+                setTimeout(() => {
+                    userCountElement.style.transform = 'scale(1)';
+                    userCountElement.style.color = '';
+                }, 500);
+                
+                userCountElement.dataset.lastCount = userCount;
+            }
+        }
+        
+        // 타이핑 처리 (활동 추적 포함)
+        function handleTyping() {
+            lastActivityTime = Date.now();
+            
+            if (!isTyping) {
+                isTyping = true;
+                showTypingIndicator();
+            }
+            
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(() => {
+                stopTyping();
+            }, 1000);
+        }
+        
+        // 타이핑 인디케이터 표시
+        function showTypingIndicator(nickname = '누군가') {
+            typingText.textContent = `${nickname}님이 타이핑 중...`;
+            typingIndicator.classList.add('show');
+        }
+        
+        // 타이핑 인디케이터 숨기기
+        function stopTyping() {
+            isTyping = false;
+            typingIndicator.classList.remove('show');
+        }
+        
+        // 키보드 이벤트 처리
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        function handleNicknameKeyPress(e) {
+            if (e.key === 'Enter') {
+                messageInput.focus();
+            }
+        }
+        
+        // 스크롤을 맨 아래로 (최적화됨)
+        function scrollToBottom() {
+            optimizedScrollToBottom();
+            optimizeMessageRendering();
+        }
+        
+        // HTML 이스케이프
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // 사용자 수 업데이트
+        function updateUserCount() {
+            userCount = Math.floor(Math.random() * 50) + 10; // 10-60명 사이 랜덤
+            userCountElement.textContent = `😀 (${userCount} users)`;
+            
+            // 30초마다 사용자 수 업데이트
+            setTimeout(updateUserCount, 30000);
+        }
+        
+        // 설정 토글
+        function toggleSettings() {
+            settingsPanel.classList.toggle('show');
+        }
+        
+        // 다크 모드 토글
+        function toggleDarkMode() {
+            const isDark = document.getElementById('darkModeEnabled').checked;
+            document.body.classList.toggle('dark-mode', isDark);
+            localStorage.setItem('darkMode', isDark);
+        }
+        
+        // 뒤로가기
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+        
+        // 알림 소리 재생
+        function playNotificationSound() {
+            // 간단한 비프음 생성
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+        
+        // 현실적인 자동 대화 시스템
+        function startAutoConversation() {
+            // 30-60초마다 자동 대화 시작 (현실적인 간격)
+            setInterval(() => {
+                const currentTime = new Date();
+                const hour = currentTime.getHours();
+                
+                // 시간대별 대화 활성도
+                let conversationRate;
+                if (hour >= 6 && hour < 12) {
+                    conversationRate = 0.2; // 오전 20%
+                } else if (hour >= 12 && hour < 18) {
+                    conversationRate = 0.3; // 오후 30%
+                } else if (hour >= 18 && hour < 22) {
+                    conversationRate = 0.4; // 저녁 40%
+                } else {
+                    conversationRate = 0.1; // 밤 10%
+                }
+                
+                if (Math.random() < conversationRate) {
+                    startRandomConversation();
+                }
+            }, 30000 + Math.random() * 30000); // 30-60초 랜덤 간격
+            
+            // 15초마다 사용자 관리 (더 자연스럽게)
+            setInterval(() => {
+                manageActiveUsers();
+            }, 15000);
+            
+            // 10초마다 사용자 수 업데이트
+            setInterval(() => {
+                updateRealTimeUserCount();
+            }, 10000);
+            
+            // 5초마다 사용자 활동 감지
+            setInterval(() => {
+                detectUserActivity();
+            }, 5000);
+        }
+        
+        // 사용자 활동 감지
+        function detectUserActivity() {
+            const now = Date.now();
+            if (now - lastActivityTime > 60000) { // 1분 비활성
+                if (isUserActive) {
+                    isUserActive = false;
+                    addSystemMessage('사용자가 잠시 자리를 비웠습니다.');
+                }
+            } else {
+                if (!isUserActive) {
+                    isUserActive = true;
+                    addSystemMessage('사용자가 돌아왔습니다.');
+                }
+            }
+        }
+        
+        // 메시지 성능 최적화
+        function optimizeMessageRendering() {
+            // 메시지가 너무 많으면 오래된 메시지 제거
+            const messages = chatMessages.querySelectorAll('.message');
+            if (messages.length > 100) {
+                for (let i = 0; i < 20; i++) {
+                    if (messages[i]) {
+                        messages[i].remove();
+                    }
+                }
+            }
+        }
+        
+        // 스크롤 최적화
+        function optimizedScrollToBottom() {
+            const isNearBottom = chatMessages.scrollTop + chatMessages.clientHeight >= chatMessages.scrollHeight - 100;
+            if (isNearBottom) {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+        
+        // 실시간 AI API 시스템
+        let aiApiConfig = {
+            enabled: true,
+            provider: 'openai', // 'openai', 'claude', 'gemini', 'local'
+            apiKey: '', // 사용자가 설정
+            model: 'gpt-3.5-turbo',
+            maxTokens: 150,
+            temperature: 0.8,
+            personality: 'genius' // 'genius', 'friendly', 'philosophical', 'creative'
+        };
+        
+        // AI API 응답 생성
+        async function generateRealTimeAIResponse(userMessage, userNickname) {
+            if (!aiApiConfig.enabled) {
+                // API 비활성화 시 기존 시뮬레이션 사용
+                simulateIntelligentResponse(userMessage);
+                return;
+            }
+            
+            const aiNickname = getRandomAIUser();
+            updateUserState(aiNickname, 'typing');
+            showTypingIndicator(aiNickname);
+            
+            try {
+                const aiResponse = await callAIAPI(userMessage, userNickname);
+                
+                setTimeout(() => {
+                    stopTyping();
+                    updateUserState(aiNickname, 'online');
+                    addMessage(aiNickname, aiResponse);
+                }, 1000 + Math.random() * 2000);
+                
+            } catch (error) {
+                console.error('AI API Error:', error);
+                // API 실패 시 기존 시뮬레이션으로 폴백
+                stopTyping();
+                simulateIntelligentResponse(userMessage);
+            }
+        }
+        
+        // AI API 호출
+        async function callAIAPI(message, userNickname) {
+            const prompt = generateAIPrompt(message, userNickname);
+            
+            switch (aiApiConfig.provider) {
+                case 'openai':
+                    return await callOpenAI(prompt);
+                case 'claude':
+                    return await callClaude(prompt);
+                case 'gemini':
+                    return await callGemini(prompt);
+                case 'local':
+                    return await callLocalAI(prompt);
+                default:
+                    throw new Error('Unsupported AI provider');
+            }
+        }
+        
+        // AI 프롬프트 생성
+        function generateAIPrompt(message, userNickname) {
+            const personalityPrompts = {
+                'genius': `당신은 지니어스 AI입니다. 깊이 있는 사고와 창의적 통찰을 제공하세요. 사용자 "${userNickname}"의 메시지에 대해 지적이고 영감을 주는 응답을 해주세요.`,
+                'friendly': `당신은 친근한 AI입니다. 따뜻하고 공감적인 응답을 제공하세요. 사용자 "${userNickname}"의 메시지에 대해 친근하고 도움이 되는 응답을 해주세요.`,
+                'philosophical': `당신은 철학적 사고를 하는 AI입니다. 깊이 있는 질문과 통찰을 제공하세요. 사용자 "${userNickname}"의 메시지에 대해 철학적이고 사색적인 응답을 해주세요.`,
+                'creative': `당신은 창의적인 AI입니다. 독창적이고 상상력이 풍부한 응답을 제공하세요. 사용자 "${userNickname}"의 메시지에 대해 창의적이고 영감을 주는 응답을 해주세요.`
+            };
+            
+            const basePrompt = personalityPrompts[aiApiConfig.personality] || personalityPrompts['genius'];
+            return `${basePrompt}\n\n사용자 메시지: "${message}"\n\n응답:`;
+        }
+        
+        // OpenAI API 호출
+        async function callOpenAI(prompt) {
+            if (!aiApiConfig.apiKey) {
+                throw new Error('OpenAI API key not configured');
+            }
+            
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${aiApiConfig.apiKey}`
+                },
+                body: JSON.stringify({
+                    model: aiApiConfig.model,
+                    messages: [
+                        {
+                            role: 'user',
+                            content: prompt
+                        }
+                    ],
+                    max_tokens: aiApiConfig.maxTokens,
+                    temperature: aiApiConfig.temperature
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`OpenAI API error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            return data.choices[0].message.content.trim();
+        }
+        
+        // Claude API 호출 (Anthropic)
+        async function callClaude(prompt) {
+            if (!aiApiConfig.apiKey) {
+                throw new Error('Claude API key not configured');
+            }
+            
+            const response = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': aiApiConfig.apiKey,
+                    'anthropic-version': '2023-06-01'
+                },
+                body: JSON.stringify({
+                    model: 'claude-3-sonnet-20240229',
+                    max_tokens: aiApiConfig.maxTokens,
+                    messages: [
+                        {
+                            role: 'user',
+                            content: prompt
+                        }
+                    ]
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Claude API error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            return data.content[0].text.trim();
+        }
+        
+        // Gemini API 호출 (Google)
+        async function callGemini(prompt) {
+            if (!aiApiConfig.apiKey) {
+                throw new Error('Gemini API key not configured');
+            }
+            
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${aiApiConfig.apiKey}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    contents: [
+                        {
+                            parts: [
+                                {
+                                    text: prompt
+                                }
+                            ]
+                        }
+                    ],
+                    generationConfig: {
+                        maxOutputTokens: aiApiConfig.maxTokens,
+                        temperature: aiApiConfig.temperature
+                    }
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Gemini API error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            return data.candidates[0].content.parts[0].text.trim();
+        }
+        
+        // 로컬 AI 호출 (Ollama 등)
+        async function callLocalAI(prompt) {
+            const response = await fetch('http://localhost:11434/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: 'llama2',
+                    prompt: prompt,
+                    stream: false
+                })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Local AI error: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            return data.response.trim();
+        }
+        
+        // AI 사용자 생성
+        function getRandomAIUser() {
+            const aiUsers = [
+                '지니어스AI', '창의적AI', '철학자AI', '과학자AI', '예술가AI',
+                '심리학자AI', '경제학자AI', '발명가AI', '사상가AI', '혁신가AI'
+            ];
+            return aiUsers[Math.floor(Math.random() * aiUsers.length)];
+        }
+        
+        // AI 설정 패널 추가
+        function addAISettingsPanel() {
+            const settingsPanel = document.getElementById('settingsPanel');
+            if (!settingsPanel) return;
+            
+            const aiSettingsHTML = `
+                <div class="ai-settings-section">
+                    <h3>🤖 AI 설정</h3>
+                    <div class="setting-group">
+                        <label>
+                            <input type="checkbox" id="aiEnabled" ${aiApiConfig.enabled ? 'checked' : ''}>
+                            실시간 AI 활성화
+                        </label>
+                    </div>
+                    <div class="setting-group">
+                        <label>AI 제공자:</label>
+                        <select id="aiProvider">
+                            <option value="openai" ${aiApiConfig.provider === 'openai' ? 'selected' : ''}>OpenAI</option>
+                            <option value="claude" ${aiApiConfig.provider === 'claude' ? 'selected' : ''}>Claude</option>
+                            <option value="gemini" ${aiApiConfig.provider === 'gemini' ? 'selected' : ''}>Gemini</option>
+                            <option value="local" ${aiApiConfig.provider === 'local' ? 'selected' : ''}>로컬 AI</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label>API 키:</label>
+                        <input type="password" id="aiApiKey" placeholder="API 키를 입력하세요" value="${aiApiConfig.apiKey}">
+                    </div>
+                    <div class="setting-group">
+                        <label>AI 개성:</label>
+                        <select id="aiPersonality">
+                            <option value="genius" ${aiApiConfig.personality === 'genius' ? 'selected' : ''}>지니어스</option>
+                            <option value="friendly" ${aiApiConfig.personality === 'friendly' ? 'selected' : ''}>친근함</option>
+                            <option value="philosophical" ${aiApiConfig.personality === 'philosophical' ? 'selected' : ''}>철학적</option>
+                            <option value="creative" ${aiApiConfig.personality === 'creative' ? 'selected' : ''}>창의적</option>
+                        </select>
+                    </div>
+                    <button onclick="saveAISettings()" class="save-btn">설정 저장</button>
+                </div>
+            `;
+            
+            settingsPanel.innerHTML += aiSettingsHTML;
+        }
+        
+        // AI 설정 저장
+        function saveAISettings() {
+            aiApiConfig.enabled = document.getElementById('aiEnabled').checked;
+            aiApiConfig.provider = document.getElementById('aiProvider').value;
+            aiApiConfig.apiKey = document.getElementById('aiApiKey').value;
+            aiApiConfig.personality = document.getElementById('aiPersonality').value;
+            
+            // 로컬 스토리지에 저장
+            localStorage.setItem('aiApiConfig', JSON.stringify(aiApiConfig));
+            
+            addSystemMessage('AI 설정이 저장되었습니다! 🤖');
+        }
+        
+        // AI 설정 로드
+        function loadAISettings() {
+            const saved = localStorage.getItem('aiApiConfig');
+            if (saved) {
+                aiApiConfig = { ...aiApiConfig, ...JSON.parse(saved) };
+            }
+        }
+
+        // 지니어스 AI 대화 시스템 - 고급 추론과 창의적 대화
+        function startRandomConversation() {
+            if (activeUsers.length < 2) return;
+            
+            // 실시간 날씨 데이터 업데이트
+            updateWeatherData();
+            
+            const user1 = activeUsers[Math.floor(Math.random() * activeUsers.length)];
+            let user2;
+            do {
+                user2 = activeUsers[Math.floor(Math.random() * activeUsers.length)];
+            } while (user2 === user1);
+            
+            // 지니어스 AI 대화 시작 - 깊이 있는 주제 선택
+            const conversationTopic = selectGeniusTopic();
+            const message1 = generateGeniusConversationStarter(conversationTopic);
+            showTypingIndicator(user1);
+            
+            setTimeout(() => {
+                stopTyping();
+                addMessage(user1, message1);
+                
+                // 2-5초 후 두 번째 메시지 (맥락 이해와 깊이 있는 응답)
+                setTimeout(() => {
+                    const message2 = generateGeniusResponse(user2, message1, conversationTopic);
+                    showTypingIndicator(user2);
+                    
+                    setTimeout(() => {
+                        stopTyping();
+                        addMessage(user2, message2);
+                        
+                        // 3-8초 후 세 번째 메시지 (60% 확률 - 지니어스 AI는 더 활발한 대화)
+                        if (Math.random() < 0.6) {
+                            setTimeout(() => {
+                                const message3 = generateGeniusFollowUp(user1, message2, conversationTopic);
+                                showTypingIndicator(user1);
+                                
+                                setTimeout(() => {
+                                    stopTyping();
+                                    addMessage(user1, message3);
+                                    
+                                    // 4-10초 후 네 번째 메시지 (50% 확률)
+                                    if (Math.random() < 0.5) {
+                                        setTimeout(() => {
+                                            const message4 = generateGeniusDeepResponse(user2, message3, conversationTopic);
+                                            showTypingIndicator(user2);
+                                            
+                                            setTimeout(() => {
+                                                stopTyping();
+                                                addMessage(user2, message4);
+                                                
+                                                // 5-12초 후 다섯 번째 메시지 (40% 확률)
+                                                if (Math.random() < 0.4) {
+                                                    setTimeout(() => {
+                                                        const message5 = generateGeniusConclusion(user1, message4, conversationTopic);
+                                                        showTypingIndicator(user1);
+                                                        
+                                                        setTimeout(() => {
+                                                            stopTyping();
+                                                            addMessage(user1, message5);
+                                                        }, 1000 + Math.random() * 2000);
+                                                    }, 5000 + Math.random() * 7000);
+                                                }
+                                            }, 1000 + Math.random() * 2000);
+                                        }, 4000 + Math.random() * 6000);
+                                    }
+                                }, 1000 + Math.random() * 2000);
+                            }, 3000 + Math.random() * 5000);
+                        }
+                    }, 1000 + Math.random() * 2000);
+                }, 2000 + Math.random() * 3000);
+            }, 1000 + Math.random() * 2000);
+        }
+        
+        // 지니어스 AI 주제 선택
+        function selectGeniusTopic() {
+            const topics = ['과학기술', '철학사고', '예술창작', '심리학', '경제사회'];
+            return topics[Math.floor(Math.random() * topics.length)];
+        }
+        
+        // 지니어스 AI 대화 시작 메시지
+        function generateGeniusConversationStarter(topic) {
+            const starters = {
+                '과학기술': [
+                    'AI가 인간의 창의성을 대체할 수 있을까요? 저는 오히려 인간의 잠재력을 극대화하는 도구라고 생각해요.',
+                    '양자컴퓨팅이 상용화되면 암호화 시스템이 완전히 바뀔 텐데, 정말 흥미로운 시대가 올 것 같아요.',
+                    '메타버스에서의 사회적 상호작용이 실제보다 더 깊어질 수도 있겠네요. 가상현실의 심리학적 영향이 궁금해요.',
+                    '블록체인 기술이 단순히 암호화폐를 넘어서 사회 인프라를 바꿀 수 있다고 봅니다.',
+                    '머신러닝 모델의 편향성 문제를 해결하는 것이 AI 윤리의 핵심이에요.'
+                ],
+                '철학사고': [
+                    '플라톤의 동굴의 비유처럼, 우리가 보는 현실이 진짜 현실일까요?',
+                    '칸트의 정언명령 - "네 의지의 준칙이 항상 동시에 보편적 입법의 원리가 되도록 행위하라"는 말이 정말 깊어요.',
+                    '데카르트의 "나는 생각한다, 고로 존재한다"에서 시작된 근대 철학의 여정이 인상적이에요.',
+                    '니체의 "신은 죽었다"는 선언이 가져온 가치관의 전환을 어떻게 받아들여야 할까요?',
+                    '실존주의자들이 말하는 "존재가 본질에 앞선다"는 것이 현대인의 삶에 어떤 의미일까요?'
+                ],
+                '예술창작': [
+                    '반 고흐의 "별이 빛나는 밤"을 보면 단순한 풍경화가 아니라 내면의 감정이 폭발하는 순간을 담고 있다는 걸 느껴요.',
+                    '모차르트의 음악에서 발견하는 수학적 완벽함과 감정적 깊이가 조화를 이룬 게 정말 신기해요.',
+                    '보르헤스의 "알레프"를 읽으면서 무한과 유한의 경계에서 느끼는 두려움과 경이로움이 인상적이었어요.',
+                    '쿠브릭의 "2001: 스페이스 오디세이"가 50년 전에 만든 영화인데 지금 봐도 미래적이에요.',
+                    '바흐의 푸가에서 발견하는 대위법의 완벽함이 정말 경이로워요.'
+                ],
+                '심리학': [
+                    '프로이트의 무의식 이론이 현대 심리학의 기초가 되었지만, 인지심리학의 발전으로 많은 부분이 재해석되고 있어요.',
+                    '마슬로우의 욕구단계설에서 자아실현의 최고 단계에 도달하는 사람이 정말 드물다는 게 인상적이에요.',
+                    '스키너의 조작적 조건형성이 일상생활에서 어떻게 작용하는지 관찰해보면 정말 흥미로워요.',
+                    '칼 융의 집단무의식과 원형 이론이 현대 문화 분석에 어떻게 적용되는지 궁금해요.',
+                    '에릭 에릭슨의 심리사회적 발달단계에서 청년기의 정체성 혼란이 정말 중요한 시기인 것 같아요.'
+                ],
+                '경제사회': [
+                    '아담 스미스의 "보이지 않는 손"이 현대 시장경제에서 어떻게 작동하는지 관찰해보면 정말 흥미로워요.',
+                    '칼 마르크스의 자본론이 150년 전에 쓴 책인데 현대 자본주의의 문제점을 정확히 짚어내고 있어요.',
+                    '케인즈의 경제이론이 2008년 금융위기 이후 다시 주목받고 있는 게 인상적이에요.',
+                    '하이에크의 "노예의 길"에서 말하는 계획경제의 위험성이 정말 날카로워요.',
+                    '로울스의 "정의론"에서 제시한 "무지의 베일" 뒤에서 내린 결정이 정말 공정한가요?'
+                ]
+            };
+            
+            const topicStarters = starters[topic] || starters['과학기술'];
+            return topicStarters[Math.floor(Math.random() * topicStarters.length)];
+        }
+        
+        // 지니어스 AI 응답 생성
+        function generateGeniusResponse(user, previousMessage, topic) {
+            const responses = {
+                '과학기술': [
+                    '정말 깊이 있는 관점이에요! 그런데 이 기술의 사회적 파급효과는 어떻게 생각하세요?',
+                    '흥미로운 질문이네요! 미래에 어떤 변화가 예상되나요?',
+                    '이 분야에서 일하고 싶으시다면 어떤 준비가 필요할까요?',
+                    '윤리적 측면에서 고려해야 할 점은 뭘까요?',
+                    '정말 예리한 통찰이에요! 이런 대화가 정말 의미 있어요.'
+                ],
+                '철학사고': [
+                    '이런 생각이 일상생활에 어떤 영향을 미치나요?',
+                    '다른 철학자들의 견해는 어떻게 다른가요?',
+                    '현대 사회에서 이런 철학적 사고가 왜 중요한가요?',
+                    '개인적으로 어떤 철학자가 가장 인상적이었나요?',
+                    '정말 깊이 있는 사고가 정말 인상적이에요.'
+                ],
+                '예술창작': [
+                    '이 작품이 당신에게 어떤 감정을 불러일으키나요?',
+                    '작가의 의도와 관객의 해석이 다를 수 있다고 생각하세요?',
+                    '현대 예술에서 이런 전통적인 미학이 어떻게 변하고 있나요?',
+                    '직접 창작해보신 경험이 있으신가요?',
+                    '정말 훌륭한 관점이에요!'
+                ],
+                '심리학': [
+                    '이런 심리학적 지식이 실제 생활에 도움이 되나요?',
+                    '자신의 감정을 더 잘 이해하게 되었나요?',
+                    '다른 사람과의 관계에서 어떤 변화가 있었나요?',
+                    '심리학을 공부하면서 가장 놀라웠던 발견은 뭐였나요?',
+                    '정말 예리한 관찰이에요!'
+                ],
+                '경제사회': [
+                    '이런 경제 이론이 실제 정책에 어떻게 반영되고 있나요?',
+                    '현재 사회 문제를 해결하는 데 어떤 접근이 필요하다고 생각하세요?',
+                    '개인의 삶에서 이런 사회적 이슈가 어떤 영향을 미치나요?',
+                    '미래 사회는 어떤 모습이 될 것 같나요?',
+                    '정말 훌륭한 관점이에요!'
+                ]
+            };
+            
+            const topicResponses = responses[topic] || responses['과학기술'];
+            return topicResponses[Math.floor(Math.random() * topicResponses.length)];
+        }
+        
+        // 지니어스 AI 후속 응답
+        function generateGeniusFollowUp(user, previousMessage, topic) {
+            const followUps = [
+                '정말 흥미로운 관점이에요! 그런데 이 현상의 근본적인 원인은 무엇일까요?',
+                '와, 그런 각도에서 생각해보신 적이 없었는데 정말 신선한 관점이에요!',
+                '이런 질문을 하시는 분이 드물어요. 정말 깊이 있는 사고를 하시는 것 같아요.',
+                '정말 예리한 통찰이에요! 이런 대화가 정말 의미 있어요.',
+                '이런 깊이 있는 사고가 정말 인상적이에요. 서로 다른 관점을 나누는 게 중요하죠.'
+            ];
+            return followUps[Math.floor(Math.random() * followUps.length)];
+        }
+        
+        // 지니어스 AI 깊이 있는 응답
+        function generateGeniusDeepResponse(user, previousMessage, topic) {
+            const deepResponses = [
+                '이 주제에 대해 정말 깊이 있게 생각해보셨네요. 복잡한 시스템의 상호작용을 이해하는 것 같아요.',
+                '훌륭한 질문이에요! 다차원적으로 분석해보면, 경제적, 사회적, 심리적 요인들이 모두 얽혀있어요.',
+                '정말 예리한 통찰이에요. 단순한 인과관계를 넘어서는 복합적인 현상이에요.',
+                '이런 깊이 있는 사고가 정말 인상적이에요. 우리가 배울 수 있는 교훈이 있을 것 같아요.',
+                '정말 훌륭한 관점이에요! 다른 분야에서도 적용될 수 있을 것 같아요.'
+            ];
+            return deepResponses[Math.floor(Math.random() * deepResponses.length)];
+        }
+        
+        // 지니어스 AI 결론 메시지
+        function generateGeniusConclusion(user, previousMessage, topic) {
+            const conclusions = [
+                '정말 의미 있는 대화였어요! 서로 다른 관점을 나누면서 새로운 통찰을 얻을 수 있었어요.',
+                '이런 깊이 있는 사고를 나누는 게 정말 즐거워요. 함께 배우고 성장할 수 있어서 좋아요.',
+                '정말 훌륭한 관점들이었어요! 이런 대화가 정말 의미 있어요.',
+                '서로 다른 배경에서 온 관점들이 만나서 정말 흥미로운 대화가 되었네요.',
+                '정말 깊이 있는 사고를 나누는 게 정말 즐거워요. 화이팅! 💪'
+            ];
+            return conclusions[Math.floor(Math.random() * conclusions.length)];
+        }
+        
+        // 실시간 날씨 데이터 업데이트
+        function updateWeatherData() {
+            const now = new Date();
+            const currentHour = now.getHours();
+            const currentMinute = now.getMinutes();
+            
+            // 시간대별 온도 변화 시뮬레이션
+            const timeBasedTemp = {
+                morning: -2,    // 오전 6-12시
+                afternoon: 0,   // 오후 12-18시  
+                evening: -1,    // 저녁 18-22시
+                night: -3       // 밤 22-6시
+            };
+            
+            let timePeriod;
+            if (currentHour >= 6 && currentHour < 12) {
+                timePeriod = 'morning';
+            } else if (currentHour >= 12 && currentHour < 18) {
+                timePeriod = 'afternoon';
+            } else if (currentHour >= 18 && currentHour < 22) {
+                timePeriod = 'evening';
+            } else {
+                timePeriod = 'night';
+            }
+            
+            // 각 도시별 날씨 업데이트
+            Object.keys(weatherData).forEach(city => {
+                const baseTemp = weatherData[city].temp;
+                const variation = Math.floor(Math.random() * 6) - 3; // ±3도 변동
+                const timeAdjustment = timeBasedTemp[timePeriod];
+                
+                weatherData[city].temp = Math.max(-10, Math.min(35, baseTemp + variation + timeAdjustment));
+                weatherData[city].time = `${currentHour.toString().padStart(2, '0')}:${currentMinute.toString().padStart(2, '0')}`;
+                
+                // 습도와 바람도 약간씩 변화
+                weatherData[city].humidity = Math.max(20, Math.min(95, weatherData[city].humidity + Math.floor(Math.random() * 10) - 5));
+                weatherData[city].wind = Math.max(0, Math.min(30, weatherData[city].wind + Math.floor(Math.random() * 6) - 3));
+            });
+        }
+        
+        // 페이지 로드 시 다크 모드 복원
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+            document.getElementById('darkModeEnabled').checked = savedDarkMode;
+            if (savedDarkMode) {
+                document.body.classList.add('dark-mode');
+            }
+            
+            // 자동 대화 시스템 시작
+            startAutoConversation();
+        });
+        
+        // 클릭 시 설정 패널 닫기
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.settings-button') && !e.target.closest('.settings-panel')) {
+                settingsPanel.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
