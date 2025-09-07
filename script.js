@@ -48,7 +48,7 @@ function openEmuOS() {
 
     // EmuOS 플랫폼으로 리다이렉트
     setTimeout(() => {
-        window.open('https://xowk9876.github.io/Service-game/', '_blank');
+        window.open('https://xowk9876.github.io/portfolio/', '_blank');
     }, 500);
 }
 

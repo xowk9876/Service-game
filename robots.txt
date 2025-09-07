@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://xowk9876.github.io/Service-game/sitemap.xml
+Sitemap: https://xowk9876.github.io/portfolio/sitemap.xml
 
