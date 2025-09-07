@@ -1,5 +1,12 @@
 User-agent: *
 Allow: /
+Disallow: /chat-server.js
+Disallow: /package.json
+Disallow: /package-lock.json
 
+# Sitemap
 Sitemap: https://xowk9876.github.io/portfolio/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
 

@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tae_system - 웹 개발자 & 포트폴리오 전문가 | 반응형 웹사이트 제작</title>
-    <meta name="description" content="Tae_system 포트폴리오 | 웹 개발자, 포트폴리오 제작 전문가. 반응형 웹사이트, 성능 최적화, 프론트엔드 개발 서비스 제공. EmuOS 게임 플랫폼 개발자.">
-    <meta name="keywords" content="웹개발자, 포트폴리오, 반응형웹사이트, 웹성능최적화, 프론트엔드개발, HTML5, CSS3, JavaScript, React, Vue.js, 웹디자인, 모바일최적화, SEO최적화">
+    <meta name="description" content="Tae_system 포트폴리오 | 웹 개발자 & IT 서버 엔지니어. 실시간 채팅 시스템, 반응형 웹사이트, 성능 최적화, 프론트엔드/백엔드 개발 서비스. WebSocket, Node.js, React 전문가.">
+    <meta name="keywords" content="웹개발자, 포트폴리오, 반응형웹사이트, 웹성능최적화, 프론트엔드개발, 백엔드개발, WebSocket, Node.js, HTML5, CSS3, JavaScript, React, Vue.js, 웹디자인, 모바일최적화, SEO최적화, 실시간채팅, 서버엔지니어, 클라우드, Docker, Kubernetes">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Tae_system">
     <meta name="theme-color" content="#667eea">
+    <meta name="color-scheme" content="light dark">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tae_system Portfolio">
     <link rel="canonical" href="https://xowk9876.github.io/portfolio/">
 
     <!-- Preconnects for performance -->
@@ -16,13 +22,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    
+    <!-- Resource hints -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    <link rel="preload" href="image/profile.jpg" as="image">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ko_KR">
     <meta property="og:site_name" content="Tae_system Portfolio">
     <meta property="og:title" content="Tae_system - 웹 개발자 & 포트폴리오 전문가 | 반응형 웹사이트 제작">
-    <meta property="og:description" content="웹 개발자, 포트폴리오 제작 전문가. 반응형 웹사이트, 성능 최적화, 프론트엔드 개발 서비스 제공. EmuOS 게임 플랫폼 개발자.">
+    <meta property="og:description" content="웹 개발자 & IT 서버 엔지니어. 실시간 채팅 시스템, 반응형 웹사이트, 성능 최적화, 프론트엔드/백엔드 개발 서비스 제공. WebSocket, Node.js 전문가.">
     <meta property="og:url" content="https://xowk9876.github.io/portfolio/">
     <meta property="og:image" content="https://xowk9876.github.io/portfolio/image/profile.jpg">
     <meta property="og:image:alt" content="Tae_system 웹 개발자 포트폴리오">
@@ -32,12 +44,70 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Tae_system - 웹 개발자 & 포트폴리오 전문가">
-    <meta name="twitter:description" content="반응형 웹사이트, 성능 최적화, 프론트엔드 개발 서비스 제공. EmuOS 게임 플랫폼 개발자.">
+    <meta name="twitter:description" content="웹 개발자 & IT 서버 엔지니어. 실시간 채팅 시스템, 반응형 웹사이트, 성능 최적화, 프론트엔드/백엔드 개발 서비스 제공.">
     <meta name="twitter:image" content="https://xowk9876.github.io/portfolio/image/profile.jpg">
     <meta name="twitter:creator" content="@tae_system">
 
     <!-- Favicon (uses profile image as fallback) -->
     <link rel="icon" href="image/profile.jpg" type="image/jpeg">
+    
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Tae_system",
+        "jobTitle": "웹 개발자 & IT 서버 엔지니어",
+        "description": "웹 개발자 & IT 서버 엔지니어. 실시간 채팅 시스템, 반응형 웹사이트, 성능 최적화, 프론트엔드/백엔드 개발 서비스 제공.",
+        "url": "https://xowk9876.github.io/portfolio/",
+        "image": "https://xowk9876.github.io/portfolio/image/profile.jpg",
+        "email": "bhd03014@gmail.com",
+        "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "KR",
+            "addressRegion": "South Korea"
+        },
+        "sameAs": [
+            "https://www.instagram.com/tae_system/",
+            "https://github.com/xowk9876"
+        ],
+        "knowsAbout": [
+            "웹 개발",
+            "프론트엔드 개발",
+            "백엔드 개발",
+            "WebSocket",
+            "Node.js",
+            "React",
+            "Vue.js",
+            "HTML5",
+            "CSS3",
+            "JavaScript",
+            "반응형 웹 디자인",
+            "웹 성능 최적화",
+            "SEO 최적화",
+            "서버 엔지니어링",
+            "클라우드 컴퓨팅",
+            "Docker",
+            "Kubernetes",
+            "실시간 통신"
+        ],
+        "hasOccupation": {
+            "@type": "Occupation",
+            "name": "웹 개발자 & IT 서버 엔지니어",
+            "description": "웹사이트 개발, 성능 최적화, 서버 인프라 구축 전문가"
+        },
+        "alumniOf": {
+            "@type": "Organization",
+            "name": "IT 서버 엔지니어링 전문가"
+        },
+        "award": [
+            "EmuOS 레트로 게임 플랫폼 10만+ 사용자 달성",
+            "포트폴리오 웹사이트 템플릿 개발",
+            "실시간 채팅 시스템 구축"
+        ]
+    }
+    </script>
+    
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -182,7 +252,7 @@
 
         <!-- 프로젝트 쇼케이스 섹션 -->
         <div class="projects-section scroll-animate">
-            <h2>🌟 대표 프로젝트</h2>
+            <h2>🌟 프로젝트</h2>
             <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-image">

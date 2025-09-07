@@ -4,19 +4,15 @@
 
 ## 🌟 프로젝트 개요
 
-Tae_system의 개인 포트폴리오 웹사이트로, 웹 개발자 & IT 서버 엔지니어로서의 전문성과 창의성을 보여주는 현대적인 디자인의 반응형 웹사이트입니다. 글래스모피즘 디자인, 다크 모드, 스크롤 애니메이션, **실시간 익명 채팅 시스템**, **실시간 AI 채팅 시스템** 등 최신 웹 트렌드를 반영한 인터랙티브한 사용자 경험을 제공합니다.
+Tae_system의 개인 포트폴리오 웹사이트로, 웹 개발자 & IT 서버 엔지니어로서의 전문성과 창의성을 보여주는 현대적인 디자인의 반응형 웹사이트입니다. 글래스모피즘 디자인, 다크 모드, 스크롤 애니메이션, **실시간 익명 채팅 시스템** 등 최신 웹 트렌드를 반영한 인터랙티브한 사용자 경험을 제공합니다.
 
-### 🚀 **새로운 기능 (v3.1.0) - 배포 완료**
+### 🚀 **주요 기능 (v3.1.0) - 배포 완료**
 - **실시간 익명 채팅**: WebSocket 기반 다중 사용자 실시간 채팅 ✅
 - **완전 익명 시스템**: 개인정보 없이 안전한 채팅 환경 ✅
 - **실시간 동기화**: 메시지, 타이핑 상태, 사용자 수 실시간 업데이트 ✅
 - **자동 재연결**: 연결 끊김 시 자동 재연결 기능 ✅
 - **반응형 디자인**: 모바일/데스크톱 모든 기기 지원 ✅
 - **전 세계 접속**: 어디서나 실시간 채팅 가능 ✅
-- **실시간 AI 채팅**: OpenAI, Claude, Gemini API 통합
-- **지니어스 AI**: 고급 추론과 창의적 사고를 통한 대화
-- **다양한 AI 개성**: 지니어스, 친근함, 철학적, 창의적 AI
-- **로컬 AI 지원**: Ollama 기반 완전 무료 AI 대화
 
 ## ✨ 주요 기능
 
@@ -35,7 +31,7 @@ Tae_system의 개인 포트폴리오 웹사이트로, 웹 개발자 & IT 서버 
 - **클라우드 솔루션**: AWS, Azure 기반 확장 가능한 아키텍처
 - **CI/CD 파이프라인**: 자동화된 배포 및 모니터링 시스템
 
-### 🌟 대표 프로젝트
+### 🌟 프로젝트
 - **실시간 익명 채팅 시스템**: WebSocket 기반 다중 사용자 실시간 채팅 플랫폼 ✅
   - **배포 상태**: 정상 작동 중
   - **접속 URL**: [https://xowk9876.github.io/portfolio/chat.html](https://xowk9876.github.io/portfolio/chat.html)
@@ -45,7 +41,6 @@ Tae_system의 개인 포트폴리오 웹사이트로, 웹 개발자 & IT 서버 
 - **실시간 대시보드 시스템**: 실시간 모니터링 및 알림 기능 (비공개)
 - **서버 자동화 시스템**: Ansible 기반 90% 시간 단축 솔루션 (비공개)
 - **보안 모니터링 시스템**: ELK Stack 기반 실시간 보안 이벤트 모니터링 (비공개)
-- **익명 커뮤니티 포털**: 실시간 AI 채팅 시스템
 
 ### 💻 전문 기술
 - **프론트엔드**: HTML5, CSS3, JavaScript (ES6+), React, Vue.js
@@ -63,17 +58,6 @@ Tae_system의 개인 포트폴리오 웹사이트로, 웹 개발자 & IT 서버 
 - **반응형 웹 디자인 완벽 가이드** (리다이렉트 준비중)
 - **Linux 서버 보안 강화 완벽 가이드** (리다이렉트 준비중)
 - **Ansible을 활용한 서버 자동화** (리다이렉트 준비중)
-
-### 🤖 익명 AI 채팅 시스템
-- **실시간 AI 대화**: OpenAI, Claude, Gemini API를 통한 진짜 AI와의 실시간 대화
-- **API 통합 방법**: 
-  - **OpenAI API**: GPT-3.5/GPT-4 모델로 지능적 대화
-  - **Claude API**: Anthropic의 고급 AI 모델 활용
-  - **Gemini API**: Google의 무료 AI 모델 (일일 60회 무료)
-  - **로컬 AI**: Ollama 기반 완전 무료 AI 대화
-- **다양한 AI 개성**: 지니어스, 친근함, 철학적, 창의적 AI
-- **지능적 응답**: 고급 추론과 창의적 사고를 통한 대화
-- **API 설정**: 사용자 맞춤형 AI 제공자 및 모델 선택
 
 ## 🎨 디자인 특징
 
@@ -102,11 +86,11 @@ Tae_system의 개인 포트폴리오 웹사이트로, 웹 개발자 & IT 서버 
 - **Font Awesome**: 아이콘 라이브러리
 - **반응형 디자인**: 모바일 퍼스트 접근법
 
-### Backend & AI
-- **AI API 통합**: OpenAI, Claude, Gemini, Ollama
+### Backend & 실시간 통신
+- **Node.js**: WebSocket 서버
+- **WebSocket**: 실시간 양방향 통신
 - **비동기 처리**: async/await, Promise 기반
 - **로컬 스토리지**: 사용자 설정 및 상태 관리
-- **실시간 통신**: WebSocket 기반 실시간 채팅
 
 ### 성능 최적화
 - **Google Fonts**: preconnect로 폰트 로딩 최적화
@@ -129,9 +113,11 @@ Tae_system의 개인 포트폴리오 웹사이트로, 웹 개발자 & IT 서버 
 WebSite/
 ├── index.html              # 메인 포트폴리오 페이지
 ├── community.html          # 익명 커뮤니티 포털
-├── chat.html               # 실시간 AI 채팅 시스템
+├── chat.html               # 실시간 익명 채팅 시스템
 ├── styles.css              # 통합 스타일시트
 ├── script.js               # JavaScript 기능
+├── chat-server.js          # WebSocket 서버 (Node.js)
+├── package.json            # Node.js 프로젝트 설정
 ├── README.md               # 프로젝트 문서
 ├── robots.txt              # 검색 엔진 크롤링 정책
 ├── sitemap.xml             # 사이트맵
@@ -159,176 +145,6 @@ WebSite/
    - `/join 채널명`: 채널 참여
    - `/help`: 도움말 보기
 
-### 🤖 **AI 채팅 사용법**
-1. **채팅하기** 버튼 클릭
-2. **익명 커뮤니티** → **실시간 채팅** 선택
-3. **닉네임 설정** (자동 생성됨)
-4. **메시지 입력** 후 전송
-5. **AI 응답** 자동 생성 (80% 확률)
-
-### ⚙️ **AI 설정 방법**
-1. **설정 버튼** 클릭 (⚙️)
-2. **AI 설정** 섹션에서:
-   - "실시간 AI 활성화" 체크
-   - 원하는 AI 제공자 선택
-   - API 키 입력
-   - AI 개성 선택
-3. **설정 저장** 클릭
-
-### 🔑 **API 키 설정 방법**
-
-#### **1. Gemini API (무료 추천)**
-```bash
-# 1. Google AI Studio 접속
-https://makersuite.google.com/app/apikey
-
-# 2. API 키 생성
-# 3. 설정에서 "gemini" 선택
-# 4. API 키 입력
-```
-
-#### **2. OpenAI API**
-```bash
-# 1. OpenAI Platform 접속
-https://platform.openai.com/api-keys
-
-# 2. 계정 생성 및 $5 크레딧 받기
-# 3. API 키 생성
-# 4. 설정에서 "openai" 선택
-# 5. API 키 입력
-```
-
-#### **3. Claude API**
-```bash
-# 1. Anthropic Console 접속
-https://console.anthropic.com/
-
-# 2. 계정 생성 및 $5 크레딧 받기
-# 3. API 키 생성
-# 4. 설정에서 "claude" 선택
-# 5. API 키 입력
-```
-
-#### **4. 로컬 AI (Ollama) - 완전 무료**
-```bash
-# 1. Ollama 설치
-# Windows
-winget install Ollama.Ollama
-
-# 2. AI 모델 다운로드
-ollama pull llama2
-ollama pull codellama
-
-# 3. Ollama 서버 실행
-ollama serve
-
-# 4. 설정에서 "로컬 AI" 선택
-# 5. API 키는 비워두기
-```
-
-## 🤖 AI API 사용 방법
-
-### API 키 설정
-1. **설정 버튼** 클릭 (⚙️)
-2. **AI 설정** 섹션에서:
-   - "실시간 AI 활성화" 체크
-   - 원하는 AI 제공자 선택
-   - API 키 입력
-   - AI 개성 선택
-3. **설정 저장** 클릭
-
-### 지원하는 AI 제공자
-- **OpenAI**: https://platform.openai.com/api-keys
-  - GPT-3.5-turbo, GPT-4 모델
-  - 신규 가입 시 $5 크레딧 제공
-- **Claude**: https://console.anthropic.com/
-  - Claude-3-sonnet 모델
-  - 신규 가입 시 $5 크레딧 제공
-- **Gemini**: https://makersuite.google.com/app/apikey
-  - Gemini-pro 모델
-  - **일일 60회 무료!** (가장 추천)
-- **로컬 AI**: https://ollama.ai/
-  - 완전 무료
-  - 컴퓨터에 설치 필요
-
-### 무료로 시작하는 방법
-1. **Gemini 사용** (가장 추천!)
-   - Google 계정으로 가입
-   - 일일 60회까지 무료
-   - 설정에서 "gemini" 선택
-
-2. **로컬 AI (Ollama)**
-   - 완전 무료
-   - 컴퓨터에 설치 후 사용
-
-### 🔧 **상세 설정 가이드**
-
-#### **Gemini API 설정 (무료)**
-```bash
-# 1단계: Google AI Studio 접속
-https://makersuite.google.com/app/apikey
-
-# 2단계: Google 계정으로 로그인
-
-# 3단계: "Create API Key" 클릭
-
-# 4단계: API 키 복사
-
-# 5단계: 웹사이트에서 설정
-# - 설정 버튼 (⚙️) 클릭
-# - AI 제공자: "Gemini" 선택
-# - API 키: 복사한 키 붙여넣기
-# - AI 개성: "지니어스" 선택
-# - 설정 저장 클릭
-```
-
-#### **OpenAI API 설정 (유료)**
-```bash
-# 1단계: OpenAI Platform 접속
-https://platform.openai.com/api-keys
-
-# 2단계: 계정 생성 및 $5 크레딧 받기
-
-# 3단계: "Create new secret key" 클릭
-
-# 4단계: API 키 복사 및 저장
-
-# 5단계: 웹사이트에서 설정
-# - 설정 버튼 (⚙️) 클릭
-# - AI 제공자: "OpenAI" 선택
-# - API 키: 복사한 키 붙여넣기
-# - AI 개성: "지니어스" 선택
-# - 설정 저장 클릭
-```
-
-#### **로컬 AI 설정 (완전 무료)**
-```bash
-# 1단계: Ollama 설치
-# Windows
-winget install Ollama.Ollama
-
-# macOS
-brew install ollama
-
-# Linux
-curl -fsSL https://ollama.ai/install.sh | sh
-
-# 2단계: AI 모델 다운로드
-ollama pull llama2
-ollama pull codellama
-ollama pull mistral
-
-# 3단계: Ollama 서버 실행
-ollama serve
-
-# 4단계: 웹사이트에서 설정
-# - 설정 버튼 (⚙️) 클릭
-# - AI 제공자: "로컬 AI" 선택
-# - API 키: 비워두기
-# - AI 개성: "지니어스" 선택
-# - 설정 저장 클릭
-```
-
 ## 🌐 배포
 
 ### GitHub Pages 배포 ✅
@@ -338,12 +154,6 @@ ollama serve
 - **자동 배포**: 코드 변경 시 자동으로 사이트 업데이트
 - **HTTPS 지원**: 무료 SSL 인증서 제공
 
-### 배포 과정
-1. **Git 저장소 생성 및 파일 업로드**
-2. **GitHub Pages 설정**: Settings → Pages → Source: Deploy from a branch
-3. **브랜치 설정**: main, folder: / (root)
-4. **배포 완료**: 몇 분 내에 사이트 활성화
-
 ### 실시간 채팅 시스템 배포 ✅
 - **프론트엔드**: GitHub Pages (정적 파일)
 - **백엔드**: Render WebSocket 서버 호스팅 완료
@@ -351,81 +161,99 @@ ollama serve
 - **채팅 URL**: `https://xowk9876.github.io/portfolio/chat.html`
 - **상태**: 실시간 채팅 정상 작동 중
 
-#### WebSocket 서버 배포 완료 ✅
-1. **Render 배포** (완료):
-   - ✅ [Render.com](https://render.com) 가입 완료
-   - ✅ "New Web Service" 선택 완료
-   - ✅ GitHub 저장소 연결 (`xowk9876/portfolio`) 완료
-   - ✅ 자동 설정: Build Command: `npm install`, Start Command: `node chat-server.js` 완료
-   - ✅ 배포 URL: `https://portfolio-q8ar.onrender.com`
-   - ✅ `chat.html`에 URL 반영 완료
-
-2. **대안 배포 방법**:
-   - **Railway**: [Railway.app](https://railway.app) - "New Project" → "Deploy from GitHub repo"
-   - **Heroku**: [Heroku.com](https://heroku.com) - `Procfile` 생성 후 GitHub 연결
-
-### AI 기능 배포 시 주의사항
-- **API 키**: GitHub에 올릴 때 API 키는 제거해야 함 (보안상)
-- **로컬 AI**: 각자 컴퓨터에 Ollama 설치 필요
-- **데모용**: 시뮬레이션 AI는 GitHub Pages에서도 정상 작동
-
 ## 💻 코드 예시
 
-### **AI API 통합 코드**
+### **WebSocket 서버 구현**
 ```javascript
-// AI API 설정
-let aiApiConfig = {
-    enabled: true,
-    provider: 'openai', // 'openai', 'claude', 'gemini', 'local'
-    apiKey: '', // 사용자가 설정
-    model: 'gpt-3.5-turbo',
-    maxTokens: 150,
-    temperature: 0.8,
-    personality: 'genius' // 'genius', 'friendly', 'philosophical', 'creative'
-};
+// chat-server.js
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({ port: 8080 });
 
-// OpenAI API 호출
-async function callOpenAI(prompt) {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${aiApiConfig.apiKey}`
-        },
-        body: JSON.stringify({
-            model: aiApiConfig.model,
-            messages: [{ role: 'user', content: prompt }],
-            max_tokens: aiApiConfig.maxTokens,
-            temperature: aiApiConfig.temperature
-        })
+const clients = new Map();
+const messageHistory = [];
+
+wss.on('connection', (ws) => {
+    const clientId = generateId();
+    clients.set(ws, { id: clientId, nickname: `사용자${clientId}` });
+    
+    ws.on('message', (data) => {
+        const message = JSON.parse(data);
+        handleMessage(ws, message);
     });
     
-    const data = await response.json();
-    return data.choices[0].message.content.trim();
-}
-```
+    ws.on('close', () => {
+        clients.delete(ws);
+        broadcastUserCount();
+    });
+});
 
-### **지니어스 AI 응답 생성**
-```javascript
-// 지니어스 AI 응답 생성
-function generateGeniusResponse(user, previousMessage, topic) {
-    const responses = {
-        '과학기술': [
-            'AI가 인간의 창의성을 대체할 수 있을까요? 저는 오히려 인간의 잠재력을 극대화하는 도구라고 생각해요.',
-            '양자컴퓨팅이 상용화되면 암호화 시스템이 완전히 바뀔 텐데, 정말 흥미로운 시대가 올 것 같아요.'
-        ],
-        '철학사고': [
-            '플라톤의 동굴의 비유처럼, 우리가 보는 현실이 진짜 현실일까요?',
-            '칸트의 정언명령 - "네 의지의 준칙이 항상 동시에 보편적 입법의 원리가 되도록 행위하라"는 말이 정말 깊어요.'
-        ]
-    };
+function handleMessage(ws, message) {
+    const client = clients.get(ws);
     
-    const topicResponses = responses[topic] || responses['과학기술'];
-    return topicResponses[Math.floor(Math.random() * topicResponses.length)];
+    switch (message.type) {
+        case 'nickname':
+            client.nickname = message.nickname;
+            broadcastUserCount();
+            break;
+        case 'message':
+            broadcastMessage(client.nickname, message.content);
+            break;
+        case 'typing':
+            broadcastTyping(client.nickname, true);
+            break;
+        case 'stopTyping':
+            broadcastTyping(client.nickname, false);
+            break;
+    }
 }
 ```
 
-### **실시간 채팅 구현**
+### **클라이언트 WebSocket 연결**
+```javascript
+// chat.html
+function connectWebSocket() {
+    const wsUrl = 'wss://portfolio-q8ar.onrender.com';
+    
+    try {
+        ws = new WebSocket(wsUrl);
+        
+        ws.onopen = function() {
+            console.log('WebSocket 연결 성공');
+            isConnected = true;
+            addSystemMessage('🔗 실시간 채팅 서버에 연결되었습니다!');
+            
+            if (currentNickname) {
+                ws.send(JSON.stringify({
+                    type: 'nickname',
+                    nickname: currentNickname
+                }));
+            }
+        };
+        
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            handleWebSocketMessage(data);
+        };
+        
+        ws.onclose = function() {
+            console.log('WebSocket 연결 종료');
+            isConnected = false;
+            addSystemMessage('❌ 서버 연결이 끊어졌습니다. 재연결을 시도합니다...');
+            setTimeout(connectWebSocket, 3000);
+        };
+        
+        ws.onerror = function(error) {
+            console.error('WebSocket 오류:', error);
+            addSystemMessage('❌ 연결 오류가 발생했습니다.');
+        };
+    } catch (error) {
+        console.error('WebSocket 연결 실패:', error);
+        addSystemMessage('❌ 실시간 채팅을 사용할 수 없습니다.');
+    }
+}
+```
+
+### **메시지 전송 및 표시**
 ```javascript
 // 메시지 전송
 function sendMessage() {
@@ -434,14 +262,95 @@ function sendMessage() {
     
     if (!message) return;
     
-    // 메시지 추가
-    addMessage(nickname, message);
+    if (isConnected && ws) {
+        ws.send(JSON.stringify({
+            type: 'message',
+            content: message
+        }));
+    } else {
+        addMessage(nickname, message);
+    }
     
-    // AI 기반 지능적 응답 (80% 확률)
-    if (Math.random() < 0.8) {
-        setTimeout(() => {
-            generateRealTimeAIResponse(message, nickname);
-        }, 1000 + Math.random() * 2000);
+    messageInput.value = '';
+    messageInput.focus();
+}
+
+// 메시지 표시
+function displayMessage(nickname, message, isOwn = false) {
+    const messageElement = document.createElement('div');
+    messageElement.className = `message ${isOwn ? 'own' : ''}`;
+    
+    messageElement.innerHTML = `
+        <div class="message-header">
+            <span class="nickname">${nickname}</span>
+            <span class="timestamp">${new Date().toLocaleTimeString()}</span>
+        </div>
+        <div class="message-content">${message}</div>
+    `;
+    
+    messagesContainer.appendChild(messageElement);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+```
+
+### **다크 모드 구현**
+```javascript
+// script.js
+function toggleDarkMode() {
+    const body = document.body;
+    const isDark = body.classList.toggle('dark-mode');
+    
+    localStorage.setItem('darkMode', isDark);
+    updateDarkModeButton(isDark);
+}
+
+function updateDarkModeButton(isDark) {
+    const darkModeBtn = document.getElementById('darkModeBtn');
+    if (darkModeBtn) {
+        darkModeBtn.innerHTML = isDark ? '☀️' : '🌙';
+        darkModeBtn.title = isDark ? '라이트 모드로 변경' : '다크 모드로 변경';
+    }
+}
+
+// 페이지 로드 시 다크 모드 상태 복원
+document.addEventListener('DOMContentLoaded', function() {
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (savedDarkMode) {
+        document.body.classList.add('dark-mode');
+        updateDarkModeButton(true);
+    }
+});
+```
+
+### **반응형 CSS 그리드**
+```css
+/* styles.css */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+    align-items: start;
+}
+
+.blog-card {
+    background: white;
+    border-radius: 20px;
+    padding: 0;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .blog-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
     }
 }
 ```
@@ -454,7 +363,13 @@ function sendMessage() {
    python -m http.server 8000
    ```
 
-2. **브라우저에서 접속**:
+2. **Node.js WebSocket 서버 실행**:
+   ```bash
+   npm install
+   node chat-server.js
+   ```
+
+3. **브라우저에서 접속**:
    - `http://localhost:8000`
    - `http://127.0.0.1:8000`
 
@@ -496,23 +411,6 @@ function sendMessage() {
 - **sitemap.xml**: 사이트 구조 제공
 - **Canonical URL**: 중복 콘텐츠 방지
 
-## 🎨 인터랙티브 기능
-
-### 프로필 카드
-- **호버 효과**: 카드 전체에 부드러운 호버 애니메이션
-- **이미지 클릭**: 프로필 이미지 클릭 시 폭발 효과
-- **다크 모드**: 테마 토글 기능
-
-### 스크롤 애니메이션
-- **섹션별 페이드인**: 스크롤 시 자연스러운 등장 효과
-- **슬라이드 효과**: 아래에서 위로 슬라이드하는 애니메이션
-- **지연 로딩**: 뷰포트에 들어올 때 애니메이션 실행
-
-### 레트로 게임 섹션
-- **3D 호버 효과**: 카드 호버 시 입체적인 변형
-- **클릭 애니메이션**: 클릭 시 폭발 효과와 함께 EmuOS 이동
-- **파티클 배경**: 동적인 배경 파티클 효과
-
 ## 🔧 최신 업데이트
 
 ### v3.1.0 - 2025.09.07 (최신)
@@ -520,22 +418,11 @@ function sendMessage() {
 - **🔒 프로젝트 상태 업데이트**: 서버 자동화 시스템, 보안 모니터링 시스템을 비공개로 변경
 - **📝 기술 글 상태**: 모든 기술 글을 "리다이렉트 준비중"으로 업데이트
 - **🔍 SEO 최적화**: 모든 메타 태그, sitemap, robots.txt URL 업데이트
+- **💬 실시간 채팅**: WebSocket 기반 다중 사용자 실시간 채팅 시스템 완성
+- **🎨 UI/UX 개선**: 블로그 카드 레이아웃 최적화 및 간격 정렬
 
 ### v3.0.0 - 2025.09.07
 - **🎉 익명 커뮤니티 포털**: 완전한 익명 채팅 시스템 구현
-- **🤖 실시간 AI 채팅**: 
-  - **OpenAI API 통합**: GPT-3.5/GPT-4 모델로 진짜 AI와 대화
-  - **Claude API 통합**: Anthropic의 고급 AI 모델 활용
-  - **Gemini API 통합**: Google 무료 AI 모델 (일일 60회 무료)
-  - **로컬 AI 지원**: Ollama 기반 완전 무료 AI 대화
-- **🧠 지니어스 AI 시스템**: 
-  - 고급 추론과 창의적 사고를 통한 대화
-  - 다층 분석 시스템 (감정, 개성, 맥락, 복잡도 분석)
-  - 확률 기반 100% 정확도 AI 응답
-  - 실시간 날씨 데이터 통합
-- **🎭 다양한 AI 개성**: 지니어스, 친근함, 철학적, 창의적 AI
-- **⚙️ AI 설정 패널**: 사용자 맞춤형 AI 제공자 및 모델 선택
-- **🔐 API 키 관리**: 보안을 고려한 API 키 설정 및 저장
 - **💼 서버 엔지니어 전문성**: IT 인프라 및 클라우드 기술 통합
 - **📱 완전 반응형**: 모바일, 태블릿, 데스크톱 완벽 지원
 - **🌙 다크 모드**: 모든 페이지에서 일관된 다크 모드 지원
@@ -561,58 +448,42 @@ function sendMessage() {
 - **인스타그램**: [@tae_system](https://www.instagram.com/tae_system/)
 - **GitHub**: [@xowk9876](https://github.com/xowk9876)
 - **위치**: South Korea
-- **전문 분야**: 웹 개발, IT 서버 엔지니어링, AI 시스템 통합
+- **전문 분야**: 웹 개발, IT 서버 엔지니어링, 실시간 통신 시스템
 
 ## 🎯 주요 성과
 
 - **포트폴리오 웹사이트**: 현대적이고 반응형 디자인
-- **익명 커뮤니티**: 실시간 AI 채팅 시스템 구축
-- **AI 통합**: OpenAI, Claude, Gemini API 통합
-- **지니어스 AI**: 고급 추론과 창의적 사고 시스템
+- **실시간 채팅 시스템**: WebSocket 기반 다중 사용자 실시간 채팅
 - **완전 반응형**: 모든 기기에서 완벽한 사용자 경험
+- **클라우드 배포**: GitHub Pages + Render를 통한 안정적인 서비스
 
 ## 🔧 문제 해결
 
 ### **자주 묻는 질문 (FAQ)**
 
-#### **Q: AI가 응답하지 않아요**
+#### **Q: 실시간 채팅이 작동하지 않아요**
 ```bash
 # 해결 방법:
-1. 설정에서 "실시간 AI 활성화" 체크 확인
-2. API 키가 올바르게 입력되었는지 확인
-3. 인터넷 연결 상태 확인
-4. 브라우저 콘솔에서 오류 메시지 확인
+1. 인터넷 연결 상태 확인
+2. 브라우저 콘솔에서 오류 메시지 확인
+3. WebSocket 서버 상태 확인
+4. 방화벽 설정 확인
 ```
 
-#### **Q: API 키를 어디서 구하나요?**
-```bash
-# 무료 옵션:
-- Gemini: https://makersuite.google.com/app/apikey (일일 60회 무료)
-- 로컬 AI: https://ollama.ai/ (완전 무료)
-
-# 유료 옵션:
-- OpenAI: https://platform.openai.com/api-keys ($5 크레딧)
-- Claude: https://console.anthropic.com/ ($5 크레딧)
-```
-
-#### **Q: 로컬 AI가 작동하지 않아요**
+#### **Q: 닉네임이 제대로 표시되지 않아요**
 ```bash
 # 해결 방법:
-1. Ollama가 설치되어 있는지 확인
-2. Ollama 서버가 실행 중인지 확인
-   ollama serve
-3. AI 모델이 다운로드되었는지 확인
-   ollama list
-4. 포트 11434가 사용 중인지 확인
+1. 페이지 새로고침 후 재시도
+2. 다른 닉네임으로 변경 시도
+3. 브라우저 캐시 삭제
 ```
 
-#### **Q: GitHub Pages에서 AI가 작동하지 않아요**
+#### **Q: 모바일에서 레이아웃이 깨져요**
 ```bash
-# 정상적인 현상입니다:
-- GitHub Pages는 API 키를 저장할 수 없음
-- 시뮬레이션 AI는 정상 작동
-- 실시간 AI는 로컬에서만 사용 가능
-- 또는 각자 API 키 설정 후 사용
+# 해결 방법:
+1. 브라우저 최신 버전 사용
+2. 페이지 새로고침
+3. 브라우저 캐시 삭제
 ```
 
 ### **기술 지원**
@@ -627,6 +498,6 @@ function sendMessage() {
 ---
 
 **Tae_system** - 웹 개발자 & IT 서버 엔지니어  
-*✨ 최신 업데이트: v3.0.0 - 실시간 AI 채팅 시스템 통합*  
+*✨ 최신 업데이트: v3.1.0 - 실시간 채팅 시스템 완성*  
 *🌐 온라인 호환성: 모든 브라우저와 기기에서 완벽 작동*  
-*🤖 AI 기능: 지니어스 AI와의 실시간 대화 가능*
+*💬 실시간 채팅: WebSocket 기반 다중 사용자 실시간 대화 가능*
