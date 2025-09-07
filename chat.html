@@ -767,8 +767,12 @@
         
         // WebSocket 연결 함수
         function connectWebSocket() {
-            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsUrl = `${protocol}//${window.location.host}`;
+            // Railway 배포 후 실제 URL로 변경하세요
+            const wsUrl = 'wss://portfolio-production-xxxx.up.railway.app';
+            
+            // 로컬 개발용 (배포 시 주석 처리)
+            // const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            // const wsUrl = `${protocol}//${window.location.host}`;
             
             try {
                 ws = new WebSocket(wsUrl);
