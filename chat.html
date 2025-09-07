@@ -337,50 +337,6 @@
             transform: scale(0.95);
         }
         
-        .settings-button {
-            width: 50px;
-            height: 50px;
-            border: none;
-            border-radius: 50%;
-            background: #f8f9fa;
-            color: #667eea;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            margin-right: 10px;
-        }
-        
-        .settings-button:hover {
-            background: #e9ecef;
-            transform: scale(1.05);
-        }
-        
-        .settings-panel {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            min-width: 250px;
-            display: none;
-            z-index: 1000;
-        }
-        
-        .settings-panel.show {
-            display: block;
-        }
-        
-        .settings-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #333;
-        }
         
         .setting-item {
             margin-bottom: 15px;
@@ -447,37 +403,6 @@
             color: #a0aec0;
         }
         
-        /* AI 설정 스타일 */
-        .ai-settings-section {
-            background: rgba(102, 126, 234, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 2px solid rgba(102, 126, 234, 0.2);
-        }
-        
-        .ai-settings-section h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-        
-        .ai-settings-section select,
-        .ai-settings-section input[type="password"] {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            font-size: 14px;
-            background: white;
-        }
-        
-        .ai-settings-section select:focus,
-        .ai-settings-section input[type="password"]:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
         
         .save-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -495,28 +420,6 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
         
-        /* 다크 모드 AI 설정 */
-        body.dark-mode .ai-settings-section {
-            background: rgba(102, 126, 234, 0.2);
-            border-color: rgba(102, 126, 234, 0.4);
-        }
-        
-        body.dark-mode .ai-settings-section h3 {
-            color: #a0aec0;
-        }
-        
-        body.dark-mode .ai-settings-section select,
-        body.dark-mode .ai-settings-section input[type="password"] {
-            background: #4a5568;
-            color: #e2e8f0;
-            border-color: #718096;
-        }
-        
-        body.dark-mode .ai-settings-section select:focus,
-        body.dark-mode .ai-settings-section input[type="password"]:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
-        }
         
         body.dark-mode .message-text {
             color: #e2e8f0;
@@ -539,22 +442,7 @@
             border-color: #81c784;
         }
         
-        body.dark-mode .settings-button {
-            background: #4a5568;
-            color: #e2e8f0;
-        }
         
-        body.dark-mode .settings-panel {
-            background: #4a5568;
-        }
-        
-        body.dark-mode .settings-title {
-            color: #e2e8f0;
-        }
-        
-        body.dark-mode .setting-label {
-            color: #a0aec0;
-        }
         
         /* 반응형 */
         @media (max-width: 768px) {
@@ -639,9 +527,6 @@
         <!-- 채팅 입력 영역 -->
         <div class="chat-input-container">
             <div class="chat-input-wrapper">
-                <button class="settings-button" onclick="toggleSettings()">
-                    <i class="fas fa-cog"></i>
-                </button>
                 <input type="text" class="nickname-input" id="nicknameInput" placeholder="닉네임" maxlength="20">
                 <input type="text" class="message-input" id="messageInput" placeholder="메시지를 입력하세요..." maxlength="500">
                 <button class="send-button" onclick="sendMessage()">
@@ -649,28 +534,6 @@
                 </button>
             </div>
             
-            <!-- 설정 패널 -->
-            <div class="settings-panel" id="settingsPanel">
-                <div class="settings-title">⚙️ 설정</div>
-                <div class="setting-item">
-                    <label class="setting-label">
-                        <input type="checkbox" class="setting-checkbox" id="soundEnabled" checked>
-                        소리 효과
-                    </label>
-                </div>
-                <div class="setting-item">
-                    <label class="setting-label">
-                        <input type="checkbox" class="setting-checkbox" id="notificationsEnabled" checked>
-                        알림
-                    </label>
-                </div>
-                <div class="setting-item">
-                    <label class="setting-label">
-                        <input type="checkbox" class="setting-checkbox" id="darkModeEnabled">
-                        다크 모드
-                    </label>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -896,7 +759,6 @@
         const userCountElement = document.getElementById('userCount');
         const typingIndicator = document.getElementById('typingIndicator');
         const typingText = document.getElementById('typingText');
-        const settingsPanel = document.getElementById('settingsPanel');
         
         // 페이지 로드 시 초기화
         document.addEventListener('DOMContentLoaded', function() {
@@ -908,12 +770,8 @@
             messageInput.addEventListener('input', handleTyping);
             nicknameInput.addEventListener('keypress', handleNicknameKeyPress);
             
-            // 설정 이벤트 리스너
-            document.getElementById('darkModeEnabled').addEventListener('change', toggleDarkMode);
             
             // AI 설정 로드 및 패널 추가
-            loadAISettings();
-            addAISettingsPanel();
             
             // 시뮬레이션된 사용자 수 업데이트
             updateUserCount();
@@ -2342,9 +2200,6 @@
         }
         
         // 설정 토글
-        function toggleSettings() {
-            settingsPanel.classList.toggle('show');
-        }
         
         // 다크 모드 토글
         function toggleDarkMode() {
@@ -2658,68 +2513,9 @@
         }
         
         // AI 설정 패널 추가
-        function addAISettingsPanel() {
-            const settingsPanel = document.getElementById('settingsPanel');
-            if (!settingsPanel) return;
-            
-            const aiSettingsHTML = `
-                <div class="ai-settings-section">
-                    <h3>🤖 AI 설정</h3>
-                    <div class="setting-group">
-                        <label>
-                            <input type="checkbox" id="aiEnabled" ${aiApiConfig.enabled ? 'checked' : ''}>
-                            실시간 AI 활성화
-                        </label>
-                    </div>
-                    <div class="setting-group">
-                        <label>AI 제공자:</label>
-                        <select id="aiProvider">
-                            <option value="openai" ${aiApiConfig.provider === 'openai' ? 'selected' : ''}>OpenAI</option>
-                            <option value="claude" ${aiApiConfig.provider === 'claude' ? 'selected' : ''}>Claude</option>
-                            <option value="gemini" ${aiApiConfig.provider === 'gemini' ? 'selected' : ''}>Gemini</option>
-                            <option value="local" ${aiApiConfig.provider === 'local' ? 'selected' : ''}>로컬 AI</option>
-                        </select>
-                    </div>
-                    <div class="setting-group">
-                        <label>API 키:</label>
-                        <input type="password" id="aiApiKey" placeholder="API 키를 입력하세요" value="${aiApiConfig.apiKey}">
-                    </div>
-                    <div class="setting-group">
-                        <label>AI 개성:</label>
-                        <select id="aiPersonality">
-                            <option value="genius" ${aiApiConfig.personality === 'genius' ? 'selected' : ''}>지니어스</option>
-                            <option value="friendly" ${aiApiConfig.personality === 'friendly' ? 'selected' : ''}>친근함</option>
-                            <option value="philosophical" ${aiApiConfig.personality === 'philosophical' ? 'selected' : ''}>철학적</option>
-                            <option value="creative" ${aiApiConfig.personality === 'creative' ? 'selected' : ''}>창의적</option>
-                        </select>
-                    </div>
-                    <button onclick="saveAISettings()" class="save-btn">설정 저장</button>
-                </div>
-            `;
-            
-            settingsPanel.innerHTML += aiSettingsHTML;
-        }
         
         // AI 설정 저장
-        function saveAISettings() {
-            aiApiConfig.enabled = document.getElementById('aiEnabled').checked;
-            aiApiConfig.provider = document.getElementById('aiProvider').value;
-            aiApiConfig.apiKey = document.getElementById('aiApiKey').value;
-            aiApiConfig.personality = document.getElementById('aiPersonality').value;
-            
-            // 로컬 스토리지에 저장
-            localStorage.setItem('aiApiConfig', JSON.stringify(aiApiConfig));
-            
-            addSystemMessage('AI 설정이 저장되었습니다! 🤖');
-        }
         
-        // AI 설정 로드
-        function loadAISettings() {
-            const saved = localStorage.getItem('aiApiConfig');
-            if (saved) {
-                aiApiConfig = { ...aiApiConfig, ...JSON.parse(saved) };
-            }
-        }
 
         // 지니어스 AI 대화 시스템 - 고급 추론과 창의적 대화
         function startRandomConversation() {
@@ -2977,12 +2773,6 @@
             startAutoConversation();
         });
         
-        // 클릭 시 설정 패널 닫기
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.settings-button') && !e.target.closest('.settings-panel')) {
-                settingsPanel.classList.remove('show');
-            }
-        });
     </script>
 </body>
 </html>
