@@ -346,17 +346,18 @@ ollama serve
 - **배포 URL**: `https://사용자명.github.io/저장소명/chat.html`
 
 #### WebSocket 서버 배포 방법
-1. **Railway 배포** (추천):
+1. **Render 배포** (추천):
+   - [Render.com](https://render.com) 가입
+   - "New Web Service" 선택
+   - GitHub 저장소 연결 (`xowk9876/portfolio`)
+   - 자동 설정: Build Command: `npm install`, Start Command: `node chat-server.js`
+   - 배포 후 URL을 `chat.html`에 반영
+
+2. **Railway 배포**:
    - [Railway.app](https://railway.app) 가입
    - "New Project" → "Deploy from GitHub repo"
    - `chat-server.js`를 메인 파일로 설정
    - 자동 배포 후 URL을 `chat.html`에 반영
-
-2. **Render 배포**:
-   - [Render.com](https://render.com) 가입
-   - "New Web Service" 선택
-   - Build Command: `npm install`
-   - Start Command: `node chat-server.js`
 
 3. **Heroku 배포**:
    - [Heroku.com](https://heroku.com) 가입

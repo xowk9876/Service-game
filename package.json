@@ -1,24 +1,24 @@
 {
-  "name": "realtime-chat",
-  "version": "1.0.0",
-  "description": "실시간 채팅 애플리케이션",
+  "name": "portfolio-website",
+  "version": "3.1.0",
+  "description": "Tae_system Portfolio Website with Real-time Chat",
   "main": "chat-server.js",
   "scripts": {
-    "start": "node chat-server.js",
-    "dev": "nodemon chat-server.js"
+    "start": "node chat-server.js"
   },
   "dependencies": {
     "ws": "^8.14.2"
   },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
-  },
   "keywords": [
+    "portfolio",
     "chat",
     "websocket",
     "realtime",
     "nodejs"
   ],
   "author": "Tae_system",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
 }
